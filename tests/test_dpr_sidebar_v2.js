@@ -475,6 +475,9 @@ function testSidebarPaperVisualStateCssContract() {
 function testSidebarStickyHierarchyCssContract() {
   const css = fs.readFileSync('app/app.css', 'utf8');
   const rootRule = cssRule(css, '#dpr-sidebar-v2');
+  assert.ok(/--dpr-sidebar-surface:\s*#ffffff/i.test(rootRule));
+  assert.ok(/--dpr-sidebar-sticky-mask-bg:\s*var\(--dpr-sidebar-surface\)/i.test(rootRule));
+  assert.ok(/--dpr-sidebar-sticky-mask-bleed:\s*8px/i.test(rootRule));
   assert.ok(/--dpr-sidebar-sticky-panel-top:\s*0px/i.test(rootRule));
   assert.ok(/--dpr-sidebar-sticky-axis-top:\s*34px/i.test(rootRule));
   assert.ok(/--dpr-sidebar-sticky-section-top:\s*70px/i.test(rootRule));
@@ -483,19 +486,36 @@ function testSidebarStickyHierarchyCssContract() {
   assert.ok(/position:\s*sticky/i.test(panelHeaderRule));
   assert.ok(/top:\s*var\(--dpr-sidebar-sticky-panel-top\)/i.test(panelHeaderRule));
   assert.ok(/z-index:\s*18/i.test(panelHeaderRule));
-  assert.ok(/background:\s*#ffffff/i.test(panelHeaderRule));
+  assert.ok(/isolation:\s*isolate/i.test(panelHeaderRule));
+  assert.ok(/background:\s*var\(--dpr-sidebar-sticky-mask-bg\)/i.test(panelHeaderRule));
 
   const axisRowRule = cssRule(css, '.dpr-sidebar-panel.is-expanded > .dpr-sidebar-panel-content > .dpr-sidebar-axis-row');
   assert.ok(/position:\s*sticky/i.test(axisRowRule));
   assert.ok(/top:\s*var\(--dpr-sidebar-sticky-axis-top\)/i.test(axisRowRule));
   assert.ok(/z-index:\s*17/i.test(axisRowRule));
-  assert.ok(/background:\s*#ffffff/i.test(axisRowRule));
+  assert.ok(/isolation:\s*isolate/i.test(axisRowRule));
+  assert.ok(/background:\s*var\(--dpr-sidebar-sticky-mask-bg\)/i.test(axisRowRule));
 
   const sectionHeaderRule = cssRule(css, '.dpr-sidebar-panel.is-expanded .dpr-sidebar-axis-section-header');
   assert.ok(/position:\s*sticky/i.test(sectionHeaderRule));
   assert.ok(/top:\s*var\(--dpr-sidebar-sticky-section-top\)/i.test(sectionHeaderRule));
   assert.ok(/z-index:\s*16/i.test(sectionHeaderRule));
-  assert.ok(/background:\s*#ffffff/i.test(sectionHeaderRule));
+  assert.ok(/isolation:\s*isolate/i.test(sectionHeaderRule));
+  assert.ok(/background:\s*var\(--dpr-sidebar-sticky-mask-bg\)/i.test(sectionHeaderRule));
+
+  assert.ok(/\.dpr-sidebar-panel\.is-expanded > \.dpr-sidebar-panel-header::before,\s*\.dpr-sidebar-panel\.is-expanded > \.dpr-sidebar-panel-content > \.dpr-sidebar-axis-row::before,\s*\.dpr-sidebar-panel\.is-expanded \.dpr-sidebar-axis-section-header::before\s*{[^}]*content:\s*""/i.test(css));
+  assert.ok(/\.dpr-sidebar-panel\.is-expanded > \.dpr-sidebar-panel-header::before,\s*\.dpr-sidebar-panel\.is-expanded > \.dpr-sidebar-panel-content > \.dpr-sidebar-axis-row::before,\s*\.dpr-sidebar-panel\.is-expanded \.dpr-sidebar-axis-section-header::before\s*{[^}]*inset:\s*calc\(var\(--dpr-sidebar-sticky-mask-bleed\) \* -1\) 0/i.test(css));
+  assert.ok(/\.dpr-sidebar-panel\.is-expanded > \.dpr-sidebar-panel-header::before,\s*\.dpr-sidebar-panel\.is-expanded > \.dpr-sidebar-panel-content > \.dpr-sidebar-axis-row::before,\s*\.dpr-sidebar-panel\.is-expanded \.dpr-sidebar-axis-section-header::before\s*{[^}]*background:\s*var\(--dpr-sidebar-sticky-mask-bg\)/i.test(css));
+  assert.ok(/\.dpr-sidebar-panel\.is-expanded > \.dpr-sidebar-panel-header::before,\s*\.dpr-sidebar-panel\.is-expanded > \.dpr-sidebar-panel-content > \.dpr-sidebar-axis-row::before,\s*\.dpr-sidebar-panel\.is-expanded \.dpr-sidebar-axis-section-header::before\s*{[^}]*z-index:\s*-1/i.test(css));
+
+  const panelContentRule = cssRule(css, '.dpr-sidebar-panel-content');
+  assert.ok(/background:\s*var\(--dpr-sidebar-surface\)/i.test(panelContentRule));
+  const axisContentRule = cssRule(css, '.dpr-sidebar-axis-content');
+  assert.ok(/background:\s*var\(--dpr-sidebar-surface\)/i.test(axisContentRule));
+  const axisSectionRule = cssRule(css, '.dpr-sidebar-axis-section');
+  assert.ok(/background:\s*var\(--dpr-sidebar-surface\)/i.test(axisSectionRule));
+  const papersRule = cssRule(css, '.dpr-sidebar-axis-papers');
+  assert.ok(/background:\s*var\(--dpr-sidebar-surface\)/i.test(papersRule));
 }
 
 function testRenderBodyPutsConferenceAboveDaily() {
