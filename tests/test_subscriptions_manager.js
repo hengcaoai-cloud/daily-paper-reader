@@ -23,6 +23,7 @@ const {
   __setConferenceStatsSnapshot,
   __buildConferenceChoiceRowsHtml,
   formatConferenceYearStatsLabel,
+  runQuickConferenceRetrieval,
   runSelectedQuickFetch,
 } = global.window.SubscriptionsManager.__test;
 
@@ -397,6 +398,42 @@ async function testQuickFetchIncludesAnySelectedProfile() {
   delete global.window.confirm;
 }
 
+async function testConferenceRetrievalDispatchesUnifiedConferencePairs() {
+  const calls = [];
+  const msgEl = { textContent: '', style: { color: '' } };
+  __setConferenceStatsSnapshot({
+    items: [
+      { conference_key: 'iclr', year: 2025, stored_total_count: 1000 },
+      { conference_key: 'neurips', year: 2024, stored_total_count: 1000 },
+      { conference_key: 'ieee_sp', year: 2026, stored_total_count: 1000 },
+    ],
+  });
+  __setRunSelectionState({ conferencePairs: ['ICLR:2025', 'NeurIPS:2024', 'IEEE S&P:2026'] });
+  __setUnsavedChanges(false);
+  global.window.SubscriptionsSmartQuery = {
+    getSelectedProfileTags() {
+      return ['GENE'];
+    },
+  };
+  global.window.DPRWorkflowRunner = {
+    runConferenceRetrieval(conference, years, options) {
+      calls.push({ conference, years, options });
+      return true;
+    },
+  };
+
+  assert.equal(await runQuickConferenceRetrieval(msgEl), true);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].conference, 'unified');
+  assert.deepEqual(calls[0].years, ['2026', '2025', '2024']);
+  assert.equal(calls[0].options.dispatchInputs.conference_pairs, 'ieee_sp:2026,iclr:2025,neurips:2024');
+  assert.equal(calls[0].options.dispatchInputs.profile_tag, 'GENE');
+
+  __setRunSelectionState({});
+  delete global.window.DPRWorkflowRunner;
+  delete global.window.SubscriptionsSmartQuery;
+}
+
 (async () => {
   testNormalizeSubscriptionsAddsBiorxivBackend();
   testNormalizeSubscriptionsPreservesCustomBiorxivBackendFields();
@@ -410,6 +447,7 @@ async function testQuickFetchIncludesAnySelectedProfile() {
   testConferenceRunAllowsMoreThanFiveYearsWhenStoredTotalUnderLimit();
   testConferenceRunDisabledWhenSelectedStoredTotalReachesLimit();
   await testQuickFetchIncludesAnySelectedProfile();
+  await testConferenceRetrievalDispatchesUnifiedConferencePairs();
 
   console.log('subscriptions manager tests passed');
 })().catch((error) => {

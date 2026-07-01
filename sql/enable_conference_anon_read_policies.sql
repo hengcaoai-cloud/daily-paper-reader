@@ -232,4 +232,12 @@ to anon, authenticated;
 grant execute on function public.match_ndss_papers_bm25(text, int, timestamptz, timestamptz)
 to anon, authenticated;
 
+grant select on public.conference_papers_unified
+to anon, authenticated;
+
+grant execute on function public.match_conference_papers_exact(vector, int, text[])
+to anon, authenticated;
+grant execute on function public.match_conference_papers_bm25(text, int, text[])
+to anon, authenticated;
+
 commit;

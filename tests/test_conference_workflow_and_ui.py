@@ -30,6 +30,7 @@ class ConferenceWorkflowAndUiTest(unittest.TestCase):
 
         self.assertIn("conference", inputs)
         self.assertIn("years", inputs)
+        self.assertIn("conference_pairs", inputs)
         self.assertEqual((inputs.get("top_k") or {}).get("default"), "50")
         self.assertEqual((inputs.get("rrf_top_n") or {}).get("default"), "200")
         self.assertEqual((inputs.get("run_rerank") or {}).get("default"), "true")
@@ -48,6 +49,8 @@ class ConferenceWorkflowAndUiTest(unittest.TestCase):
         self.assertIn("--run-llm-refine", text)
         self.assertIn("--output-dir \"archive/${RUN_DATE}/filtered\"", text)
         self.assertIn("DPR_FILTER_PROFILE_TAG", text)
+        self.assertIn("CONFERENCE_PAIRS", text)
+        self.assertIn("--conference-pairs", text)
 
     def test_frontend_triggers_conference_retrieval_workflow(self):
         root = pathlib.Path(__file__).resolve().parents[1]
@@ -95,7 +98,8 @@ class ConferenceWorkflowAndUiTest(unittest.TestCase):
         self.assertIn("logEl.scrollTop = logEl.scrollHeight", runner)
         self.assertNotIn("bodyEl.scrollTop = bodyEl.scrollHeight", runner)
         self.assertIn("refreshLocalRun(r.runId)", runner)
-        self.assertIn("runConferenceRetrieval(conf, years, {", manager)
+        self.assertIn("conference_pairs: selectedPairText", manager)
+        self.assertIn("runConferenceRetrieval('unified', selectedYears, {", manager)
         for conference in ["OSDI", "SOSP", "IEEE S&P", "NDSS"]:
             self.assertIn(conference, manager)
         for conference in ["OSDI", "SOSP", "S&P", "NDSS"]:

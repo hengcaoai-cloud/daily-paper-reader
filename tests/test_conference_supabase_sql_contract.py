@@ -103,6 +103,24 @@ CONFERENCE_SQL = {
 
 
 class ConferenceSupabaseSqlContractTest(unittest.TestCase):
+    def test_unified_conference_view_and_rpcs_exist(self):
+        path = SQL_DIR / "create_conference_papers_unified.sql"
+        self.assertTrue(path.exists(), f"missing {path.name}")
+        sql = path.read_text(encoding="utf-8").lower()
+
+        self.assertIn("create or replace view public.conference_papers_unified", sql)
+        for column in ["conference_key", "conference_year", "conference_pair", "source_table"]:
+            self.assertIn(column, sql)
+        for spec in CONFERENCE_SQL.values():
+            self.assertIn(f"from public.{spec['table']}", sql)
+        self.assertIn("create or replace function public.match_conference_papers_exact", sql)
+        self.assertIn("create or replace function public.match_conference_papers_bm25", sql)
+        self.assertRegex(sql, r"filter_pairs\s+text\[\]\s+default\s+null")
+        self.assertIn("p.conference_pair = any(filter_pairs)", sql)
+        self.assertIn("grant select on public.conference_papers_unified to anon, authenticated", sql)
+        self.assertIn("grant execute on function public.match_conference_papers_exact", sql)
+        self.assertIn("grant execute on function public.match_conference_papers_bm25", sql)
+
     def test_all_conference_schema_files_define_pdf_url(self):
         for conference, spec in CONFERENCE_SQL.items():
             with self.subTest(conference=conference):

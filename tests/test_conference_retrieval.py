@@ -34,6 +34,18 @@ class ConferenceRetrievalTest(unittest.TestCase):
     def test_parse_years_keeps_user_order_and_dedupes(self):
         self.assertEqual(self.mod.parse_years("2025,2024,2025"), [2025, 2024])
 
+    def test_parse_conference_pairs_normalizes_aliases_and_dedupes(self):
+        self.assertEqual(
+            self.mod.parse_conference_pairs("ICLR:2025,nips:2024,S&P:2026,iclr:2025"),
+            [("iclr", 2025), ("neurips", 2024), ("ieee_sp", 2026)],
+        )
+
+    def test_conference_pairs_to_filter_pairs(self):
+        self.assertEqual(
+            self.mod.conference_pairs_to_filter_pairs([("iclr", 2025), ("neurips", 2024)]),
+            ["iclr:2025", "neurips:2024"],
+        )
+
     def test_year_window_covers_prior_submission_year(self):
         start, end = self.mod.year_window(2025)
         self.assertEqual(start.isoformat(), "2024-01-01T00:00:00+00:00")

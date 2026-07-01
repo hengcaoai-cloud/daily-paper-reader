@@ -221,6 +221,32 @@ window.SubscriptionsManager = (function () {
     });
     return total;
   };
+  const getSelectedConferencePairSpecs = () => {
+    const out = [];
+    const seen = new Set();
+    selectedConferenceYearPairs.forEach((item) => {
+      const [conferenceRaw, yearRaw] = String(item || '').split(':');
+      const conference = normalizeConferenceStatsKey(conferenceRaw);
+      const year = toSafeInteger(yearRaw);
+      if (!conference || !year) return;
+      const pair = `${conference}:${year}`;
+      if (seen.has(pair)) return;
+      seen.add(pair);
+      out.push({ conference, year, pair });
+    });
+    out.sort((a, b) => (b.year - a.year) || a.conference.localeCompare(b.conference));
+    return out.map((item) => item.pair);
+  };
+  const getSelectedConferenceYearsForWorkflow = () => {
+    const seen = new Set();
+    return getSelectedConferencePairSpecs()
+      .map((item) => item.split(':')[1])
+      .filter((year) => {
+        if (!year || seen.has(year)) return false;
+        seen.add(year);
+        return true;
+      });
+  };
   const formatConferenceShortYear = (year) => {
     const yearText = normalizeText(year);
     return yearText.length === 4 ? yearText.slice(2) : yearText;
@@ -1060,15 +1086,8 @@ window.SubscriptionsManager = (function () {
       refreshQuickRunButtons();
       return false;
     }
-    const grouped = {};
-    selectedConferenceYearPairs.forEach((item) => {
-      const [conference, year] = String(item || '').split(':');
-      if (!conference || !year) return;
-      if (!grouped[conference]) grouped[conference] = [];
-      grouped[conference].push(year);
-    });
-    const groups = Object.entries(grouped).filter(([, years]) => years.length);
-    if (!groups.length) {
+    const selectedPairSpecs = getSelectedConferencePairSpecs();
+    if (!selectedPairSpecs.length) {
       if (msgEl) {
         msgEl.textContent = '请先选择至少一个会议年份。';
         msgEl.style.color = '#c00';
@@ -1091,23 +1110,23 @@ window.SubscriptionsManager = (function () {
       }
       return false;
     }
-    const groupText = groups.map(([conf, years]) => `${conf} ${years.join(', ')}`).join('；');
-    const results = await Promise.all(groups.map(([conf, years]) =>
-      window.DPRWorkflowRunner.runConferenceRetrieval(conf, years, {
-        dispatchInputs: {
-          profile_tag: profileTags.join(','),
-        },
-      }),
-    ));
-    if (results.some((item) => item === false)) {
+    const selectedPairText = selectedPairSpecs.join(',');
+    const selectedYears = getSelectedConferenceYearsForWorkflow();
+    const success = await window.DPRWorkflowRunner.runConferenceRetrieval('unified', selectedYears, {
+      dispatchInputs: {
+        profile_tag: profileTags.join(','),
+        conference_pairs: selectedPairText,
+      },
+    });
+    if (success === false) {
       if (msgEl) {
-        msgEl.textContent = '部分会议检索工作流未成功触发，请检查权限或配置。';
+        msgEl.textContent = '会议检索工作流未成功触发，请检查权限或配置。';
         msgEl.style.color = '#c00';
       }
       return false;
     }
     if (msgEl) {
-      msgEl.textContent = `已发起 ${groupText} 会议论文检索任务。`;
+      msgEl.textContent = `已发起 ${selectedPairSpecs.length} 个会议年份的统一会议论文检索任务。`;
       msgEl.style.color = '#080';
     }
     showWorkflowSuccessEffects();
@@ -1901,6 +1920,7 @@ window.SubscriptionsManager = (function () {
       },
       __initializeConferenceChoices: () => initializeConferenceChoices(),
       __getSelectedConferenceYearPairs: () => Array.from(selectedConferenceYearPairs),
+      runQuickConferenceRetrieval,
       runSelectedQuickFetch,
       refreshQuickRunButtons,
       clearQuickRunUnsavedMessage,
