@@ -1,0 +1,925 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-06T01:11:27.731137+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 16,
+    "deep_cap": 6,
+    "deep_selected": 11,
+    "quick_candidates": 11,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2606.28813v1",
+      "source": "arxiv",
+      "title": "Human2Any: Human-to-Robot Transfer via Constraint-Aware Compositional Planning",
+      "abstract": "Human videos are a scalable source of supervision for robot manipulation, as they are abundant and naturally capture rich object interactions. However, transferring human demonstrations to robots remains challenging due to embodiment mismatch, scene variation, and robot-specific feasibility constraints. We present Human2Any, a framework for learning reusable object-centric interaction priors from human videos without requiring real-world robot demonstrations in the target task contexts. Human2Any represents manipulation through object-object interaction motion, capturing task-relevant scene changes while abstracting away embodiment-specific details. It composes learned interaction priors with robot-side feasibility reasoning and motion planning, allowing the same human-derived knowledge to adapt to different embodiments, scene geometries, and task contexts. We validate Human2Any across diverse manipulation settings, including real-world experiments on a Franka tabletop setup and an RBY-1 humanoid mobile robot, demonstrating robust interaction-centric manipulation without real-world robot training data. Project website: https://human2any.github.io/.",
+      "authors": [
+        "Shuo Cheng",
+        "Chuye Zhang",
+        "Alfred Cueva",
+        "Caelan Garrett",
+        "Ajay Mandlekar",
+        "Danfei Xu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-27T08:45:27+00:00",
+      "link": "https://arxiv.org/pdf/2606.28813v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "learns reusable object-centric interaction priors from human videos and composes with robot feasibility planning",
+      "llm_evidence_cn": "从人类视频中学习可重用的对象交互先验并与机器人可行性规划组合",
+      "llm_evidence": "从人类视频中学习可重用的对象交互先验并与机器人可行性规划组合",
+      "canonical_evidence": "从人类视频中学习可重用的对象交互先验并与机器人可行性规划组合",
+      "llm_tldr_en": "Human2Any transfers manipulation skills from human videos to robots by learning object-object interaction motion priors and composing them with robot-specific constraints and planning, without target-task robot demos.",
+      "llm_tldr_cn": "针对人类视频到机器人操作迁移中具身差异、场景变化和可行性约束等问题，提出Human2Any框架。通过提取以物体为中心的对象交互运动先验，抽象化具身细节，捕捉任务相关的场景变化，并结合机器人端可行性推理与运动规划。无需目标任务的机器人示教即可实现跨具身操作技能迁移。",
+      "llm_tldr": "针对人类视频到机器人操作迁移中具身差异、场景变化和可行性约束等问题，提出Human2Any框架。通过提取以物体为中心的对象交互运动先验，抽象化具身细节，捕捉任务相关的场景变化，并结合机器人端可行性推理与运动规划。无需目标任务的机器人示教即可实现跨具身操作技能迁移。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "transferring human skills to robots",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.32009v1",
+      "source": "arxiv",
+      "title": "Human-as-Humanoid: Enabling Zero-Shot Humanoid Learning from Ego-Exo Human Videos with Human-Aligned Embodiments",
+      "abstract": "Vision-language-action (VLA) models across robot embodiments require high-quality observation--action supervision to learn deployable action distributions, yet scaling such robot data remains difficult, especially for high-DoF humanoids. Teleoperation provides controller-aligned supervision, while human egocentric videos capture diverse bimanual manipulation but do not directly provide executable robot actions. We introduce Human-as-Humanoid, a human-to-humanoid supervision framework that enables near-real-time human-centric action generation, making human demonstrations usable for high-DoF humanoid VLA training by jointly aligning the robot embodiment, the sensing setup, and the action-label interface. Built on PrimeU, a human-aligned 60-DoF upper-body humanoid, Human-as-Humanoid uses synchronized ego-exo videos to pair deployment-aligned egocentric observations with exocentric motion recovery, retargets the recovered human motion through staged Inverse Kinematics (IK) into controller-aligned 60-DoF action chunks, and trains the VLA model with Forward Kinematics (FK)-aware supervision to preserve wrist and fingertip task-space geometry. This converts large-scale human demonstrations from visual observations into executable observation--action supervision for the target humanoid. Experiments validate the conversion chain at the motion-recovery, robot-action-space, and real-robot deployment levels. Human-as-Humanoid yields a 4.8--7.2x raw demonstration-throughput gain over humanoid teleoperation in our data-collection analysis, and on several downstream tasks, policies post-trained only with the converted human labels generalize to real-robot deployment without target-task robot demonstrations. The official project website is available at https://zgc-embodyai.github.io/Human-as-Humanoid.",
+      "authors": [
+        "Xiaopeng Lin",
+        "Ruoqi Yang",
+        "Shijie Lian",
+        "Zhaolong Shen",
+        "Bin Yu",
+        "Changti Wu",
+        "Haibao Liu",
+        "Yuxiang Zhang",
+        "Hong Li",
+        "Qiyuan Su",
+        "Haochen Liu",
+        "Xuguo He",
+        "Yukun Shi",
+        "Cong Huang",
+        "Zhirui Zhang",
+        "Bojun Cheng",
+        "Kai Chen"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-30T17:44:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.32009v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "converts human videos into robot-executable actions for humanoid VLA training",
+      "llm_evidence_cn": "将人类视频转化为人形机器人可执行动作用于VLA训练",
+      "llm_evidence": "将人类视频转化为人形机器人可执行动作用于VLA训练",
+      "canonical_evidence": "将人类视频转化为人形机器人可执行动作用于VLA训练",
+      "llm_tldr_en": "Human-as-Humanoid jointly aligns robot embodiment, sensing, and action interface to convert egocentric human videos into executable humanoid actions, enabling zero-shot VLA training from human demonstrations.",
+      "llm_tldr_cn": "针对人形机器人数据稀缺问题，提出Human-as-Humanoid框架，通过联合对齐机器人具身、感知和动作接口，将人类自我中心视频转化为可执行动作，使人形机器人能够直接从人视频中零样本学习操作技能，为利用海量人类视频数据提供了可扩展途径。",
+      "llm_tldr": "针对人形机器人数据稀缺问题，提出Human-as-Humanoid框架，通过联合对齐机器人具身、感知和动作接口，将人类自我中心视频转化为可执行动作，使人形机器人能够直接从人视频中零样本学习操作技能，为利用海量人类视频数据提供了可扩展途径。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "methods for converting human video demonstrations into robot executable action data",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.02075v1",
+      "source": "arxiv",
+      "title": "HandsOnWorld: Unconstrained Egocentric Video Generation with Camera-Disentangled Hand Control",
+      "abstract": "We present HandsOnWorld, a framework for hand-controlled egocentric video generation that forgoes multi-view and marker-based motion capture, learning instead from unconstrained monocular video. Such generality is bottlenecked by the scarcity of scalable 3D hand annotations: large egocentric corpora lack finger-level labels, whereas precise hand datasets are confined to narrow, instrumented settings, limiting prior hand-controlled generators to restricted scene distributions. We instead annotate 3D hands directly on in-the-wild egocentric video through monocular reconstruction, introducing a protagonist-centered annotation pipeline that filters the reconstructions at the action-semantic, image-quality, and 3D-geometric levels to build EgoVid-Pro, a dataset of clean, protagonist-only hand trajectories spanning 103K clips and roughly 12M frames across diverse everyday scenes. To resolve the camera-hand entanglement induced by large ego-motion, we further propose the Plücker Hand Map, a 3D-aware control signal that extends Plücker-ray representations from camera rays to the hand surface, disentangling camera and hand motion at the representation level. Experiments show that \\method surpasses prior hand-controlled generators in reconstruction fidelity and control accuracy, and generalizes to out-of-distribution everyday scenes beyond the laboratory datasets on which prior methods rely.",
+      "authors": [
+        "Yushuo Chen",
+        "Xiaoyu Shi",
+        "Xiaoshi Wu",
+        "Xintao Wang",
+        "Pengfei Wan",
+        "Yebin Liu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-02T12:14:02+00:00",
+      "link": "https://arxiv.org/pdf/2607.02075v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "directly annotates 3D hands on in-the-wild egocentric video through monocular reconstruction, enabling hand-object interaction reconstruction from human videos",
+      "llm_evidence_cn": "通过单目重建直接在自然场景自我中心视频上标注3D手部，实现从人类视频重建手-物交互",
+      "llm_evidence": "通过单目重建直接在自然场景自我中心视频上标注3D手部，实现从人类视频重建手-物交互",
+      "canonical_evidence": "通过单目重建直接在自然场景自我中心视频上标注3D手部，实现从人类视频重建手-物交互",
+      "llm_tldr_en": "HandsOnWorld proposes a monocular 3D hand annotation pipeline for in-the-wild egocentric videos, filtering reconstructions to enable scalable hand-object interaction data for robot manipulation learning.",
+      "llm_tldr_cn": "针对手控自我中心视频生成中缺乏可扩展3D手部标注的瓶颈，HandsOnWorld提出通过单目重建直接在非受控视频上标注3D手部，并构建了一个主演中心化的标注管线，在动作语义、图像质量和三维几何层面过滤重建结果。该方法摆脱了多视角和标记动捕的依赖，能够从大规模互联网自我中心视频中获取准确的手部姿态，为机器人学习对手-物交互的理解和复现提供了关键数据基础。",
+      "llm_tldr": "针对手控自我中心视频生成中缺乏可扩展3D手部标注的瓶颈，HandsOnWorld提出通过单目重建直接在非受控视频上标注3D手部，并构建了一个主演中心化的标注管线，在动作语义、图像质量和三维几何层面过滤重建结果。该方法摆脱了多视角和标记动捕的依赖，能够从大规模互联网自我中心视频中获取准确的手部姿态，为机器人学习对手-物交互的理解和复现提供了关键数据基础。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "reconstructing hand object interactions from human videos for robot manipulation learning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.29517v1",
+      "source": "arxiv",
+      "title": "CORE: Common Outcome Regularities from Action-Free Visual Demonstrations for Robot Manipulation",
+      "abstract": "Robot imitation learning often relies on costly robot demonstrations, while abundant action-free visual demonstrations, such as human videos, are difficult to use because they lack robot-executable actions and suffer from embodiment gaps. We propose CORE, a policy learning framework that extracts Common Outcome Regularities from visual demonstrations. Rather than transferring explicit actions across embodiments, CORE exploits a key observation: although successful trajectories for the same task can be diverse, their terminal states often share stable object configurations, spatial relations, and contact constraints. CORE first trains a terminal outcome encoder with contrastive and auxiliary temporal objectives, then aggregates successful terminal embeddings into visual goal prototypes, and finally injects these prototypes as global goal conditions into robot policies. Compared with language instructions, visual goal prototypes provide more concrete geometric and physical constraints for task completion. Across Meta-World, RoboTwin 2.0, and real-world manipulation, CORE improves the average success rate of the corresponding policy backbones by up to +3.9, +11.1, and +17.0 percentage points, respectively, and outperforms text-conditioned variants under the evaluated settings.",
+      "authors": [
+        "Juyi Sheng",
+        "Jincheng Li",
+        "Mingxin Tan",
+        "Mengyuan Liu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-28T17:27:23+00:00",
+      "link": "https://arxiv.org/pdf/2606.29517v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Extracts common outcome regularities from action-free visual demos like human videos to train robot policies without explicit actions",
+      "llm_evidence_cn": "从人类视频等无动作视觉演示中提取共同结果规律，无需显式动作即可训练机器人策略",
+      "llm_evidence": "从人类视频等无动作视觉演示中提取共同结果规律，无需显式动作即可训练机器人策略",
+      "canonical_evidence": "从人类视频等无动作视觉演示中提取共同结果规律，无需显式动作即可训练机器人策略",
+      "llm_tldr_en": "CORE learns robot manipulation policies from human video demonstrations by focusing on shared terminal state configurations, bypassing embodiment gaps and missing actions.",
+      "llm_tldr_cn": "机器人模仿学习常依赖昂贵示教，人类视频等无动作演示因具身差异难以利用。CORE提出从视觉演示中提取共同结果规律的方法，通过对比学习训练终端状态编码器，利用成功轨迹终端状态在物体布局、空间关系和接触约束上的共享规律学习策略，从而将人类视频转化为机器人可学习的演示数据，在多种操作任务上验证了有效性。",
+      "llm_tldr": "机器人模仿学习常依赖昂贵示教，人类视频等无动作演示因具身差异难以利用。CORE提出从视觉演示中提取共同结果规律的方法，通过对比学习训练终端状态编码器，利用成功轨迹终端状态在物体布局、空间关系和接触约束上的共享规律学习策略，从而将人类视频转化为机器人可学习的演示数据，在多种操作任务上验证了有效性。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "methods for converting human video demonstrations into robot executable action data",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.29940v1",
+      "source": "arxiv",
+      "title": "WARP: Whole-Body Retargeting for Learning from Offline Human Demonstrations",
+      "abstract": "Direct transfer from human demonstration to learnable robot action is a crucial step towards scalable whole-body mobile manipulation. While human data scales better than mobile teleoperation, it requires overcoming significant embodiment gaps. Existing retargeting methods yield imprecise or inconsistent solutions, causing action multi-modality that prevents supervised policies from reliably converging. We present Whole-body-Aware Retargeting from human Pose (WARP), an offline pipeline that explicitly models embodiment differences to extract precise, unique whole-body actions. WARP leverages a closed-form Shoulder-Elbow-Wrist (SEW) geometric solver for exact end-effector tracking while preserving whole-body structural intent. Paired with lazy mobile-base control, it extracts accurate, consistent robot trajectories. Evaluations show WARP provides highly reliable data for open-loop real-world replay. To our knowledge, WARP is the first framework to achieve zero-shot whole-body mobile manipulation directly from offline human demonstrations, eliminating the need for human-in-the-loop teleoperation action data. More details on https://warp-retarget.github.io/",
+      "authors": [
+        "Zhenyang Chen",
+        "Chuizheng Kong",
+        "Chuye Zhang",
+        "Yuanshao Yang",
+        "Lawrence Y. Zhu",
+        "Shreyas Kousik",
+        "Danfei Xu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-29T08:17:31+00:00",
+      "link": "https://arxiv.org/pdf/2606.29940v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "explicitly models embodiment differences to extract precise whole-body actions from human pose for robot learning",
+      "llm_evidence_cn": "显式建模具身差异以从人体姿态提取精确全身动作用于机器人学习",
+      "llm_evidence": "显式建模具身差异以从人体姿态提取精确全身动作用于机器人学习",
+      "canonical_evidence": "显式建模具身差异以从人体姿态提取精确全身动作用于机器人学习",
+      "llm_tldr_en": "WARP proposes an offline retargeting pipeline that overcomes embodiment gaps between human demonstrations and robot morphology, using a geometric solver for exact end-effector tracking while preserving whole-body structural intent to generate precise robot actions.",
+      "llm_tldr_cn": "WARP提出一种离线重定向流程，通过显式建模人体与机器人的具身差异，利用肩-肘-腕几何求解器实现精确末端执行器跟踪，同时保持全身结构意图，从人类演示中提取精确唯一的机器人动作，解决了现有方法导致动作多模态而使策略无法收敛的问题，为从大规模人类数据中学习可扩展的全身移动操作提供了关键步骤。",
+      "llm_tldr": "WARP提出一种离线重定向流程，通过显式建模人体与机器人的具身差异，利用肩-肘-腕几何求解器实现精确末端执行器跟踪，同时保持全身结构意图，从人类演示中提取精确唯一的机器人动作，解决了现有方法导致动作多模态而使策略无法收敛的问题，为从大规模人类数据中学习可扩展的全身移动操作提供了关键步骤。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "aligning human body motion with different robot morphologies for robot learning from human demonstrations",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.30290v1",
+      "source": "arxiv",
+      "title": "X-Morph: Human Motion Priors for Scalable Robot Learning Across Morphologies",
+      "abstract": "Recent progress in humanoid behavior models has been driven in large part by abundant human motion data, but comparable motion data is scarce for non-humanoid legged robots such as quadrupeds, hexapods, and quadruped manipulators. A promising alternative is to repurpose human motion across embodiments; however, direct retargeting often produces motions that are visually plausible yet physically inconsistent or difficult to track under robot dynamics. We present X-Morph, a human-motion-to-robot-behavior pipeline that converts human motion into deployable locomotion and loco-manipulation policies for diverse non-humanoid legged morphologies. A cross-morphology retargeting stage converts human motions into kinematically plausible, intent-preserving robot references, which are then tracked by a privileged RL policy and distilled into a causal student policy. We evaluate X-Morph on three morphologically distinct platforms: a quadruped, a hexapod, and a quadruped equipped with a manipulator. The resulting policies track diverse retargeted motions, generalize to unseen human motions, and support downstream use cases including video-based teleoperation, behavior-prior control, and text-conditioned motion generation. These results suggest that large-scale human motion can serve as a substrate for learning broad, reusable behavior priors beyond humanoid robots. Project page: https://maker-rat.github.io/morph/",
+      "authors": [
+        "Ritwik Sharma",
+        "Shivam Sood",
+        "Arhaan Jain",
+        "Shyam Charan Kesavamoorthi",
+        "Chengyang He",
+        "Guillaume Sartoretti"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-29T13:31:27+00:00",
+      "link": "https://arxiv.org/pdf/2606.30290v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "converting human motion into robot policies across morphologies",
+      "llm_evidence_cn": "将人类运动转化为跨形态的机器人策略",
+      "llm_evidence": "将人类运动转化为跨形态的机器人策略",
+      "canonical_evidence": "将人类运动转化为跨形态的机器人策略",
+      "llm_tldr_en": "X-Morph repurposes abundant human motion data by retargeting it into kinematically plausible motions for diverse non-humanoid legged robots, and then trains loco-manipulation policies, enabling scalable robot learning across embodiments.",
+      "llm_tldr_cn": "针对非人形腿式机器人运动数据稀缺问题，提出X-Morph框架将人类运动转化为可部署的运动策略。该方法通过跨形态重定向保留运动意图，为四足、六足及四足机械臂等形态生成运动策略，从而利用丰富的人类运动数据实现可扩展的跨形态机器人学习。",
+      "llm_tldr": "针对非人形腿式机器人运动数据稀缺问题，提出X-Morph框架将人类运动转化为可部署的运动策略。该方法通过跨形态重定向保留运动意图，为四足、六足及四足机械臂等形态生成运动策略，从而利用丰富的人类运动数据实现可扩展的跨形态机器人学习。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "aligning human body motion with different robot morphologies for robot learning from human demonstrations",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.30308v1",
+      "source": "arxiv",
+      "title": "The Surprising Effectiveness of Video Diffusion Models for Hand Motion Reconstruction",
+      "abstract": "4D hand motion reconstruction from egocentric video is bottlenecked by clear limitations of existing methods: image-based pipelines depend on a detector that fails under heavy occlusion, while video-based methods rely on temporal modules learned only from scarce hand-pose annotations, a narrow signal insufficient to model motion dynamics, occlusion reasoning, and hand-object interaction. These capabilities, however, are exactly what video generative models must implicitly acquire when trained to synthesize coherent video at internet scale. Motivated by this, we present ViDiHand, which leverages the representations of a pretrained video diffusion model to reconstruct 4D two-hand pose. We adapt it via a hand-overlay rendering objective that specializes its features for hands while preserving its world priors. A decoder then recovers metric-scale pose from the adapted features. The whole pipeline operates directly on full frames--no detector, no infiller, and no test-time optimization. On ARCTIC, HOT3D, and HOI4D, ViDiHand substantially outperforms prior methods, establishing video diffusion models as a powerful new foundation for hand motion reconstruction and a promising route to scalable in-the-wild data collection for embodied AI. Project page: https://vidihand.github.io.",
+      "authors": [
+        "Yuxi Wang",
+        "Chengkai Jin",
+        "Yufei Liu",
+        "Wenqi Ouyang",
+        "Tianyi Wei",
+        "Zhiwei Zeng",
+        "Siyuan Huang",
+        "Zhiqi Shen",
+        "Xingang Pan"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-29T13:53:00+00:00",
+      "link": "https://arxiv.org/pdf/2606.30308v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "directly reconstructs hand-object interactions from human egocentric videos using pretrained video diffusion models for robot manipulation learning",
+      "llm_evidence_cn": "利用预训练的视频扩散模型从第一人称视频中重建手物交互，用于机器人操作学习",
+      "llm_evidence": "利用预训练的视频扩散模型从第一人称视频中重建手物交互，用于机器人操作学习",
+      "canonical_evidence": "利用预训练的视频扩散模型从第一人称视频中重建手物交互，用于机器人操作学习",
+      "llm_tldr_en": "ViDiHand leverages representations from internet-scale pretrained video diffusion models to accurately reconstruct 4D two-hand poses from egocentric video, overcoming occlusion and scarce annotations, thus enabling robust hand-object interaction understanding for downstream robot learning.",
+      "llm_tldr_cn": "现有手部运动重建方法因遮挡和标注稀缺而受限。ViDiHand提出利用在大规模互联网视频上预训练的视频扩散模型的内在表示，通过手部叠加渲染目标进行适配，从第一人称视频中重建4D双手姿态。实验表明，该方法在多个基准数据集上显著优于先前方法，尤其在遮挡和动态交互场景下表现出鲁棒的手物交互理解能力，为机器人从人类视频中学习操作技能提供了高质量的手部运动数据基础。",
+      "llm_tldr": "现有手部运动重建方法因遮挡和标注稀缺而受限。ViDiHand提出利用在大规模互联网视频上预训练的视频扩散模型的内在表示，通过手部叠加渲染目标进行适配，从第一人称视频中重建4D双手姿态。实验表明，该方法在多个基准数据集上显著优于先前方法，尤其在遮挡和动态交互场景下表现出鲁棒的手物交互理解能力，为机器人从人类视频中学习操作技能提供了高质量的手部运动数据基础。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "reconstructing hand object interactions from human videos for robot manipulation learning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.30457v1",
+      "source": "arxiv",
+      "title": "Behavior Prompting Policy: Demonstrations as Prompts for Manipulation",
+      "abstract": "We study behavior prompting, a paradigm that enables robots to perform new tasks at inference time given a single human demonstration, which we call a behavior prompt. To enable this capability, we present contributions in algorithm, data, and evaluation. For algorithm, we introduce Behavior Prompting Policy (BPP), an in-context visuomotor architecture that translates the behavior prompt and the current observation into robot actions. For data, we identify that task diversity is the primary driver of the prompting capability and introduce iPhUMI, a handheld manipulation interface for collecting diverse training data. For evaluation, we introduce DrawAnything and LIBERO-Gen to evaluate test-time adaptation to unseen drawing and tabletop manipulation tasks. We also demonstrate that iPhUMI serves as a practical interface for specifying behavior prompts at test time, enabling a human to command a robot via a single demonstration to complete known tasks or to define new robot capabilities. Altogether, behavior prompting provides a flexible and scalable way to teach robots new skills without the need for expensive fine-tuning. Our project website is located at https://behavior-prompting.github.io/ .",
+      "authors": [
+        "Austin Patel",
+        "Ben Pekarek",
+        "Joel Enrique Castro Hernandez",
+        "Shuran Song"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-29T15:23:44+00:00",
+      "link": "https://arxiv.org/pdf/2606.30457v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Behavior Prompting Policy translates a single human demonstration into robot actions at inference time",
+      "llm_evidence_cn": "行为提示策略在推理时将单个人类演示转化为机器人动作",
+      "llm_evidence": "行为提示策略在推理时将单个人类演示转化为机器人动作",
+      "canonical_evidence": "行为提示策略在推理时将单个人类演示转化为机器人动作",
+      "llm_tldr_en": "BPP enables robots to perform new tasks from a single human demo by learning a mapping from demo and observation to actions, with a handheld interface iPhUMI for scalable data collection.",
+      "llm_tldr_cn": "针对机器人需要从人类演示快速学习新任务的问题，本文提出行为提示策略BPP，将单个人类演示作为行为提示，在推理时结合当前观察直接输出机器人动作。同时设计了手持操作接口iPhUMI以低成本收集多样化训练数据，并构建DrawAnything和LIBERO-Gen基准验证。实验表明任务多样性是提示能力的关键驱动因素，BPP能高效适应未见任务，为机器人利用人类演示数据提供了新范式。",
+      "llm_tldr": "针对机器人需要从人类演示快速学习新任务的问题，本文提出行为提示策略BPP，将单个人类演示作为行为提示，在推理时结合当前观察直接输出机器人动作。同时设计了手持操作接口iPhUMI以低成本收集多样化训练数据，并构建DrawAnything和LIBERO-Gen基准验证。实验表明任务多样性是提示能力的关键驱动因素，BPP能高效适应未见任务，为机器人利用人类演示数据提供了新范式。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "methods for converting human video demonstrations into robot executable action data",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.31836v1",
+      "source": "arxiv",
+      "title": "RoboTacDex: A Dexterous Visual-Tactile-Action Dataset for Humanoid Manipulation",
+      "abstract": "In the field of robot learning, large-scale and diverse demonstration trajectories provide the fundamental basis for enhancing robotic manipulation ability. We introduce RoboTacDex, a large, multi-modal, and diverse dataset of dexterous manipulation behaviors performed with a humanoid robot. Built on the publicly accessible humanoid robot Unitree G1, RoboTacDex consists of 6k trajectories covering 19 tasks, 23 skills, and interactions with 22 objects. RoboTacDex provides comprehensive records including multi-view RGB and depth information, tactile feedback, and detailed semantic annotations. Furthermore, the dataset features a variety of relatively challenging tasks that can only be completed by dual arms and dexterous hands, aiming to mimic human-like operational logic and simulate real-world manipulation complexity. To ensure data collection quality, we develop an improved multi-camera synchronization system to enable millisecond data synchronization and recording of modalities. In our experiments, we evaluate three representative imitation learning models on our dataset,   analyzing their performance as well as their respective strengths and limitations across different task categories. Successful trial results and a moderate level of generalization capabilities across a suite of tasks indicate the effectiveness and diversity of the collected dataset. Our dataset will be open-sourced soon.",
+      "authors": [
+        "Xinyi Wang",
+        "Donghan Li",
+        "Zi'Ang Chen",
+        "Chong Yu",
+        "Chen Xin",
+        "Peng Ye",
+        "Yingkai Sun",
+        "Tao Chen"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-30T15:39:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.31836v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "large-scale, multi-modal dataset of dexterous manipulation behaviors with a humanoid robot",
+      "llm_evidence_cn": "人形机器人灵巧操作的大规模多模态数据集",
+      "llm_evidence": "人形机器人灵巧操作的大规模多模态数据集",
+      "canonical_evidence": "人形机器人灵巧操作的大规模多模态数据集",
+      "llm_tldr_en": "Presents RoboTacDex, a large-scale dataset with 6k trajectories of dexterous manipulation on a humanoid robot, including multi-view RGB-D, tactile, and action data across 19 tasks, enabling scalable learning of complex manipulation skills.",
+      "llm_tldr_cn": "该工作引入了RoboTacDex，一个包含6000条轨迹的大规模人形机器人灵巧操作数据集，涵盖19个任务、多视角RGB-D、触觉和动作数据，旨在支持复杂操作技能的大规模学习。为机器人操作提供了丰富的多模态演示数据。",
+      "llm_tldr": "该工作引入了RoboTacDex，一个包含6000条轨迹的大规模人形机器人灵巧操作数据集，涵盖19个任务、多视角RGB-D、触觉和动作数据，旨在支持复杂操作技能的大规模学习。为机器人操作提供了丰富的多模态演示数据。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "scalable manipulation dataset",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.00808v1",
+      "source": "arxiv",
+      "title": "Local Motion Matters: A Deconstruct-Recompose Paradigm for Reinforcement Learning Pre-training from Videos",
+      "abstract": "Pre-training on large-scale videos to improve reinforcement learning efficiency is promising yet remains challenging. Existing methods typically treat the agent as an indivisible entity, modeling motion patterns globally. Such global modeling is tightly coupled with the morphology, hindering transfer across domains. In contrast, despite the vast disparity in global motions, the local components exhibit similar motion patterns across different agents. Building on this insight, we propose a novel Deconstruct-Recompose Paradigm (DRP) for learning transferable local motion representations. Specifically, in the Deconstruct phase, we identify multiple local points and track their frame-wise motions, defining each as an Atomic Action. We introduce a Dual-Attention Encoder (DAE) to learn local motion representations from these Atomic Actions, capturing their spatiotemporal relationships. In the Recompose phase, we compose local motion representations with a learnable Motion Aggregation Token [MAT] via latent dynamics model learning. Additionally, an adapter bridges local motion and downstream action-specific dynamics to accelerate policy learning. Extensive experiments demonstrate that our method effectively transfers to diverse robotic control and manipulation tasks, significantly improving sample efficiency and performance.",
+      "authors": [
+        "Jinwen Wang",
+        "Youfang Lin",
+        "Xiaobo Hu",
+        "Shuo Wang",
+        "Kai Lv"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-01T11:36:27+00:00",
+      "link": "https://arxiv.org/pdf/2607.00808v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "proposes learning transferable local motion representations from videos to overcome morphology-dependent global motion, enabling pre-training applicable to diverse robot embodiments",
+      "llm_evidence_cn": "从视频中学习可迁移的局部运动表示，克服形态依赖的全局运动，使预训练适用于不同机器人形态",
+      "llm_evidence": "从视频中学习可迁移的局部运动表示，克服形态依赖的全局运动，使预训练适用于不同机器人形态",
+      "canonical_evidence": "从视频中学习可迁移的局部运动表示，克服形态依赖的全局运动，使预训练适用于不同机器人形态",
+      "llm_tldr_en": "The paper introduces a Deconstruct-Recompose Paradigm that tracks local point motions from videos to learn morphology-agnostic representations, significantly improving RL pre-training across diverse domains.",
+      "llm_tldr_cn": "现有的视频预训练方法将智能体作为不可分割的整体进行全局运动建模，导致与形态紧密耦合而难以跨领域迁移。该工作提出解构-重构范式，通过识别局部点并追踪其逐帧运动作为原子动作，学习与形态无关的局部运动表示，然后在重构阶段组合这些表示进行预训练。实验表明，该方法在多种形态的强化学习任务上显著提升了样本效率，为利用互联网视频数据预训练机器人策略提供了形态通用的解决方案。",
+      "llm_tldr": "现有的视频预训练方法将智能体作为不可分割的整体进行全局运动建模，导致与形态紧密耦合而难以跨领域迁移。该工作提出解构-重构范式，通过识别局部点并追踪其逐帧运动作为原子动作，学习与形态无关的局部运动表示，然后在重构阶段组合这些表示进行预训练。实验表明，该方法在多种形态的强化学习任务上显著提升了样本效率，为利用互联网视频数据预训练机器人策略提供了形态通用的解决方案。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "aligning human body motion with different robot morphologies for robot learning from human demonstrations",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.02332v1",
+      "source": "arxiv",
+      "title": "HEFT: Heavy-Payload Full-size Humanoid Teleoperation with Privileged Motion Guidance and Windowed Payload Curriculum",
+      "abstract": "General motion tracking and teleoperation offer a promising path to scalable humanoid skill acquisition, yet most existing frameworks are validated on compact platforms or without real payload interaction, leaving full-size humanoids with real payloads largely unexplored. Scaling to full-size humanoids introduces two compounding challenges: their larger inertia and tighter balance margins make tracking highly sensitive to noise, drift, and retargeting errors from commodity VR trackers, while their payload potential remains largely underutilized. We present HEFT, a heavy-payload full-size humanoid teleoperation framework that addresses both challenges. HEFT learns from deployable noisy VR references with physically plausible reconstructed references through Privileged Motion Guidance (PMG), and uses a Windowed Payload Curriculum (WPC) with expert-guided payload caps to acquire robust heavy-payload tracking. We deploy HEFT on L7, a 175cm, 65kg humanoid. The robot tracks motions including turns, forward/backward locomotion, and squats under payloads up to 24kg.",
+      "authors": [
+        "Chenxin Liu",
+        "Qingzhou Lu",
+        "Guangxiao Yang",
+        "Xuanyang Shi",
+        "Chenghan Yang",
+        "Yanjiang Guo",
+        "Jianyu Chen"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-02T15:37:37+00:00",
+      "link": "https://arxiv.org/pdf/2607.02332v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "humanoid teleoperation framework that retargets human motion from VR to full-size humanoid",
+      "llm_evidence_cn": "将VR中的人体运动重定向到全尺寸人形机器人的遥操作框架",
+      "llm_evidence": "将VR中的人体运动重定向到全尺寸人形机器人的遥操作框架",
+      "canonical_evidence": "将VR中的人体运动重定向到全尺寸人形机器人的遥操作框架",
+      "llm_tldr_en": "Proposes HEFT, a teleoperation framework for full-size humanoids that addresses motion retargeting errors and payload challenges using privileged motion guidance and a windowed payload curriculum.",
+      "llm_tldr_cn": "该工作针对全尺寸人形机器人遥操作中人体运动重定向的噪声和漂移问题，提出HEFT框架，利用特权运动指导和窗口化载荷课程学习，从低质量VR参考中学习物理一致的运动跟踪策略。实现了在真实负载下精准运动转移，为机器人学习人类技能提供了有效的身体运动对齐方法。",
+      "llm_tldr": "该工作针对全尺寸人形机器人遥操作中人体运动重定向的噪声和漂移问题，提出HEFT框架，利用特权运动指导和窗口化载荷课程学习，从低质量VR参考中学习物理一致的运动跟踪策略。实现了在真实负载下精准运动转移，为机器人学习人类技能提供了有效的身体运动对齐方法。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "aligning human body motion with different robot morphologies for robot learning from human demonstrations",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.29209v1",
+      "source": "arxiv",
+      "title": "AnyBody: Free-Form Whole-Body Humanoid Control from Arbitrary Keypoint Guidance",
+      "abstract": "We present AnyBody, a unified whole-body humanoid controller driven by an arbitrary subset of body keypoints chosen at deploy time. Prior physics-based trackers either rely on expensive full-body motion capture and error-prone trajectory retargeting, which bottleneck scalable data collection and policy learning, or decompose upper- and lower-body control into separate hierarchical representations, sacrificing the coordinated whole-body motions that loco-manipulation requires. We close this gap by learning a single latent motion representation that any keypoint subset can address. To achieve this, we first train a privileged teacher tracker on a large unstructured motion corpus and distill it online into a deterministic encoder-decoder student whose latent space is a unit sphere. We then train a transformer keypoint encoder that admits any subset of body keypoints through masked self-attention, aligning it to the privileged latent. Additionally, we treat the frozen decoder as a motor prior and specialize downstream tasks with a lightweight residual corrector in the latent space. We demonstrate the effectiveness of AnyBody by tracking large-scale human motions from arbitrary keypoint subsets, free-form control, flexibly teleoperating, and learning downstream behaviors including locomotion, in-air writing, and obstacle-reach.",
+      "authors": [
+        "Shuning Li",
+        "Sikai Li",
+        "Jiachen Li",
+        "Mingyu Ding"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-28T05:20:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.29209v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "learns a unified whole-body humanoid controller from arbitrary keypoint subsets, avoiding expensive MOCAP and enabling retargeting of human motions for scalable data collection",
+      "llm_evidence_cn": "从任意关键点子集学习统一全身人形控制器，避免昂贵动作捕捉，实现人体运动重定向用于可扩展的数据收集",
+      "llm_evidence": "从任意关键点子集学习统一全身人形控制器，避免昂贵动作捕捉，实现人体运动重定向用于可扩展的数据收集",
+      "canonical_evidence": "从任意关键点子集学习统一全身人形控制器，避免昂贵动作捕捉，实现人体运动重定向用于可扩展的数据收集",
+      "llm_tldr_en": "AnyBody proposes a unified whole-body humanoid controller driven by any subset of body keypoints, removing the need for full-body motion capture and enabling scalable policy learning from diverse motion sources.",
+      "llm_tldr_cn": "为了解决人形机器人全身控制中依赖昂贵动作捕捉和繁琐轨迹重定向的瓶颈，AnyBody提出一种从任意身体关键点子集驱动的统一控制器，通过学习单一潜在运动表示，使得任何关键点信息都能生成协调的全身运动。该方法在大型非结构化运动数据上训练特权教师追踪器并蒸馏为确定性学生模型，实现了无需全关节数据即可控制人形机器人，从而为从人类演示中规模化学习铺平了道路。",
+      "llm_tldr": "为了解决人形机器人全身控制中依赖昂贵动作捕捉和繁琐轨迹重定向的瓶颈，AnyBody提出一种从任意身体关键点子集驱动的统一控制器，通过学习单一潜在运动表示，使得任何关键点信息都能生成协调的全身运动。该方法在大型非结构化运动数据上训练特权教师追踪器并蒸馏为确定性学生模型，实现了无需全关节数据即可控制人形机器人，从而为从人类演示中规模化学习铺平了道路。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "aligning human body motion with different robot morphologies for robot learning from human demonstrations",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.29924v1",
+      "source": "arxiv",
+      "title": "DCGrasp: Distance-aware Controllable Grasp Generation",
+      "abstract": "Generating 3D hand-object interactions is essential for applications in robotics, XR, and synthetic data generation, where flexible controllability and strong generalization to diverse object geometries are required. However, existing methods rarely satisfy these requirements, limiting their practical applicability. We present DCGrasp, a distance-aware controllable grasp generation system built on a novel grasp energy term. This term computes Distance Profile, a signed distance from each hand vertex to the nearest object point, coupled with distance-aware weighting, effectively capturing the semantically similar hand-object interaction in near-contact regions while remaining invariant to object and hand identity. Given various controllable signals, DCGrasp first generates a Distance Profile based on a Diffusion Transformer, together with a corresponding candidate hand pose. We then refine the candidate pose through optimization, enforcing consistency between the optimized hand pose and the generated Distance Profile in near-contact regions. Our experiments show that DCGrasp produces high-quality, physically plausible grasps with flexible user control, generalizing to diverse object and hand shapes and scales. Our work establishes a robust and versatile pipeline for the synthesis of controllable 3D hand-object interactions.",
+      "authors": [
+        "Hiroyasu Akada",
+        "Jesús Pérez",
+        "Emre Aksan",
+        "Vasileios Choutas",
+        "Cristian Romero",
+        "Alberto Garcia-Garcia",
+        "Vladislav Golyanik",
+        "Christian Theobalt",
+        "Thabo Beeler"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-29T08:02:02+00:00",
+      "link": "https://arxiv.org/pdf/2606.29924v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "generates controllable 3D hand-object interactions",
+      "llm_evidence_cn": "生成可控的三维手物交互",
+      "llm_evidence": "生成可控的三维手物交互",
+      "canonical_evidence": "生成可控的三维手物交互",
+      "llm_tldr_en": "DCGrasp generates controllable 3D grasps using a distance-aware energy term, supporting robotics and synthetic data generation with strong generalization to diverse objects.",
+      "llm_tldr_cn": "针对手物交互生成可控性不足的问题，提出DCGrasp系统，利用距离感知能量项生成与物体几何一致的抓取姿态，可作为从人类视频重构手物交互的模块，为机器人操作学习提供数据。",
+      "llm_tldr": "针对手物交互生成可控性不足的问题，提出DCGrasp系统，利用距离感知能量项生成与物体几何一致的抓取姿态，可作为从人类视频重构手物交互的模块，为机器人操作学习提供数据。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "reconstructing hand object interactions from human videos for robot manipulation learning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.01897v1",
+      "source": "arxiv",
+      "title": "Rank-Then-Act: Reward-Free Control from Frame-Order Progress",
+      "abstract": "We introduce Rank-Then-Act (RTA), a framework for learning control policies from expert video demonstrations without environment rewards. RTA trains a Vision-Language Model (VLM) offline as a progress-based ordinal scorer, using a Group Relative Policy Optimization (GRPO) objective over shuffled frame sequences, which forces the model to recover temporal ordering from visual semantics rather than trivial time cues. Importantly, instead of using the scorer directly as a scalar reward model, we propose a correlation-based reward function for reinforcement learning: at each interaction window, we compute the Spearman rank correlation between predicted progress rankings and true temporal indices, yielding a bounded, scale-invariant learning signal. This design decouples reward learning from absolute calibration and enables stable transfer across tasks and environments. We evaluate RTA on discrete control benchmarks (PyBoy: Catrap, Kirby) and continuous control tasks (PointMaze, MetaWorld). RTA consistently matches or outperforms prior video-based reward learning methods and rank-based baselines, while demonstrating strong cross-task reuse of a single pretrained progress scorer. Our results suggest that correlation-structured supervision over video-derived ordinal signals is sufficient for policy learning, offering a scalable alternative to explicit reward design.",
+      "authors": [
+        "Yuriy Maksyuta",
+        "George Bredis",
+        "Ruslan Rakhimov",
+        "Daniil Gavrilov"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-07-02T08:50:32+00:00",
+      "link": "https://arxiv.org/pdf/2607.01897v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "learns control policies from video demonstrations by training a progress scorer from frame order, applicable to human video data",
+      "llm_evidence_cn": "通过从帧序中训练进度评分器从视频演示中学习控制策略，可应用于人类视频数据",
+      "llm_evidence": "通过从帧序中训练进度评分器从视频演示中学习控制策略，可应用于人类视频数据",
+      "canonical_evidence": "通过从帧序中训练进度评分器从视频演示中学习控制策略，可应用于人类视频数据",
+      "llm_tldr_en": "Rank-Then-Act uses a VLM trained to recover frame ordering from shuffled video sequences to produce a progress-based reward, enabling reinforcement learning from video demonstrations without environment rewards.",
+      "llm_tldr_cn": "Rank-Then-Act框架利用VLM从打乱的视频帧序列中学习进度排名，生成基于进度的奖励，通过斯皮尔曼秩相关设计强化学习信号，使机器人无需环境奖励即可从专家视频演示中学习控制策略，为利用大规模人类视频数据提供了一种方法。",
+      "llm_tldr": "Rank-Then-Act框架利用VLM从打乱的视频帧序列中学习进度排名，生成基于进度的奖励，通过斯皮尔曼秩相关设计强化学习信号，使机器人无需环境奖励即可从专家视频演示中学习控制策略，为利用大规模人类视频数据提供了一种方法。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot learning from human videos",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.31377v1",
+      "source": "arxiv",
+      "title": "Stage-Transition Dense Reward Modeling for Reinforcement Learning",
+      "abstract": "Reinforcement learning for long-horizon robotic manipulation is often limited by sparse and delayed rewards, while manually designing dense shaping signals is costly and brittle to changes in environments and object configurations. This work proposes Stage-Transition Dense Reward (STDR), a visual reward-learning framework that converts unstructured expert videos into logically grounded dense rewards for training RL agents from scratch. STDR leverages semantic understanding to infer a task's stage structure from demonstrations, and delivers two complementary learning signals during online training: (i) stage-transition feedback that provides goal-directed reward, and (ii) within-stage progress feedback that supplies fine-grained guidance toward completing each stage. Furthermore, an out-of-distribution (OOD) detection mechanism and a grasping regulation module are integrated to enhance robustness and prevent reward hacking. Experiments on 14 manipulation tasks across MetaWorld, ManiSkill, and Franka Kitchen show that STDR consistently improves sample efficiency and success rates over multiple baselines, and matches or surpasses handcrafted dense rewards on several challenging tasks. Real-robot evaluations further indicate that STDR assigns stable, progress-aligned rewards on successful executions while producing appropriately low rewards for failures, suggesting robustness to visual noise and better-calibrated reward assignment across settings.",
+      "authors": [
+        "Yang Yang",
+        "Bingjie Chen",
+        "Zihan Wang",
+        "Yizhe Li",
+        "Guoping Pan",
+        "Yi Cheng",
+        "Houde Liu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-30T09:07:19+00:00",
+      "link": "https://arxiv.org/pdf/2606.31377v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "converts unstructured expert videos into dense rewards for RL",
+      "llm_evidence_cn": "将非结构化专家视频转化为强化学习的密集奖励",
+      "llm_evidence": "将非结构化专家视频转化为强化学习的密集奖励",
+      "canonical_evidence": "将非结构化专家视频转化为强化学习的密集奖励",
+      "llm_tldr_en": "Proposes STDR, a visual reward-learning framework that infers task stage structure from expert videos and provides stage-transition and within-stage progress rewards for RL.",
+      "llm_tldr_cn": "针对长时域机器人操作中强化学习奖励稀疏且延迟的问题，提出一个视觉奖励学习框架STDR，从非结构化专家视频中推断任务阶段结构，并在训练时提供阶段转换奖励和阶段内进度奖励，为RL提供密集化的目标导向与细粒度引导。该方法无需手工设计奖励，能适应环境与物体配置变化。",
+      "llm_tldr": "针对长时域机器人操作中强化学习奖励稀疏且延迟的问题，提出一个视觉奖励学习框架STDR，从非结构化专家视频中推断任务阶段结构，并在训练时提供阶段转换奖励和阶段内进度奖励，为RL提供密集化的目标导向与细粒度引导。该方法无需手工设计奖励，能适应环境与物体配置变化。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "methods for converting human video demonstrations into robot executable action data",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.30552v1",
+      "source": "arxiv",
+      "title": "Training Vision-Language-Action Models with Dense Embodied Chain-of-Thought Supervision",
+      "abstract": "Cross-embodiment transfer in vision-language-action (VLA) models remains challenging because low-level state and action spaces differ fundamentally across robot platforms. We observe that the high-level cognitive process underlying manipulation, including scene perception, object identification, task planning, and sub-task decomposition, is largely shared across embodiments. Based on this observation, we present ZR-0, a 2.6 billion parameter end-to-end VLA model that uses dense Embodied Chain-of-Thought (ECoT) supervision to align cross-embodiment representations within the vision-language model (VLM). ZR-0 adopts a dual-stream architecture: a pre-trained VLM (System 2) generates structured ECoT reasoning during training, while a Diffusion Transformer-based action expert (System 1) produces continuous action chunks via flow matching. The two components are coupled through cross-attention, with an attention mask that restricts the action expert to input prompt features only, enabling ECoT generation to be entirely skipped at inference without any performance loss. ZR-0 is pre-trained on ProcCorpus-60M, a large-scale dataset comprising approximately 60 million frames (approximately 1,000 hours) from over 400K trajectories, with dense ECoT annotations covering 96.8% of all frames. We evaluate ZR-0 on three simulation benchmarks spanning single-arm (LIBERO), bimanual (RoboTwin 2.0), and humanoid (RoboCasa GR-1 Tabletop) embodiments, as well as real-world experiments on the xArm platform, demonstrating strong performance across all settings. Code and model checkpoints are available at https://github.com/RUCKBReasoning/ZR-0.",
+      "authors": [
+        "Haoyang Li",
+        "Guanlin Li",
+        "Youhe Feng",
+        "Chen Zhao",
+        "Zhuoran Wang",
+        "Yang Li",
+        "Qizhe Wei",
+        "Shifeng Bao",
+        "Haitao Shen",
+        "Yihan Zhao",
+        "Tong Yang",
+        "Jing Zhang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV"
+      ],
+      "published": "2026-06-29T16:48:48+00:00",
+      "link": "https://arxiv.org/pdf/2606.30552v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "uses dense Embodied Chain-of-Thought to align cross-embodiment representations in VLA models",
+      "llm_evidence_cn": "利用密集具身思维链在VLA模型中对齐跨具身表示",
+      "llm_evidence": "利用密集具身思维链在VLA模型中对齐跨具身表示",
+      "canonical_evidence": "利用密集具身思维链在VLA模型中对齐跨具身表示",
+      "llm_tldr_en": "Proposes ZR-0, a VLA model that aligns cross-embodiment representations via dense Embodied Chain-of-Thought supervision, enabling transfer of high-level manipulation reasoning across different robot platforms, which is relevant for robot learning from human demonstrations.",
+      "llm_tldr_cn": "该工作提出ZR-0模型，通过密集具身思维链监督来对齐不同机器人平台的高层认知过程，实现跨具身迁移。尽管未直接处理人体运动对齐，但其跨形态表示对齐方法为将人类演示知识迁移到机器人提供了可复现的技术路径。",
+      "llm_tldr": "该工作提出ZR-0模型，通过密集具身思维链监督来对齐不同机器人平台的高层认知过程，实现跨具身迁移。尽管未直接处理人体运动对齐，但其跨形态表示对齐方法为将人类演示知识迁移到机器人提供了可复现的技术路径。",
+      "llm_tags": [
+        "query:data:composite"
+      ],
+      "matched_query_tag": "query:data:composite",
+      "matched_query_text": "Papers central to 将人类视频转化为机器人可用的操作数据，让机器人可以利用大规模互联网数据以及人类示教去学习，特别是重构手物交互、对齐人体运动与机器人形态、可复现的机器人学习缩放规律、生成可执行动作/演示数据的方法。, especially work that connects or combines: r; robot manipulation data engine; scalable manipulation dataset; web-scale robot learning data; robot learning from human videos; transferring human skills to robots; methods for converting human video demonstrations into robot executable action data; reconstructing hand object interactions from human videos for robot manipulation learning; aligning human body motion with different robot morphologies for robot learning from human demonstrations; scaling laws for robot learning from large scale internet video data.",
+      "matched_requirement_id": "req-composite-data",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.00811v1",
+      "source": "arxiv",
+      "title": "From Pixels to Temporal Correlations: Learning Informative Representations for Reinforcement Learning Pre-training",
+      "abstract": "Unsupervised pre-training on large-scale datasets has demonstrated significant potential for improving the sample efficiency and performance of Reinforcement Learning (RL). Given the large-scale action-free internet videos, existing methods utilize single-step transition prediction and image reconstruction to learn representations. However, these methods prefer to preserve large-proportion stationary information in the pixel space, neglecting small but crucial information. To preserve enough information in the representation, it is essential to pay equal attention to each element in videos. Specifically, we propose a temporal correlation space to distinguish each element. For implementation, we introduce the Multi-scale Temporal Contrastive Learning (MTCL) method to model multi-scale temporal correlations separately. This approach can balance the attention of different elements and yield more informative representations, effectively supporting policy learning in various downstream tasks. Experimental results demonstrate that our method improves sample efficiency and asymptotic performance across various downstream tasks.",
+      "authors": [
+        "Jinwen Wang",
+        "Youfang Lin",
+        "Xiaobo Hu",
+        "Siyu Yang",
+        "Sheng Han",
+        "Shuo Wang",
+        "Kai Lv"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-01T11:38:58+00:00",
+      "link": "https://arxiv.org/pdf/2607.00811v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "uses large-scale action-free internet videos to pre-train representations for RL, a scalable approach for leveraging web data",
+      "llm_evidence_cn": "利用大规模无动作互联网视频预训练表征，实现网络数据的可扩展利用",
+      "llm_evidence": "利用大规模无动作互联网视频预训练表征，实现网络数据的可扩展利用",
+      "canonical_evidence": "利用大规模无动作互联网视频预训练表征，实现网络数据的可扩展利用",
+      "llm_tldr_en": "The paper proposes a representation learning method from action-free internet videos for RL pre-training, using temporal correlation space to preserve critical information, achieving superior performance and sample efficiency on downstream manipulation tasks.",
+      "llm_tldr_cn": "现有从无动作互联网视频中学习表征的方法倾向保留大量静态信息，忽略了细粒度关键信息。本文提出基于时序相关性的表征学习方法，通过构建时序相关空间区分视频中每个元素的重要性，从而充分保留对RL决策有用的信息。在机器人操作任务上的实验表明，该方法显著提升了预训练表征的性能和下游任务的样本效率，为利用网络级视频数据训练机器人提供了有效途径。",
+      "llm_tldr": "现有从无动作互联网视频中学习表征的方法倾向保留大量静态信息，忽略了细粒度关键信息。本文提出基于时序相关性的表征学习方法，通过构建时序相关空间区分视频中每个元素的重要性，从而充分保留对RL决策有用的信息。在机器人操作任务上的实验表明，该方法显著提升了预训练表征的性能和下游任务的样本效率，为利用网络级视频数据训练机器人提供了有效途径。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "web-scale robot learning data",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.30645v1",
+      "source": "arxiv",
+      "title": "VLK: Learning Humanoid Loco-Manipulation from Synthetic Interactions in Reconstructed Scenes",
+      "abstract": "Perception-based humanoid loco-manipulation requires connecting egocentric observations and task instructions to whole-body motion. Learning this mapping requires synchronized egocentric images, language commands, and robot-compatible kinematic trajectories, yet no existing data source provides this complete tuple at scale. We address this bottleneck by generating vision-language-kinematics (VLK) supervision synthetically in reconstructed scenes. Our pipeline leverages 3D Gaussian Splatting to reconstruct metric-scale indoor environments, synthesizes navigation and object-interaction trajectories using privileged scene information, and renders paired egocentric observations after the fact. We produce 48,000 paired trajectories with no human intervention and train a VLK policy that predicts short-horizon whole-body kinematic trajectories. A whole-body tracker converts these predictions into actions on the physical humanoid. We evaluate on the physical Unitree G1 performing navigation and single-object transport, demonstrating that synthesized interactions in reconstructed scenes provide effective supervision for sim-to-real perception-based humanoid loco-manipulation. Project Website: https://vision-language-kinematics.github.io/",
+      "authors": [
+        "Yen-Jen Wang",
+        "Jiaman Li",
+        "Sirui Chen",
+        "Takara E. Truong",
+        "Pei Xu",
+        "Pieter Abbeel",
+        "Rocky Duan",
+        "Koushil Sreenath",
+        "Angjoo Kanazawa",
+        "Carmelo Sferrazza",
+        "Guanya Shi",
+        "Karen Liu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.GR",
+        "eess.SY"
+      ],
+      "published": "2026-06-29T17:59:55+00:00",
+      "link": "https://arxiv.org/pdf/2606.30645v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "generates vision-language-kinematics supervision synthetically, providing robot-compatible trajectories from egocentric observations, serving as a data engine for manipulation",
+      "llm_evidence_cn": "通过合成方式生成视觉-语言-运动学监督，从自我中心观测提供机器人兼容轨迹，充当操作数据引擎",
+      "llm_evidence": "通过合成方式生成视觉-语言-运动学监督，从自我中心观测提供机器人兼容轨迹，充当操作数据引擎",
+      "canonical_evidence": "通过合成方式生成视觉-语言-运动学监督，从自我中心观测提供机器人兼容轨迹，充当操作数据引擎",
+      "llm_tldr_en": "VLK tackles the lack of paired egocentric image, language, and robot-compatible kinematic trajectories by generating synthetic data in reconstructed scenes, enabling large-scale learning for humanoid loco-manipulation.",
+      "llm_tldr_cn": "针对感知驱动的人形机器人运动操作缺乏同步自我中心图像、语言指令和机器人运动学轨迹数据的问题，VLK提出在重建场景中合成这些数据。利用3D高斯泼溅重建室内环境，合成导航和物体交互轨迹，并事后渲染自我中心观测，生成了48,000条配对轨迹，为从视觉到动作的迁移提供了大规模监督，推动了机器人从视觉演示中学习操作技能。",
+      "llm_tldr": "针对感知驱动的人形机器人运动操作缺乏同步自我中心图像、语言指令和机器人运动学轨迹数据的问题，VLK提出在重建场景中合成这些数据。利用3D高斯泼溅重建室内环境，合成导航和物体交互轨迹，并事后渲染自我中心观测，生成了48,000条配对轨迹，为从视觉到动作的迁移提供了大规模监督，推动了机器人从视觉演示中学习操作技能。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot manipulation data engine",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.01067v1",
+      "source": "arxiv",
+      "title": "Human-Centric Transferable Tactile Pre-Training for Dexterous Robotic Manipulation",
+      "abstract": "As an essential modality for dexterous and contact-rich tasks, tactile sensing provides precise force feedback that cannot be reliably inferred from vision. However, limited by hardware and data collection systems, existing datasets with tactility remain small in scale and narrow in contact coverage. Meanwhile, Vision-Language-Action (VLA) models with tactile modality are constrained on dynamics-agnostic post-training, which limits the performance ceiling on downstream tasks. In this paper, we present H-Tac, a large-scale tactile-action dataset with 160-hour egocentric human videos containing more than 300 tasks and 135k episodes. Building upon this, we propose Transferable Tactile Pre-Training (TTP), a system of tactile-based pre-training on human data for fine-grained robotic tasks. To bridge the gap between humans and robots, we use unified tactile and action spaces throughout the pre-training and post-training phases, preserving prior knowledge during human-to-robot transfer. By leveraging a tactile expert for future tactile prediction, our framework explicitly models the contact dynamics and precise physical interactions. Extensive experiments in simulation and on real robots demonstrate that our model achieves superior performance, exhibiting robust generalization and fine-grained manipulation capabilities. TTP paves the way for scalable tactile pre-training via human-to-robot transfer.",
+      "authors": [
+        "Chi Zhang",
+        "Penglin Cai",
+        "Ziheng Xi",
+        "Haoqi Yuan",
+        "Hao Luo",
+        "Wanpeng Zhang",
+        "Sipeng Zheng",
+        "Chaoyi Xu",
+        "Zongqing Lu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV"
+      ],
+      "published": "2026-07-01T15:26:26+00:00",
+      "link": "https://arxiv.org/pdf/2607.01067v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "large-scale tactile-action dataset from egocentric human videos for robot learning",
+      "llm_evidence_cn": "来自人类自我中心视频的大规模触觉-动作数据集用于机器人学习",
+      "llm_evidence": "来自人类自我中心视频的大规模触觉-动作数据集用于机器人学习",
+      "canonical_evidence": "来自人类自我中心视频的大规模触觉-动作数据集用于机器人学习",
+      "llm_tldr_en": "H-Tac proposes a 160-hour egocentric human video dataset with tactile-action labels and a transferable pre-training method, significantly improving dexterous robotic manipulation with tactile sensing.",
+      "llm_tldr_cn": "针对触觉数据集规模小、覆盖窄的问题，该论文构建了基于160小时人类自我中心视频的大规模触觉-动作数据集H-Tac，并提出了可迁移触觉预训练方法。通过从人视频中学习可迁移的触觉表征，提升机器人在灵巧操作任务中的表现，为机器人学习利用人类视频数据提供了新途径。",
+      "llm_tldr": "针对触觉数据集规模小、覆盖窄的问题，该论文构建了基于160小时人类自我中心视频的大规模触觉-动作数据集H-Tac，并提出了可迁移触觉预训练方法。通过从人视频中学习可迁移的触觉表征，提升机器人在灵巧操作任务中的表现，为机器人学习利用人类视频数据提供了新途径。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot learning from human videos",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.31682v1",
+      "source": "arxiv",
+      "title": "HABIT: Human-Aware Behavior and Interaction Training Dataset for Robot Manipulation",
+      "abstract": "Large-scale demonstration datasets have been central to recent progress in general-purpose robot policies. However, existing datasets are collected in human-absent settings, and policies trained on such data may perform tasks competently in isolation but fail to exhibit human-aware behaviors. To address this gap, we introduce HABIT, a large-scale robot demonstration dataset for human-present environments. We organize tasks into three roles capturing distinct modes of human-robot interaction: Collaborator, where human and robot jointly accomplish a task; Coworker, where they pursue separate tasks in a shared space; and Supervisor, where the human directs the robot. The dataset comprises over 10K episodes and over 160 hours across 60 tasks. Our experiments show that training on human-present data elicits human-aware behaviors that robot-only data fails to produce: spatiotemporal synchronization in Collaborator tasks, yielding in Coworker tasks, and gesture grounding in Supervisor tasks. Moreover, training on HABIT enables rapid adaptation to new human-robot interaction tasks. By introducing human presence as a new axis of dataset diversity, HABIT extends robot policies to environments shared with humans.",
+      "authors": [
+        "Jaehwi Song",
+        "Suchae Jeong",
+        "Byeongguk Jeon",
+        "Sungdong Kim",
+        "Minjoon Seo",
+        "Hyungmok Son",
+        "Kimin Lee"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-30T13:58:19+00:00",
+      "link": "https://arxiv.org/pdf/2606.31682v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Large-scale robot demonstration dataset (10K episodes, 60 tasks) in human-present environments for scalable manipulation learning",
+      "llm_evidence_cn": "大规模机器人演示数据集，在有人环境下包含超万段演示和60任务，支持可扩展操作学习",
+      "llm_evidence": "大规模机器人演示数据集，在有人环境下包含超万段演示和60任务，支持可扩展操作学习",
+      "canonical_evidence": "大规模机器人演示数据集，在有人环境下包含超万段演示和60任务，支持可扩展操作学习",
+      "llm_tldr_en": "HABIT provides a scalable manipulation dataset with human-robot interaction scenarios, enabling training of policies that consider human presence.",
+      "llm_tldr_cn": "现有机器人数据集多在无人环境采集，导致策略缺乏人本行为。HABIT构建了一个大规模机器人演示数据集，在有人环境下涵盖协作、共事和监管三种交互角色，包含超过1万段演示、60余种任务，为训练人本感知的机器人操作策略提供了规模化数据支撑。",
+      "llm_tldr": "现有机器人数据集多在无人环境采集，导致策略缺乏人本行为。HABIT构建了一个大规模机器人演示数据集，在有人环境下涵盖协作、共事和监管三种交互角色，包含超过1万段演示、60余种任务，为训练人本感知的机器人操作策略提供了规模化数据支撑。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "scalable manipulation dataset",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.02148v1",
+      "source": "arxiv",
+      "title": "SAMoR: Motion Modelling for Articulated Objects of Any Skeleton and Topology",
+      "abstract": "Modeling motion for articulated objects of arbitrary skeleton topology remains difficult: existing motion generators target a fixed human skeleton, and prior adaptations either fail to share a vocabulary across rigs or discard motion detail through global pooling. Our key observation is that while joint-level motion does not correspond cleanly across species, motion of functional joint groups does: a human arm, a wolf foreleg, and a bird wing share motion structure despite differing joint counts and connectivity, a correspondence that joint names (e.g., \"forearm\", \"wing_L1\") partially expose even when topology does not. We introduce SAMoR (Skeleton-Aware Motion Representation for Articulated Objects), a cross-topology motion representation that encodes each motion segment as a small fixed number ($K=8$) of part tokens shared across arbitrary skeletons. A graph-transformer encoder consumes per-joint motion features, kinematic graph structure, and joint-name embeddings, then compresses them into part-level tokens via cross-attention pooling and residual vector quantization, yielding a discrete motion codebook shared across rigs. To keep the part queries from collapsing into redundant global representations, we introduce a topology-agnostic attention supervision loss, with joint-name dropout to reduce over-reliance on text labels. We curate a heterogeneous corpus from HumanML3D, Truebones Zoo, and animated Objaverse-XL assets, and evaluate SAMoR on held-out characters with unseen skeletons. It supports accurate reconstruction and cross-topology transfer, and enables text-conditioned generation and part-wise editing via a MaskGIT token generator. SAMoR reaches $2.75 \\times 10^{-2}$ normalized MPJPE on cross-topology reconstruction, $5.8\\times$ below the strongest adapted variable-$J$ tokenizer baseline, while remaining competitive with fixed-skeleton specialists on HumanML3D.",
+      "authors": [
+        "Yuhao Zhang",
+        "Gerard Pons-Moll",
+        "Tolga Birdal"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-02T13:24:47+00:00",
+      "link": "https://arxiv.org/pdf/2607.02148v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "cross-topology motion representation for sharing motion across different articulated bodies like human, animal, and potentially robot skeletons",
+      "llm_evidence_cn": "跨骨架拓扑的运动表示，适用于人体、动物和潜在的机器人骨架之间的运动共享",
+      "llm_evidence": "跨骨架拓扑的运动表示，适用于人体、动物和潜在的机器人骨架之间的运动共享",
+      "canonical_evidence": "跨骨架拓扑的运动表示，适用于人体、动物和潜在的机器人骨架之间的运动共享",
+      "llm_tldr_en": "Introduces SAMoR, a skeleton-aware motion representation that enables sharing motion patterns across articulated objects with different skeletons by grouping joints into functional units, facilitating cross-morphology motion transfer.",
+      "llm_tldr_cn": "该工作针对不同骨架拓扑的关节物体运动建模难题，提出SAMoR，通过将关节分组为功能单元，实现跨不同骨架的运动表示共享。可用于将人体运动模式转移到具有不同关节结构的机器人上，为机器人学习人类演示时的形态对齐提供了通用方法。",
+      "llm_tldr": "该工作针对不同骨架拓扑的关节物体运动建模难题，提出SAMoR，通过将关节分组为功能单元，实现跨不同骨架的运动表示共享。可用于将人体运动模式转移到具有不同关节结构的机器人上，为机器人学习人类演示时的形态对齐提供了通用方法。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "aligning human body motion with different robot morphologies for robot learning from human demonstrations",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2607.01212v1",
+      "source": "arxiv",
+      "title": "FurnitureVLA: Learning Long-Horizon Bimanual Furniture Assembly with Vision-Language-Action Model",
+      "abstract": "Current work on robot furniture assembly mostly focuses on toy-scale settings or single-arm manipulation. We introduce FurnitureVLA, the first systematic study of real-scale bimanual furniture assembly using Vision-Language-Action models (VLAs). We formalize the task, develop a scalable simulation pipeline for expert data generation and evaluation, and build a VR teleoperation system for single-operator bimanual control to collect high-quality real-world demonstrations. To address extreme long-horizon assembly with up to 7 subtasks and 1550 control steps, we propose a progress-enhanced VLA, finetuned on semantically grounded subtasks, that jointly predicts actions and a continuous progress signal, enabling automatic subtask transitions and reducing compounding errors during inference. We further study perception and control design factors that critically affect precision in real-scale assembly. FurnitureVLA improves average simulation success from 48% to 80% compared to baselines across three furniture types, with an additional 21% gain from our design factor study. We validate on a real Kinova Gen3 platform with only 16% drop on the hardest task.",
+      "authors": [
+        "Chenyang Ma",
+        "Yue Yang",
+        "Radu Corcodel",
+        "Siddarth Jain",
+        "Andrew Wu",
+        "Chiori Hori",
+        "Diego Romeres"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-07-01T17:51:21+00:00",
+      "link": "https://arxiv.org/pdf/2607.01212v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "develops a scalable simulation pipeline for expert data generation, acting as a robot manipulation data engine",
+      "llm_evidence_cn": "开发了可扩展的仿真管线用于专家数据生成，充当机器人操作数据引擎",
+      "llm_evidence": "开发了可扩展的仿真管线用于专家数据生成，充当机器人操作数据引擎",
+      "canonical_evidence": "开发了可扩展的仿真管线用于专家数据生成，充当机器人操作数据引擎",
+      "llm_tldr_en": "FurnitureVLA presents a scalable simulation pipeline and VR teleoperation system to generate high-quality demonstrations for long-horizon bimanual furniture assembly, enabling progress-enhanced VLA learning.",
+      "llm_tldr_cn": "针对现实比例的双臂家具装配任务，FurnitureVLA提出了一种可扩展的仿真数据生成管线和VR遥操作系统，用于收集高质量演示数据，并设计了进度增强的视觉-语言-动作模型，通过联合预测动作和连续进度信号实现长时程任务学习，为机器人操作数据引擎提供了有效方案。",
+      "llm_tldr": "针对现实比例的双臂家具装配任务，FurnitureVLA提出了一种可扩展的仿真数据生成管线和VR遥操作系统，用于收集高质量演示数据，并设计了进度增强的视觉-语言-动作模型，通过联合预测动作和连续进度信号实现长时程任务学习，为机器人操作数据引擎提供了有效方案。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot manipulation data engine",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

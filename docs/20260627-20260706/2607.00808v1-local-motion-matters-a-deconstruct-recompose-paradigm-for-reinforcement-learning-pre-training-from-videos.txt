@@ -1,0 +1,1042 @@
+Title: Local Motion Matters: A Deconstruct-Recompose Paradigm for Reinforcement Learning Pre-training from Videos
+
+URL Source: https://arxiv.org/pdf/2607.00808v1
+
+Published Time: Thu, 02 Jul 2026 00:55:50 GMT
+
+Number of Pages: 20
+
+Markdown Content:
+# Local Motion Matters: A Deconstruct–Recompose Paradigm for Reinforcement Learning Pre-training from Videos 
+
+## Jinwen Wang 1,2 Youfang Lin 1,2 Xiaobo Hu 1,2 Shuo Wang 1,2* Kai Lv 1,21Beijing Jiaotong University, China 
+
+> 2
+
+## Beijing Key Laboratory of Traffic Data Mining and Embodied Intelligence, China 
+
+{jw.wang, yflin, xiaobohu, shuo.wang, lvkai }@bjtu.edu.cn 
+
+## Abstract 
+
+Pre-training on large-scale videos to improve reinforcement learning efficiency is promising yet remains challenging. Existing methods typically treat the agent as an indivisi-ble entity, modeling motion patterns globally. Such global modeling is tightly coupled with the morphology, hinder-ing transfer across domains. In contrast, despite the vast disparity in global motions, the local components exhibit similar motion patterns across different agents. Building on this insight, we propose a novel Deconstruct–Recompose Paradigm (DRP) for learning transferable local motion rep-resentations. Specifically, in the Deconstruct phase, we identify multiple local points and track their frame-wise motions, defining each as an Atomic Action. We intro-duce a Dual-Attention Encoder (DAE) to learn local motion representations from these Atomic Actions, capturing their spatiotemporal relationships. In the Recompose phase, we compose local motion representations with a learnable Motion Aggregation Token ‘[MAT]’ via latent dynamics model learning. Additionally, an adapter bridges local mo-tion and downstream action-specific dynamics to accelerate policy learning. Extensive experiments demonstrate that our method effectively transfers to diverse robotic control and manipulation tasks, significantly improving sample ef-ficiency and performance. 
+
+## 1. Introduction 
+
+Deep Reinforcement Learning (RL) has achieved remark-able success in various fields [3–5, 11, 19, 20, 25, 35, 36, 42]. However, RL typically trains from scratch, requiring extensive online interactions to acquire effective policies. To mitigate this fundamental challenge, recent works have explored leveraging large-scale, unlabeled video datasets for pre-training [2, 6, 22, 23, 26, 29, 33, 38]. This pre-  
+
+> *Corresponding author. Vertical Swing-up Horizontal Rotation Translation
+
+Figure 1. Illustration of local motion patterns. The global mo-tion of a tennis player’s forehand swing (top) is composed of sev-eral local motions (middle), such as the arm’s vertical swing-up, the body’s horizontal rotation, and the ball’s translation, which more easily capture similarities across tasks (bottom). 
+
+training paradigm aims to provide downstream agents with rich knowledge priors , thereby significantly improving sam-ple efficiency and performance. Current unsupervised pre-training approaches for RL primarily fall into two categories. The first one is to pre-train a video prediction model, aiming to help downstream agents understand environment dynamics [29, 34, 38]. The second approach infers latent actions as factors of envi-ronment dynamics from inter-frame relations, facilitating downstream policy learning [1, 21, 28, 40, 43]. These ap-proaches model motion patterns at a global level, treating the agent as an indivisible entity. Therefore, the learned motion patterns are tightly coupled with the morphology, 1
+
+> arXiv:2607.00808v1 [cs.LG] 1 Jul 2026
+
+limiting cross-domain transfer. In fact, while the global motions of different agents vary significantly, the local motion patterns often exhibit strong similarities. As illustrated in Figure 1, the global motion of a tennis player’s forehand swing differs markedly from that of downstream tasks. However, this complex global motion is composed of local components: the arm’s Vertical Swing-up, the body’s Horizontal Rotation, and the ball’s Transla-tion. These local components are more similar across differ-ent agents. This contrast between global disparity and local similarity suggests a core insight: “To achieve robust cross-domain transfer, can we employ a local modeling paradigm instead of global modeling”? 
+
+To this end, we propose a novel Deconstruct-Recompose Paradigm (DRP) that realizes this local modeling paradigm. In the Deconstruct phase, we first deconstruct morphology-coupled global motion into a set of morphology-agnostic local motion components, termed Atomic Actions . Then, a Dual-Attention Encoder (DAE) is introduced to learn trans-ferable local motion representations based on these Atomic Actions. In the Recompose phase, we employ a learnable Motion Aggregation Token ‘[MAT]’ to compose local mo-tion representations, and enrich them with dynamic seman-tics via latent dynamics model learning. In practice, the Deconstruct phase involves two key sub-processes. First, we extract Atomic Actions by tracking persistent keypoints and cropping surrounding local optical flow patches. Second, to learn local motion representations, the DAE incorporates Intra-Frame and Inter-Frame atten-tion for capturing the spatiotemporal relationships among these Atomic Actions. The DAE is trained using a Masked Autoencoder (MAE) reconstruction objective. In the Recompose phase, a learnable ‘[MAT]’ token com-poses local motion representations to align with the spe-cific task. Specifically, we apply a latent dynamics model to capture temporal relationships, enriching the composed representations with dynamic semantics. Additionally, an adapter maps these representations to the downstream spe-cific action space, accelerating policy learning. Our main contributions are summarized as follows: • We introduce a novel Deconstruct-Recompose Paradigm (DRP) that focuses on modeling local motion patterns rather than global motions, enabling effective cross-domain transfer. • We design a novel Dual Attention Encoder (DAE) that incorporates Intra-Frame and Inter-Frame attention to learn local motion representations, enabling capturing spatiotemporal relationships. • Extensive experiments demonstrate that our pre-training method based on local motion representations signif-icantly improves sample efficiency and performance across various robotic control and manipulation tasks. 
+
+## 2. Related Work 
+
+2.1. Model-Based Reinforcement Learning 
+
+Model-based Reinforcement Learning (MBRL) improves sample efficiency by constructing a world model of the en-vironment to generate imagined trajectories [9, 10, 12]. PlaNet introduces a Recurrent State Space Model (RSSM) to learn environment dynamics from images and selects actions through planning in latent spaces. The Dreamer series further advances this research direction. Dreamer [9] proposes a latent dynamics model based on a Variational AutoEncoder (VAE) [17], which encodes obser-vations and actions into compact latent states and effectively learns policies from imagined latent trajectories. Dream-erV2 [10] introduces a discretized world model, achieving human-level performance on the Atari benchmark for the first time. DreamerV3 [12] further demonstrates remark-able generalization, surpassing specialized methods across more than 150 diverse tasks using a single set of hyperpa-rameters. Additionally, approaches such as TD-MPC [13] advance MBRL by combining the strengths of model pre-dictive control and efficient temporal-difference learning. Despite these advances, traditional MBRL approaches typically learn from scratch and require extensive online in-teractions to build accurate models. This limitation moti-vates the exploration of pre-training on large-scale, unla-beled video data. 
+
+2.2. RL Pre-training via Video Prediction 
+
+Recent studies [6, 23, 24, 26] demonstrate that unsupervised Reinforcement Learning (RL) pre-training from videos significantly improves sample efficiency and asymptotic performance across various downstream decision-making tasks. One line of research focuses on pre-training a video prediction model. APV [29] proposes an action-free world model pre-trained with videos from different domains: RLBench [15]. Building on this, IPV [38] extends this paradigm to han-dle complex “in-the-wild” videos by introducing a con-textualized world model that explicitly disentangles static context from temporal dynamics. Other works, such as DisWM [34] pre-train task-relevant representations from distracting videos and transfer them to downstream RL via latent distillation. 
+
+2.3. RL Pre-training via Latent Action Modeling 
+
+Another line of research focuses on inferring latent actions from inter-frame relations as factors of the dynamic model. FICC [40] introduces a forward-inverse cycle consis-tency objective, which jointly infers latent actions and trains the dynamics model. AVDC [18] computes optical flow be-tween video frames and combines it with depth informa-tion to infer closed-form actions to be executed in the en-2Dual Attention Encoder                  
+
+> Adapter
+> 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀
+> Dual Attention Encoder
+> 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀
+> 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀
+> 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀
+> 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀
+
+(a) Pre-training (b) F ine-tuning 
+
+> Latent Dynamic
+> Model
+> Action-Specific
+> Dynamics Model
+> Local Motion
+> Representations
+> Atomic Actions
+> [MAT]
+> Deconstruct
+> Recompose
+> Deconstruct
+> Recompose
+> Image Encoder
+> Image Decoder
+
+Figure 2. Framework Overview. (a) Pre-training : We deconstruct global motion into local Atomic Actions and learn transferable local motion representations, followed by recomposing local motion representations via a latent dynamics model learning. (b) Fine-tuning : The DRP is progressively adapted, and an adapter maps the recomposed local motion representations to the agent-specific action space. 
+
+vironment. PVDR [21] employs a Conditional Variational Autoencoder (CVAE) [30] to learn visual dynamics repre-sentations from videos, based on which it trains a dynamic model. PreLAR [43] proposes learning action representa-tions by encoding two consecutive observations through an inverse dynamics model, serving as the action factors of the dynamic model. Whether these methods learn a video prediction model or a latent action–based dynamics model, they all per-form motion modeling at a global level. Consequently, the learned motion patterns become tightly coupled with the agent’s morphology, thereby hindering effective cross-domain transfer. 
+
+## 3. Preliminaries 
+
+3.1. Problem Formulation 
+
+We formulate the visual control task as a Partially Observ-able Markov Decision Process (POMDP), defined by the tu-ple M = ⟨O , A, p, r, γ ⟩. Here, O is the high-dimensional observation space, A is the action space, p(ot+1 |ot, a t) is the environment transition dynamics, r(ot, a t) is the reward function, and γ ∈ [0 , 1) is the discount factor. The objec-tive of RL is to learn a policy π(at|ot) that maximizes the expected cumulative discounted reward E[PTt=1 γtrt].
+
+3.2. Latent Dynamics Models 
+
+Dreamer [9] proposes the latent dynamics model, a world model that effectively learns from high-dimensional im-ages, consisting of several key components: • Representation Model: zt ∼ qϕ(zt|zt−1, a t−1, o t). This model, also known as the posterior, infers the current la-tent state zt from the current observation ot and the pre-vious state and action. • Transition Model: ˆzt ∼ pϕ(ˆ zt|zt−1, a t−1). This model, also known as the prior, predicts the next latent state purely from the previous state and action, enabling imag-ination of future trajectories. • Image Decoder: ˆot ∼ pϕ(ˆ ot|zt). Reconstructs the ob-servation from the latent state, ensuring that zt captures sufficient visual information. • Reward Predictor: ˆrt ∼ pϕ(ˆ rt|zt). Predicts the reward from the latent state. 
+
+3.3. Optical Flow as Motion Representation 
+
+Optical flow provides a dense, pixel-wise description of mo-tion between consecutive video frames. For two consecu-tive image frames ot and ot+1 , a dense optical flow field 
+
+Ft is a 2D vector field where each vector (u, v ) at pixel lo-cation (x, y ) represents the displacement of that pixel from frame t to t + 1 . Traditional optical flow algorithms es-timate this field using variational formulations or differ-ential constraints. Recently, deep learning–based models, such as RAFT [31], GMFlow [39], and Sea-RAFT [37], achieve state-of-the-art accuracy and robustness across di-verse benchmarks. 
+
+## 4. Method 
+
+4.1. Overview 
+
+To learn morphology-agnostic local motion patterns for effective cross-domain transfer, we propose a novel Deconstruct-Recompose Paradigm (DRP). The Deconstruct phase (Section 4.2) includes two key sub-processes: Atomic Action extraction (Section 4.2.1), where complex global motions are broken down into local components, termed Atomic Actions; and local motion representation learn-ing (Section 4.2.2), where we introduce a Dual Attention Encoder (DAE) to capture spatiotemporal relationships of 3Decoder 
+
+> Sea-RAFT
+> ...
+
+(a) Atomic Action Extraction 
+
+> Dual Attention Encoder
+
+(b) L ocal Motion Representation Learning             
+
+> Co-tracker
+> Grounded SAM
+> 𝐀 𝐀 :𝐀
+> {𝐀 𝐀 :𝐀
+> 𝐀 }𝐀 =𝐀
+> 𝐀
+> {𝐀 𝐀
+> 𝐀 }𝐀 =𝐀
+> 𝐀
+> Patch Projection
+> Intra-Frame
+> Attention
+> Inter -Frame
+> Attention
+> Feed-
+> Forward
+> Feed-
+> Forward
+> ×L
+> MAT 1...
+> 1...
+> K
+> K
+> MAT
+> ...
+> 1
+> 1
+> 2...
+> 2
+> T
+> T
+> Inter-Frame
+> 𝐀 𝐀 :𝐀 −𝐀
+> {𝐀 𝐀
+> 𝐀 }𝐀 =𝐀
+> 𝐀
+> Point
+> Sampling 𝐀 𝐀
+> Decoder
+> Intra-Frame
+> [MAT] K... 12
+> Inter-Frame
+> 1... T
+> ...
+> [MAT]
+
+Figure 3. Two sub-processes of the Deconstruct phase. (a) Atomic Action Extraction: The pipeline for extracting Atomic Actions ( ukt )using Sea-RAFT, Grounded SAM, and Co-tracker. (b) Local Motion Representation Learning: The architecture of the Dual Attention Encoder (DAE), illustrating Patch Projection and Intra-/Inter-Frame Attention mechanisms. 
+
+these Atomic Actions. The Recompose phase (Section 4.3) composes these local motion representations to align with the specific task. Finally, Section 4.4 provides details of the DRP training schedule. As shown in Figure 2, DRP uses a two-stage pre-training and fine-tuning framework. 
+
+4.2. Deconstructing Local Motion Representations 
+
+As shown in Figure 3, the Deconstruct phase first breaks down complex global motion into a set of morphology-agnostic local components, termed Atomic Actions. We then learn local motion representations to capture the spa-tiotemporal relationships of these Atomic Actions. 
+
+4.2.1. Atomic Action Extraction 
+
+As illustrated in Figure 3(a), we design a pipeline to extract Atomic Actions. First, given a video sequence o1: T , we leverage a pre-trained Sea-RAFT model [37] to compute dense optical flow fields F1: T −1 between consecutive frames, represent-ing the global motion. Second, to focus on meaningful local components and avoid static background regions, we identify and track multiple motion-salient keypoints. In practice, we utilize Grounded SAM [27] to segment individuals and obtain the foreground mask M1 for the first frame. Then, K candi-date points are randomly sampled within M1 and tracked across the video using Co-tracker [16]. To ensure these points represent salient motion, we filter out those with low motion variance over time and resample, yielding the fil-tered keypoints {pk 
+
+> 1
+
+}Kk=1 . Co-tracker then tracks these fil-tered keypoints again, yielding stable trajectories {pk 
+
+> 1: T
+
+=(xk 
+
+> 1: T
+
+, y k 
+
+> 1: T
+
+)}Kk=1 that consistently correspond to the same local physical region. Finally, at each time step t, we crop a P ×P local optical flow patch ukt ∈ RP ×P ×2 from the global flow field Ft,centered at each tracked keypoint pkt . This flow patch ukt is defined as our Atomic Action .
+
+4.2.2. Local Motion Representations Learning 
+
+To learn a local motion representation that captures the spa-tiotemporal relationships among the extracted Atomic Ac-tions, we propose a novel Dual-Attention Encoder (DAE). The DAE incorporates two types of attention (Intra-Frame and Inter-Frame), which separately model spatial and tem-poral relationships, as shown in Figure 3(b) 
+
+Dual Attention Encoder Architecture. The DAE is a Transformer-based encoder [32]. Before encoding, each extracted Atomic Action ukt is tokenized into τ kt by com-bining three types of embeddings: (1) a content embed-ding obtained via Patch Projection of ukt ; (2) a coordinate embedding derived from the tracked keypoint position pkt ;(3) a temporal embedding corresponding to timestep t. A reserved learnable Motion Aggregation Token ‘[MAT]’ is prepended to the token sequence of each frame for the sub-sequent Recompose phase. The resulting token set {[MAT] , τ 1 
+
+> t
+
+, . . . , τ Kt }Tt=1 is pro-cessed by L stacked Dual-Attention Blocks, each compris-ing two complementary attention branches: (1) Intra-Frame Attention: performs self-attention among all tokens within the same timestep t, enabling the model to capture spa-tial relationships among different local motion parts while maintaining spatial consistency. (2) Inter-Frame Attention: 
+
+applies causal self-attention across timesteps for each local part k, allowing the model to capture the temporal relation-ships of local motion trajectories. 
+
+Learning Objectives. The DAE is trained with a Masked AutoEncoder (MAE) [14] reconstruction objective. As shown in Figure 3(b), we randomly mask a subset of to-kens from the input sequence, and a decoder reconstructs the original patches from the visible tokens. This objective 4DRP PreLAR IPV APV DreamerV3 DreamerV2 Figure 4. Learning curves on DMControl Remastered. Comparison of our method (DRP) against baselines on three locomotion tasks and their average. Solid lines represent the mean episode return, and shaded areas denote the standard deviation over five random seeds. 
+
+encourages the DAE to model the spatiotemporal relation-ships necessary to infer the masked Atomic Actions. 
+
+4.3. Recomposing Local Motion Representations 
+
+The Recompose phase composes the local motion represen-tations from the Deconstruct phase (Section 4.2) by learning a latent dynamics model. As shown in Figure 2, the reserved ‘[MAT]’ token aggre-gates local motion representations at timestep t into an ag-gregated action representation aagg  
+
+> t
+
+. Based on aagg  
+
+> t
+
+, we learn a latent dynamics model. Given the current observation ot
+
+and the previous aggregated action representation aagg 
+
+> t−1
+
+, the dynamics model infers the latent state zt:
+
+zt ∼ qθ (zt | zt−1, a agg 
+
+> t−1
+
+, o t). (1) Following Dreamer [9], the model is trained by minimizing an objective that combines image reconstruction and KL di-vergence regularization: 
+
+Ldyn = Eqθ
+
+h TX
+
+> t=1
+
+
+
+− ln pθ (ot|zt) + βz Lz
+
+i 
+
+,
+
+Lz = KL qθ (zt|zt−1, a agg 
+
+> t−1
+
+, o t) ∥ pθ (ˆ zt|zt−1, a agg 
+
+> t−1
+
+) ,
+
+(2) where βz is a hyperparameter. The learning objective of the latent dynamics model ensures that the learned representa-tions possess dynamic semantics. 
+
+4.4. DRP Training Schedule 
+
+We train our proposed Deconstruct-Recompose Paradigm (DRP) within a two-stage pre-training and fine-tuning framework, as illustrated in Figure 2. 
+
+Pre-training. During pre-training, we execute the De-construct and Recompose processes sequentially to learn transferable local motion representations, as shown in Fig-ure 2(a). First, the Deconstruct process is performed through Atomic Action extraction and local motion rep-resentation learning with DAE. Second, we perform the Recompose process by training a latent dynamics model, which leverages the reserved ‘[MAT]’ token to compose the learned local motion representations. 
+
+Fine-tuning. As shown in Figure 2(b), the fine-tuning stage progressively adapts the Deconstruct–Recompose Processes. We also map local motion representations to the agent’s specific action space to learn the downstream policy. First, we adapt the Deconstruct process by slowly fine-tuning the pre-trained DAE. This allows DAE to pre-serve learned local motion representations while progres-sively incorporating new patterns not included in the pre-training dataset. Second, we adapt the Recompose process by fine-tuning the pre-trained latent dynamics model. As a result, the ‘[MAT]’ learns to selectively recompose the local motion representations to match the downstream agent. Furthermore, to map these representations to the down-stream action space, we introduce an adapter and an Action-Specific Dynamics Model, as shown in Figure 2(b). The adapter serves as a bridge between the pre-trained latent dynamics model and the Action-Specific Dynamics Model. This new Action-Specific Dynamics Model is conditioned on the agent’s real action signals ( at). Specifically, it up-dates its agent-specific state st by taking two inputs: the agent’s previous action at−1, and the latent state zt from the pre-trained model after it has been mapped by the adapter: 
+
+st ∼ qϕ(st|st−1, a t−1, z t). (3) The objective function for the Action-Specific Dynamics Model includes image reconstruction loss, reward predic-tion loss, and a KL divergence term: 
+
+Laction = Eqϕ,q θ
+
+h TX
+
+> t=1
+
+
+
+− ln pθ (ot|st, c ) − βr ln pφ(rt|st)+βsKL [ qϕ(st|st−1, a t−1, z t) ∥ pϕ(ˆ st|st−1, a t−1)] 
+
+i 
+
+,
+
+(4) where βr and βs are hyperparameters, and c is a context variable as defined in IPV [38]. This architecture tailors the pre-trained knowledge to the specific downstream agent, accelerating downstream policy learning. 5DRP PreLAR IPV APV DreamerV3 DreamerV2 DisWM 
+
+(a) Meta-World (b) Global Flow    
+
+> DRP Global Flow IPV Figure 5. Results on Meta-World (left) and ablation on the importance of motion deconstruction (right). (a) Learning curves of our method (DRP) compared to baselines across six tasks in Meta-World, based on the average success rate over five runs. (b) Comparison between global flow modeling and our local motion representation modeling on DMCR tasks.
+
+## 5. Experiments 
+
+We conduct extensive experiments to validate the effec-tiveness of our proposed Deconstruct-Recompose Paradigm (DRP). Our evaluation is performed on two challenging downstream benchmarks: the robotic locomotion suite, DMControl Remastered (DMCR) [8], and the robotic ma-nipulation benchmark, Meta-World [41]. Our experiments aim to answer the following key questions: • Q1: Is our Deconstruct-Recompose paradigm broadly ef-fective for various downstream tasks? • Q2: Is deconstructing global motion into local Atomic Actions crucial for effective knowledge transfer? • Q3: Is the dual-attention mechanism necessary for learn-ing robust local motion representations? • Q4: Are the improvements on downstream tasks due to the pre-trained local motion representations? • Q5: What benefits does the pre-trained local motion rep-resentation bring for cross-domain transfer? 
+
+Pre-training datasets. Consistent with IPV [38] and PreLAR [43], we use the Something-Something-V2 (SSV2) dataset [7] for pre-training. 
+
+Baselines. We compare our method (DRP) with two state-of-the-art Model-Based Reinforcement Learning (MBRL) algorithms and four unsupervised pre-training ap-proaches in RL: 1) DreamerV2 [10] is the first MBRL algorithm to reach human-level performance on the Atari benchmark. 2) DreamerV3 [12] is currently a powerful MBRL algorithm, outperforming specialized approaches across more than 150 diverse tasks. 3) APV [29] pre-trains an action-free world model using unlabeled video data from a different domain: RLBench [15]. 4) IPV [38] introduces Contextualized World Models in pre-training with rich in-the-wild videos. 5) PreLAR [43] introduces a learnable action representation to leverage action-free videos for pre-training world models. 6) DisWM [34] transfers the disen-tanglement capability of the pre-trained model to the down-stream world model through latent distillation. For a fair comparison, all unsupervised pre-training baselines are pre-trained on the SSV2 dataset. 
+
+5.1. Evaluation on DMControl Remastered 
+
+To evaluate the effectiveness of our proposed Decon-struct–Recompose Paradigm (DRP) on downstream robotic locomotion tasks, we conduct experiments on the challeng-ing simulated robotics benchmark DMControl Remastered (DMCR) [8]. DMCR is designed to measure generaliza-tion in continuous control by featuring randomly generated, complex graphics. Following IPV [38], we evaluate on three distinct loco-motion tasks: “Walker Run”, “Hopper Stand”, “Cheetah Run”. Figure 4 presents the learning curves for individual tasks and their aggregated average, comparing our method against strong baselines. As shown in Figure 4, our method consistently achieves significant improvements in both sam-ple efficiency and asymptotic performance across all tasks. 
+
+5.2. Evaluation on Meta-World 
+
+To further investigate the broad effectiveness of our method (DRP), we extend our evaluation to robotic manipula-6Figure 6. Ablation study on DA-MAE architectural components. We analyze the necessity of our dual-attention mechanisms. The results compare our model against variants removing Intra-Frame Attention (w/o Intra-Atten) or Inter-Frame Attention (w/o Inter-Atten). 
+
+tion tasks using the widely adopted Meta-World bench-mark [41]. Following the IPV [38] and PreLAR [43], we evaluate our method on the same six tasks. The learning curves are presented in Figure 5(a). The results demonstrate that our method (DRP) achieves state-of-the-art performance across all six tasks. We observe sig-nificant improvements in asymptotic performance on the “Dial Turn” and “Lever Pull” tasks. Notably, our method successfully masters the “Dial Turn” task, which is consid-ered particularly challenging, whereas baselines struggle. Furthermore, our approach significantly improves sample efficiency on the “Drawer Open”, “Button Press Topdown wall”, “Reach”, and “Door Lock” tasks. Combined with the DMCR results, our DRP consistently achieves superior performance compared with both video prediction methods (IPV [38], APV [29], and DisWM [34]) and latent action modeling methods (PreLAR [43]). These experiments provide clear evidence supporting Q1 , demon-strating that our DRP is broadly effective across diverse downstream tasks. 
+
+5.3. Importance of Motion Deconstruction 
+
+We now address question Q2 : Is deconstructing global motion into local Atomic Actions crucial for cross-domain transfer? To validate this hypothesis, we conduct a key ab-lation study comparing our local motion modeling method with the conventional global motion modeling paradigm. To this end, we design a baseline variant termed “Global Flow”, representing the global modeling approach. It re-places our Deconstruct pipeline with a convolutional en-coder that processes the entire global optical flow into a sin-gle global embedding to condition the dynamics model. For a fair comparison, both models are pre-trained on the SSV2 dataset and fine-tuned on DMCR tasks (“Walker Run” and “Hopper Stand”), differing only in their motion representa-tion strategy (local vs. global). As shown in Figure 5(b), our DRP method significantly outperforms the “Global Flow” variant in both sample effi-ciency and asymptotic return. Notably, “Global Flow” fails to show an advantage over IPV [38], which also relies on   
+
+> Figure 7. Ablation on pre-training effectiveness. Removing our pre-training or replacing it with IPV’s leads to clear performance degradation, confirming the superiority of our pre-training.
+
+global image modeling. This result provides strong evidence that global mod-eling is tightly coupled with morphology, which hinders transfer across domains. In contrast, the local motion rep-resentations learned through deconstructing global motion enable effective cross-domain transfer. 
+
+5.4. Ablation Study 
+
+5.4.1. Dual-Attention Mechanism in DAE 
+
+We first address Q3 : Is the dual-attention mechanism nec-essary for learning local motion patterns? We conduct an ablation study by removing the Intra-Frame Attention and 
+
+Inter-Frame Attention components from the DAE, respec-tively. We evaluate these variants on two tasks in DMCR (“Walker Run”, “Hopper Stand”) and two tasks in Meta-World (“Drawer Open”, “Dial Turn”). Figure 6 presents the results. Both ablated variants show significant performance degradation compared to DRP. This confirms that both mechanisms are essential: Intra-Frame Attention is crucial for modeling spatial relationship among different parts; Inter-Frame Attention is necessary for cap-turing their individual temporal relationship. 
+
+5.4.2. Transfer Gain Attribution 
+
+Next, we address Q4 : Are the improvements on down-stream tasks due to the pre-trained local motion represen-tations? We conduct two critical comparisons: (1) w/o pre-7Table 1. Ablation study on pre-trained dynamics model. We report the mean and standard deviation on DMCR tasks.                             
+
+> Method Walker Run Hopper Stand DRP 681 ±39 796 ±114 DRP w/o dyn. 613 ±45 708 ±106
+> ∆dyn. ↓10.0% ↓11.1%
+> IPV 595 ±67 634 ±128 IPV w/o dyn. 586 ±61 628 ±134
+> ∆dyn. ↓1.5% ↓0.9%
+
+training: We train our model from scratch (“DRP w/o pre”) to validate the benefit of pre-training. (2) vs. Global Pre-training: To isolate the advantage of our pre-training based on local motion representations, we compare it with a vari-ant (“IPV pre DRP ft”). This variant utilizes a pre-trained model from a global modeling method, IPV [38], but em-ploys our identical fine-tuning framework. As shown in Figure 7, our full method (DRP) signifi-cantly outperforms “DRP w/o pre”, demonstrating that pre-training provides valuable prior knowledge and acceler-ates downstream policy learning. Importantly, our method also shows a clear performance improvement compared to “IPV pre DRP ft”. In addition, we ablate the pre-trained dynamics model. As shown in Table 1, removing our dy-namics model (“DRP w/o dyn.”) causes a massive perfor-mance degradation. In contrast, removing IPV’s dynamics (“IPV w/o dyn.”) model has a minimal impact. These re-sults exhibit that our pre-trained local motion representa-tions have learned transferable motion patterns, while the baselines primarily focus on static representations. 
+
+5.5. Visualization of Video Predictions 
+
+Finally, we address Q5 : What benefits does the pre-trained local motion representation bring for cross-domain trans-fer? To investigate this question, we perform open-loop video prediction in both the source domain and cross-domain settings to illustrate the results. First, we examine whether the learned local motion representations accurately capture motion patterns in the source domain. Given the initial frames of a video, we per-form open-loop video prediction using our dynamics model and compare the results with global-modeling approaches, IPV [38] and PreLAR [43]. As shown in Figure 8(a), our method predicts future frames that more accurately reflect long-horizon motion. For example: 1) DRP more accu-rately captures the shape of the hand and correctly predicts the subsequent 2) movement and 3) disappearance of the hand from the scene. In contrast, IPV and PreLAR fail to capture these details. Second, we evaluate cross-domain transfer by perform-ing zero-shot open-loop predictions on a robot manipulation (b) Meta-World   
+
+> (a) Source D omain
+> Ground
+> Truth:
+> DRP:
+> IPV:
+> PreLAR:
+> Ground
+> Truth:
+> DRP:
+> IPV:
+> PreLAR:
+> Figure 8. Visualization of Video Predictions. Open-loop predic-tions on (a) the source domain (SSV2) and (b) a zero-shot cross-domain setting (Meta-World).
+
+task (Meta-World). As shown in Figure 8(b), our DRP gen-erates accurate future-frame predictions for previously un-seen robotic agents. Specifically, 4) DRP more accurately preserves the shape of the robotic arm, whereas IPV and PreLAR exhibit varying degrees of arm deformation. In ad-dition, 5) DRP is able to capture the robotic gripper, which is crucial for manipulation tasks, while the gripper disap-pears in the predictions of IPV and PreLAR. This demon-strates that our pre-trained local motion representations fa-cilitate capturing dynamic semantic information. 
+
+## 6. Conclusion 
+
+Video pre-training offers a promising path to improving downstream RL. The major obstacle lies in the morpho-logical mismatch between pre-training data and agents. Nonetheless, local motion patterns exhibit cross-agent sim-ilarity. Inspired by this insight, we propose a novel Decon-struct–Recompose Paradigm (DRP) to model such trans-ferable local motion patterns. In the Deconstruct phase, global motion is broken down into a set of local Atomic Actions, and a Dual-Attention Encoder (DAE) learns local motion representations from these Atomic Actions, captur-ing their spatiotemporal relationships. In the Recompose phase, these local motion representations are composed us-ing a learnable Motion Aggregation Token ‘[MAT]’ through latent dynamics model learning. Extensive experiments demonstrate that DRP significantly improves sample effi-ciency and performance across a wide range of downstream robotic control and manipulation tasks. 8Acknowledgments 
+
+This work was supported by the National Natural Science Foundation of China (No. 62576029) and the National Natural Science Foundation of China ( No. 62536001). 
+
+## References 
+
+[1] Artemij Amiranashvili, Alexey Dosovitskiy, Vladlen Koltun, and Thomas Brox. Motion perception in reinforcement learning with dynamic objects. In Conference on Robot Learning , pages 156–168, 2018. 1 [2] Bowen Baker, Ilge Akkaya, Peter Zhokhov, Joost Huizinga, Jie Tang, Adrien Ecoffet, Brandon Houghton, Raul Sampe-dro, and Jeff Clune. Video pretraining (VPT): learning to act by watching unlabeled online videos. Advances in Neural Information Processing Systems , 35:24639–24654, 2022. 1 [3] Chethan Bhateja, Derek Guo, Dibya Ghosh, Anikait Singh, Manan Tomar, Quan Vuong, Yevgen Chebotar, Sergey Levine, and Aviral Kumar. Robotic offline rl from inter-net videos via value-function pre-training. arXiv preprint arXiv:2309.13041 , 2023. 1 [4] Yuanpei Chen, Tianhao Wu, Shengjie Wang, Xidong Feng, Jiechuan Jiang, Zongqing Lu, Stephen McAleer, Hao Dong, Song-Chun Zhu, and Yaodong Yang. Towards human-level bimanual dexterous manipulation with reinforcement learn-ing. Advances in Neural Information Processing Systems ,35:5150–5163, 2022. [5] Yuanzhe Cui, Zhipeng Xu, Lou Zhong, Pengjie Xu, Yichao Shen, and Qirong Tang. A task-adaptive deep reinforcement learning framework for dual-arm robot manipulation. IEEE Transactions on Automation Science and Engineering , 22: 466–479, 2025. 1 [6] Dibya Ghosh, Chethan Anand Bhateja, and Sergey Levine. Reinforcement learning from passive data via latent inten-tions. In International Conference on Machine Learning ,pages 11321–11339, 2023. 1, 2 [7] Raghav Goyal, Samira Ebrahimi Kahou, Vincent Michal-ski, Joanna Materzynska, Susanne Westphal, Heuna Kim, Valentin Haenel, Ingo Fruend, Peter Yianilos, Moritz Mueller-Freitag, et al. The ”something something” video database for learning and evaluating visual common sense. In Proceedings of the IEEE/CVF International Conference on Computer Vision , pages 5842–5850, 2017. 6 [8] Jake Grigsby and Yanjun Qi. Measuring visual general-ization in continuous control from pixels. arXiv preprint arXiv:2010.06740 , 2020. 6 [9] Danijar Hafner, Timothy Lillicrap, Jimmy Ba, and Moham-mad Norouzi. Dream to control: Learning behaviors by la-tent imagination. In International Conference on Learning Representations , 2020. 2, 3, 5 [10] Danijar Hafner, Timothy Lillicrap, Mohammad Norouzi, and Jimmy Ba. Mastering atari with discrete world models. In In-ternational Conference on Learning Representations , 2021. 2, 6 [11] Danijar Hafner, Kuang-Huei Lee, Ian Fischer, and Pieter Abbeel. Deep hierarchical planning from pixels. Advances in Neural Information Processing Systems , 35:26091–26104, 2022. 1 [12] Danijar Hafner, Jurgis Pasukonis, Jimmy Ba, and Timothy Lillicrap. Mastering diverse control tasks through world models. Nature , 640(8059):647–653, 2025. 2, 6 [13] Nicklas Hansen, Hao Su, and Xiaolong Wang. Temporal difference learning for model predictive control. In Interna-tional Conference on Machine Learning , pages 8387–8406, 2022. 2 [14] Kaiming He, Xinlei Chen, Saining Xie, Yanghao Li, Piotr Doll´ ar, and Ross Girshick. Masked autoencoders are scalable vision learners. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition , pages 16000– 16009, 2022. 4 [15] Stephen James, Zicong Ma, David Rovick Arrojo, and An-drew J. Davison. Rlbench: The robot learning benchmark & learning environment. IEEE Robotics and Automation Let-ters , 5(2):3019–3026, 2020. 2, 6 [16] Nikita Karaev, Ignacio Rocco, Benjamin Graham, Natalia Neverova, Andrea Vedaldi, and Christian Rupprecht. Co-tracker: It is better to track together. In European Conference on Computer Vision , pages 18–35, 2024. 4 [17] Diederik P Kingma and Max Welling. Auto-encoding varia-tional bayes. In International Conference on Learning Rep-resentations , 2014. 2 [18] Po-Chen Ko, Jiayuan Mao, Yilun Du, Shao-Hua Sun, and Joshua B. Tenenbaum. Learning to act from actionless videos through dense correspondences. In International Conference on Learning Representations , 2024. 2 [19] Michael Laskin, Aravind Srinivas, and Pieter Abbeel. Curl: Contrastive unsupervised representations for reinforcement learning. In International Conference on Machine Learning ,pages 5639–5650, 2020. 1 [20] Sergey Levine, Chelsea Finn, Trevor Darrell, and Pieter Abbeel. End-to-end training of deep visuomotor policies. 
+
+Journal of Machine Learning Research , 17(39):1–40, 2016. 1[21] Hao Luo, Bohan Zhou, and Zongqing Lu. Pre-trained vi-sual dynamics representations for efficient policy learning. In European Conference on Computer Vision , pages 249– 267, 2024. 1, 3 [22] Yecheng Jason Ma, Shagun Sodhani, Dinesh Jayaraman, Os-bert Bastani, Vikash Kumar, and Amy Zhang. VIP: towards universal visual reward and representation via value-implicit pre-training. In International Conference on Learning Rep-resentations , 2023. 1 [23] Suraj Nair, Aravind Rajeswaran, Vikash Kumar, Chelsea Finn, and Abhinav Gupta. R3M: A universal visual repre-sentation for robot manipulation. In Conference on Robot Learning , pages 892–909, 2023. 1, 2 [24] Simone Parisi, Aravind Rajeswaran, Senthil Purushwalkam, and Abhinav Gupta. The unsurprising effectiveness of pre-trained vision models for control. In International Confer-ence on Machine Learning , pages 17359–17371, 2022. 2 [25] Zhenghao Peng, Wenjie Luo, Yiren Lu, Tianyi Shen, Cole Gulino, Ari Seff, and Justin Fu. Improving agent behaviors with RL fine-tuning for autonomous driving. In European Conference on Computer Vision , pages 165–181, 2024. 1 
+
+9[26] Ilija Radosavovic, Tete Xiao, Stephen James, Pieter Abbeel, Jitendra Malik, and Trevor Darrell. Real-world robot learn-ing with masked visual pre-training. In Conference on Robot Learning , pages 416–426, 2023. 1, 2 [27] Tianhe Ren, Shilong Liu, Ailing Zeng, Jing Lin, Kunchang Li, He Cao, Jiayu Chen, Xinyu Huang, Yukang Chen, Feng Yan, et al. Grounded sam: Assembling open-world models for diverse visual tasks. arXiv preprint arXiv:2401.14159 ,2024. 4 [28] Dominik Schmidt and Minqi Jiang. Learning to act without actions. In International Conference on Learning Represen-tations , 2024. 1 [29] Younggyo Seo, Kimin Lee, Stephen James, and Pieter Abbeel. Reinforcement learning with action-free pre-training from videos. In International Conference on Ma-chine Learning , pages 19561–19579, 2022. 1, 2, 6, 7 [30] Kihyuk Sohn, Honglak Lee, and Xinchen Yan. Learning structured output representation using deep conditional gen-erative models. Advances in Neural Information Processing Systems , 28, 2015. 3 [31] Zachary Teed and Jia Deng. Raft: Recurrent all-pairs field transforms for optical flow. In European Conference on Computer Vision , pages 402–419, 2020. 3 [32] Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszko-reit, Llion Jones, Aidan N Gomez, Lukasz Kaiser, and Illia Polosukhin. Attention is all you need. Advances in Neural Information Processing Systems , 30, 2017. 4 [33] Jinwen Wang, Youfang Lin, Xiaobo Hu, Siyu Yang, Sheng Han, Shuo Wang, and Kai Lv. From pixels to temporal correlations: Learning informative representations for rein-forcement learning pre-training. In Proceedings of the 33rd ACM International Conference on Multimedia , pages 679– 688, 2025. 1 [34] Qi Wang, Zhipeng Zhang, Baao Xie, Xin Jin, Yunbo Wang, Shiyu Wang, Liaomo Zheng, Xiaokang Yang, and Wenjun Zeng. Disentangled world models: Learning to transfer se-mantic knowledge from distracting videos for reinforcement learning. In Proceedings of the IEEE/CVF International Conference on Computer Vision , pages 2599–2608, 2025. 1, 2, 6, 7 [35] Shuo Wang, Zhihao Wu, Xiaobo Hu, Youfang Lin, and Kai Lv. Skill-based hierarchical reinforcement learning for target visual navigation. IEEE Transactions on Multimedia , 25: 8920–8932, 2023. 1 [36] Shuo Wang, Zhihao Wu, Jinwen Wang, Xiaobo Hu, Youfang Lin, and Kai Lv. How to learn domain-invariant represen-tations for visual reinforcement learning: An information-theoretical perspective. In International Joint Conference on Artificial Intelligence , pages 1389–1397, 2024. 1 [37] Yihan Wang, Lahav Lipson, and Jia Deng. SEA-RAFT: sim-ple, efficient, accurate RAFT for optical flow. In European Conference on Computer Vision , pages 36–54, 2024. 3, 4 [38] Jialong Wu, Haoyu Ma, Chaoyi Deng, and Mingsheng Long. Pre-training contextualized world models with in-the-wild videos for reinforcement learning. Advances in Neural In-formation Processing Systems , 36:39719–39743, 2023. 1, 2, 5, 6, 7, 8 [39] Haofei Xu, Jing Zhang, Jianfei Cai, Hamid Rezatofighi, and Dacheng Tao. Gmflow: Learning optical flow via global matching. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition , pages 8121– 8130, 2022. 3 [40] Weirui Ye, Yunsheng Zhang, Pieter Abbeel, and Yang Gao. Become a proficient player with limited data through watch-ing pure videos. In International Conference on Learning Representations , 2023. 1, 2 [41] Tianhe Yu, Deirdre Quillen, Zhanpeng He, Ryan Julian, Karol Hausman, Chelsea Finn, and Sergey Levine. Meta-world: A benchmark and evaluation for multi-task and meta reinforcement learning. In Conference on Robot Learning ,pages 1094–1100, 2020. 6, 7 [42] Dongkun Zhang, Jiaming Liang, Ke Guo, Sha Lu, Qi Wang, Rong Xiong, Zhenwei Miao, and Yue Wang. Carplanner: Consistent auto-regressive trajectory planning for large-scale reinforcement learning in autonomous driving. In Proceed-ings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition , pages 17239–17248, 2025. 1 [43] Lixuan Zhang, Meina Kan, Shiguang Shan, and Xilin Chen. Prelar: World model pre-training with learnable action rep-resentation. In European Conference on Computer Vision ,pages 185–201, 2024. 1, 3, 6, 7, 8 
+
+10 Local Motion Matters: A Deconstruct–Recompose Paradigm for Reinforcement Learning Pre-training from Videos 
+
+# Supplementary Material 
+
+## 7. Details of Pre-training and Fine-tuning 
+
+This section provides the detailed optimization objectives used in both the Pre-training and Fine-tuning stages. These objectives correspond directly to the DRP training schedule described in Section 4.4 of our main manuscript. The com-plete pre-training and fine-tuning algorithms are provided in Algorithm 1 and Algorithm 2, respectively. 
+
+7.1. Pre-training Objectives 
+
+During pre-training, DRP optimizes two objectives: aMasked AutoEncoder (MAE) reconstruction objective for deconstructing global motion into local motion representa-tions, and a latent dynamics model objective for recompos-ing local motion representations. The full pre-training stage is summarized in Algorithm 1. 
+
+MAE Reconstruction Objective. To learn local motion representations that capture the spatiotemporal relation-ships among Atomic Actions, we train the Dual-Attention Encoder (DAE) using a Masked Autoencoder (MAE) re-construction objective. During pre-training, we randomly mask a subset of Atomic Action tokens and require the de-coder to reconstruct only the corresponding masked Atomic Actions from the visible tokens: 
+
+LMAE = 1
+
+|M| 
+
+X
+
+> i∈M
+
+∥ˆui − ui∥22 , (5) where M denotes the set of masked Atomic Actions, ui
+
+represents the original Atomic Action patch, and ˆui is the reconstructed patch. This objective encourages the DAE to model the spatiotemporal relationships necessary to infer the masked Atomic Actions. 
+
+Latent Dynamics Objective. The latent dynamics model learns to recompose local motion representations through the aggregated action representation aagg  
+
+> t
+
+. Following Dreamer, the latent dynamic model is trained with an im-age reconstruction term and a KL regularization term: 
+
+Ldyn = Eqθ
+
+" TX
+
+> t=1
+
+
+
+− ln pθ (ot | zt) + βz Lz
+
+#
+
+,
+
+Lz = KL 
+
+h
+
+qθ (zt | zt−1, a agg 
+
+> t−1
+
+, o t) pθ (ˆ zt | zt−1, a agg 
+
+> t−1
+
+)
+
+i
+
+.
+
+(6) This objective ensures that the recomposed motion repre-sentation acquires dynamic semantics. 
+
+Algorithm 1 DRP Pre-training  
+
+> 1:
+
+Initialize parameters ζ of DAE, θ of latent dynamics model, image encoder, and decoder randomly  
+
+> 2:
+
+Load unlabeled video dataset D 
+
+> 3:
+
+for every iteration do  
+
+> 4:
+
+Randomly sample videos {o1: T } ∼ D 
+
+# Atomic Action Extraction  
+
+> 5:
+
+Compute optical flow {F1: T −1} using Sea-RAFT  
+
+> 6:
+
+Segment foreground mask M1 via Grounded SAM  
+
+> 7:
+
+Track K keypoints {pk 
+
+> 1: T
+
+} using Co-tracker  
+
+> 8:
+
+Extract Atomic Action patches {ukt }
+
+# Local Motion Representation Learning  
+
+> 9:
+
+Tokenize ukt into τ kt and prepend ‘[MAT]’  
+
+> 10:
+
+Encode tokens via DAE to obtain local motion rep-resentations 
+
+# Recompose via Latent Dynamics Model  
+
+> 11:
+
+Obtain aggregated representation aagg t from ‘[MAT]’  
+
+> 12:
+
+Infer the latent state zt:
+
+zt ∼ qθ (zt | zt−1, a agg t−1, o t). 
+
+> 13:
+
+Update latent dynamic model by minimizing Ldyn 
+
+in Eq. (6).  
+
+> 14:
+
+end for 
+
+7.2. Fine-tuning Objectives 
+
+The Fine-tuning stage jointly fine-tunes the DAE and the latent dynamics model, and maps the recomposed motion representations into the downstream agent’s action space to accelerate policy learning. The overall objective consists of three components: (1) MAE fine-tuning of the DAE, (2) fine-tuning of the latent dynamics model, and (3) the Action-Specific Dynamics Model objective, as detailed in Algorithm 2. 
+
+MAE Fine-tuning for DAE. The DAE is slowly fine-tuned using the same MAE objective as in pre-training: 
+
+Lft MAE = LMAE . (7) This retains the pre-trained transferable local motion repre-sentations while allowing the model to gradually incorpo-rate new ones specific to the downstream agent (e.g., rigid-joint motions). 1Latent Dynamics Fine-tuning. The pre-trained latent dynamics model is slowly fine-tuned so that the Motion Ag-gregation Token ‘[MAT]’ can selectively recompose the lo-cal motion representations to match the downstream agent: 
+
+Lft dyn = Ldyn , (8) with the same form as in Eq. (6). 
+
+Action-Specific Dynamics Model Objective. We further introduce an Adapter together with an Action-Specific Dy-namics Model to map the recomposed local motion repre-sentations into the downstream agent’s action space. The Adapter bridges the pre-trained latent dynamics model and the Action-Specific Dynamics Model. The optimization objective of the Action-Specific Dy-namics Model is: 
+
+Laction = Eqϕ,q θ
+
+h TX
+
+> t=1
+
+
+
+− ln pθ (ot|st, c ) − βr ln pφ(rt|st)+βsKL [ qϕ(st|st−1, a t−1, z t) ∥ pϕ(ˆ st|st−1, a t−1)] 
+
+i 
+
+,
+
+(9) where st is the agent-specific state, zt is the latent state of the pre-trained latent dynamics model. c is a context vari-able adopted from IPV [38], computed by encoding ran-domly sampled frames from the video. This context vari-able c captures static context information (e.g., backgrounds and textured appearance). 
+
+## 8. Policy Learning 
+
+During the fine-tuning stage of DRP, policy learning is per-formed on top of the Action-Specific Dynamics Model. Fol-lowing Dreamer, both the actor and critic are optimized en-tirely using imagined trajectories generated within the latent space of the Action-Specific Dynamics Model. This design enables highly sample-efficient reinforcement learning and allows the agent to fully leverage the transferable motion knowledge acquired during pre-training. 
+
+8.1. Latent Imagination Rollouts 
+
+Given the current agent-specific latent state st and policy 
+
+πψ , the dynamics model recursively produces an imagined trajectory: 
+
+{ˆsτ , ˆaτ , ˆrτ }t+Hτ =t ,
+
+where H denotes the imagination horizon, and  τ repre-sents the various time steps in the imagined trajectory. Each imagined transition is generated by: • sampling an action ˆaτ ∼ πψ (· | ˆsτ ),• predicting the next latent state via the transition model 
+
+pϕ(ˆ sτ +1 | ˆsτ , ˆaτ ) of Action-Specific Dynamics Model, • predicting the reward ˆrτ via pφ(ˆ rτ | ˆsτ ).
+
+Algorithm 2 DRP Fine-tuning  
+
+> 1:
+
+Load pre-trained parameters ζ of DAE, θ of latent dy-namics model, image encoder and decoder  
+
+> 2:
+
+Initialize parameters ϕ of Action-Specific Dynamics, ω
+
+of Adapter, and φ of reward predictors randomly  
+
+> 3:
+
+Initialize parameters ψ of actor πψ (a|s) and ξ of critic 
+
+vξ (s) 
+
+> 4:
+
+Initialize replay buffer B 
+
+> 5:
+
+for every iteration do  
+
+> 6:
+
+# Collect Transitions  
+
+> 7:
+
+Get state zt ∼ qθ (zt | zt−1, a agg 
+
+> t−1
+
+, o t), st ∼ qϕ
+
+ st |
+
+st−1, a t−1, z t
+
+ 
+
+> 8:
+
+Get action at ∼ πψ (at | st) 
+
+> 9:
+
+Add transition {ot, a t, r t} to replay buffer B 
+
+> 10:
+
+# Deconstruct Fine-tuning  
+
+> 11:
+
+Extract Atomic Actions {ukt } 
+
+> 12:
+
+Fine-tune the DAE by minimizing Lft MAE in Eq. (7)  
+
+> 13:
+
+# Recompose Fine-tuning  
+
+> 14:
+
+Compute aggregated representation aagg t 
+
+> 15:
+
+Fine-tune latent dynamics model by minimizing 
+
+Lft dyn in Eq. (8)  
+
+> 16:
+
+# Action-Specific Dynamics Model  
+
+> 17:
+
+Compute latent state zt of latent dynamics model  
+
+> 18:
+
+Learn Action-Specific Dynamics Model by mini-mizing Laction in Eq. (9)  
+
+> 19:
+
+# Policy Learning  
+
+> 20:
+
+Imagine future latent rollouts {ˆsτ , ˆaτ , ˆrτ }t+Hτ =t us-ing the Action-Specific Dynamics Model and actor  
+
+> 21:
+
+Compute λ-return V λτ in Eq. (10)  
+
+> 22:
+
+Update critic by minimizing Lcritic in Eq. (11)  
+
+> 23:
+
+Update actor by minimizing Lactor in Eq. (12)  
+
+> 24:
+
+end for 
+
+These imagined trajectories serve as the sole training data for the actor and critic, reducing reliance on real en-vironment interaction. 
+
+8.2. Critic Learning 
+
+The critic vξ estimates the value of latent states. We use the 
+
+λ-return to construct multi-step bootstrapped targets: 
+
+V λτ
+
+.
+
+= ˆ rτ + γ
+
+((1 − λ) vξ (ˆ sτ +1 ) + λ V λτ +1 , τ < t + H, vξ (ˆ sτ +1 ), τ = t + H. 
+
+(10) The critic is trained to regress the  λ-return using a squared loss: 
+
+Lcritic (ξ) = E
+
+"t+HX 
+
+> τ=t
+
+12
+
+ vξ (ˆ sτ ) − sg( V λτ )2
+
+#
+
+, (11) where sg( ·) is the stop-gradient operator. 2Dual Attention Encoder       
+
+> 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀
+> 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀
+
+(a) Pre-training                 
+
+> Don ruc
+> Rompo e
+> 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀
+> {𝐀 𝐀
+> 𝐀 }𝐀 =𝐀
+> 𝐀 {𝐀 𝐀
+> 𝐀 }𝐀 =𝐀
+> 𝐀 {𝐀 𝐀
+> 𝐀 }𝐀 =𝐀
+> 𝐀
+> {𝐀 𝐀
+> 𝐀 }𝐀 =𝐀
+> 𝐀 {𝐀 𝐀
+> 𝐀 }𝐀 =𝐀
+> 𝐀 {𝐀 𝐀
+> 𝐀 }𝐀 =𝐀
+> 𝐀 MAT MAT MAT
+> 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀
+> 𝐀 𝐀
+> 𝐀𰠀𰠀
+> 𝐀 𝐀
+> 𝐀𰠀𰠀 𝐀 𝐀
+> 𝐀𰠀𰠀
+> 𝐀 𝐀 𝐀 𝐀 𝐀 𝐀
+> Dual Attention Encoder
+> Patch Projection
+> : Coordinate Embedding : Temporal Embedding : Content Embedding
+
+Figure 9. Illustration of DAE Processing. For each extracted Atomic Action, we generate a token by combining its Content Embedding with Coordinate and Temporal Embeddings. These tokens, prepended with a learnable ‘[MAT]’ token, are processed by the DAE to produce the aggregated motion representation aagg .
+
+8.3. Actor Learning 
+
+The actor is optimized to select actions that maximize the critic’s λ-return on imagined trajectories. An entropy regu-larization term encourages sufficient exploration: 
+
+Lactor (ψ) = E
+
+"t+HX 
+
+> τ=t
+
+ −V λτ − η H[πψ (ˆ aτ | ˆsτ )] #
+
+, (12) where η controls the entropy weight. A detailed algorithmic description of the policy learning process is provided in the 
+
+Policy Learning block of Algorithm 2. 
+
+## 9. Dual-Attention Formulation of the DAE 
+
+This section provides the mathematical formulation of the Dual-Attention Encoder (DAE). The DAE consists of two complementary attention branches: Intra-Frame Attention and Inter-Frame Attention, which models the spatial and temporal relationships among Atomic Actions, respectively. 
+
+DAE Token Construction. As shown in Figure 9, for each timestep t, the input to the DAE is constructed from the extracted Atomic Actions. Given a tracked keypoint 
+
+pkt , a local optical flow patch ukt is first cropped and passed through a Patch Projection module to obtain a content em-bedding. This embedding is then combined with a Co-ordinate Embedding and a Temporal Embedding to yield the final token embedding. To enable aggregation dur-ing the Recompose phase, a learnable Motion Aggrega-tion Token ‘[MAT]’ is prepended to each frame’s token sequence. Thus, the complete token set at timestep t is: 
+
+Tt = {[MAT] , τ 1 
+
+> t
+
+, τ 2 
+
+> t
+
+, . . . , τ Kt }. Stacking all tokens yields the matrix: Xt ∈ R(K+1) ×d, which serves as the input to the Dual-Attention Blocks. The updated ‘[MAT]’ token after Dual-Attention produces the aggregated motion representation aagg  
+
+> t
+
+used in the latent dynamics model. 
+
+Intra-Frame Attention. This branch models spatial rela-tionships within each frame. Given Xt, the query/key/value projections are: 
+
+Qt = XtW intra  
+
+> Q
+
+, Kt = XtW intra  
+
+> K
+
+, Vt = XtW intra  
+
+> V
+
+,
+
+(13) with W intra  
+
+> Q
+
+, W intra  
+
+> K
+
+, W intra  
+
+> V
+
+∈ Rd×d. The Intra-Frame At-tention output is: 
+
+IntraAttn( Xt) = Softmax 
+
+ QtK⊤
+
+> t
+
+√d
+
+
+
+Vt. (14) This allows the model to capture how local motion compo-nents interact spatially within the same frame. 
+
+Inter-Frame Attention. To capture temporal relation-ships, Inter-Frame Attention applies causal self-attention across timesteps for each local part k. Given the sequence of features for the k-th token across time: 
+
+Sk = {τ k 
+
+> 1
+
+, τ k 
+
+> 2
+
+, . . . , τ kT } ∈ RT ×d,
+
+we compute: 
+
+Qk = SkW inter  
+
+> Q
+
+, Kk = SkW inter  
+
+> K
+
+, V k = SkW inter  
+
+> V
+
+,
+
+(15) where W inter  
+
+> Q
+
+, W inter  
+
+> K
+
+, W inter  
+
+> V
+
+∈ Rd×d. Causal masking is applied using Mcausal ∈ RT ×T to prevent attending to fu-ture timesteps. The Inter-Frame Attention output is: 
+
+InterAttn( Sk) = Softmax 
+
+ Qk(Kk)⊤
+
+√d + Mcausal 
+
+
+
+V k.
+
+(16) 
+
+Dual-Attention Block. Each DAE block integrates the two attention mechanisms sequentially with residual con-nections and Layer Normalization. Let Z denote the input tensor to the block. The update process is formulated as: 
+
+Z′ = Z + IntraAttn (Z) (17) 
+
+Z′′ = Z′ + InterAttn (Z′) (18) 
+
+Zout = Z′′ + MLP (LN (Z′′ )) , (19) 3Cheetah Run Walker Run Hopper Stand Figure 10. Examples of DMControl Remastered. 
+
+where Eq. (17) applies Intra-Frame Attention for each frame, and Eq. (18) applies Inter-Frame Attention for each token sequence across time. This sequential design ensures that the model captures both spatial consistency and tempo-ral dynamics effectively. 
+
+Discussion. Intra-Frame Attention captures spatial rela-tionships among Atomic Actions within each frame, while Inter-Frame Attention captures the temporal relationships of each local motion trajectory. Together, these two atten-tion mechanisms enable the DAE to learn transferable local motion representations. 
+
+## 10. Experimental Details 
+
+10.1. Pre-training Dataset 
+
+Following IPV, we adopt the Something-Something-V2 (SSV2) dataset for unsupervised pre-training. SSV2 con-tains more than 220K videos of humans interacting with everyday objects, covering a wide range of motion pat-terns and object manipulations. After filtering out videos with fewer than 25 frames, we retain 162K videos for pre-training. This large-scale and diverse dataset provides a rich data foundation for learning transferable local motion rep-resentations. 
+
+10.2. Benchmark Environments 
+
+10.2.1. DMControl Remastered 
+
+DMC Remastered (DMCR) is a variant of the DeepMind Control Suite featuring randomly generated graphics, em-phasizing visual diversity. In each episode, seven factors affecting visual conditions are randomly sampled, including background, floor texture, robot body color, target color, re-flectance, camera position, and lighting. Following IPV, we evaluate the same three locomotion tasks: “Walker Run”, “Hopper Stand”, and “Cheetah Run”, as shown in Fig-ure 10. Each episode lasts 1000 steps with an action repeat of 2, and rewards range from 0 to 1. All methods are trained for 1.02M environment steps to ensure fair comparison. 
+
+10.2.2. Meta-World 
+
+Meta-World consists of 50 diverse robotic manipulation tasks. Following IPV and PreLAR, we evaluate six same tasks: “Dial Turn”, “Drawer Open”, “Lever Pull”, “But-ton Press Topdown Wall”, “Reach”, and “Door Lock”, as Drawer Open Dial Turn Lever Pull   
+
+> Reach Door Lock
+> Button Press
+> Topdown Wall
+> Figure 11. Examples of Meta-World.
+
+shown in Figure 11. Each episode contains 500 steps with no action repetition, and the action space is 4-dimensional. Rewards range from 0 to 10. All methods are trained for 255K environment steps. 
+
+## 11. Additional Ablation Studies 
+
+We further evaluate the key design choices of DRP, includ-ing the two forms of positional embeddings (Coordinate Embedding and Temporal Embedding) used in the Dual-Attention Encoder (DAE) and the Adapter architecture. 
+
+11.1. Ablation on Positional Embeddings in DAE 
+
+When encoding Atomic Actions, the DAE augments the content embedding with two forms of positional informa-tion: (1) a coordinate embedding that specifies where the flow patch is located, and (2) a temporal embedding that in-dicates the timestep at which it occurs. These two positional cues are critical for enabling the DAE to capture the spatial and temporal relationships among Atomic Actions. To evaluate the importance of these two positional en-codings, we individually remove one type of positional en-coding from the DRP. As shown in Figure 12, “DRP w/o Coord. Emb.” denotes the variant without the Coordi-nate Embedding, and “DRP w/o Temp. Emb.” denotes the variant without the Temporal Embedding. The exper-imental results indicate that removing either positional em-bedding leads to significant performance degradation. This suggests that spatial position and temporal order informa-tion are critical for modeling the spatiotemporal relation-ships among atomic actions, and are therefore essential for learning transferable local motion representations. 
+
+11.2. Ablation on the Adapter Design 
+
+During the fine-tuning stage, the Adapter serves as a key bridge connecting the pre-trained latent dynamics model and the Action-Specific Dynamics Model. To evaluate the necessity of the Adapter, we replace it with a simple Multi-Layer Perceptron (MLP) projection layer. As shown in the Figure 13, the variant where the Adapter is replaced by an MLP projection layer, denoted as “DRP 4Figure 12. Ablation study on Positional Embeddings in DAE. We analyze the necessity of the two positional encodings within the DAE module. The results compare our full model DRP against variants where either the Coordinate Embedding (w/o Coord. Emb.) or the Temporal Embedding (w/o Temp. Emb.) is removed on the “Walker Run” and “Hopper Stand” tasks from DMCR, and the “Drawer Open” and “Dial Turn” tasks from Meta-World.   
+
+> Figure 13. Ablation study on the Adapter design. We compare DRP with a variant where the Adapter is replaced by a simple Multi-Layer Perceptron (MLP) projection layer (denoted as “DRP MLP Projection”) on the “Walker Run” task from DMCR and the “Drawer Open” task from Meta-World.
+
+MLP Projection,” results in a significant performance drop. This indicates that the MLP’s limited expressive capacity prevents it from effectively mapping the local motion rep-resentations to the agent-specific action space. This re-sult highlights the critical role of the Adapter in effectively aligning the transferable local motion representation space with the agent-specific action space. 
+
+## 12. Additional Visualization and Analysis 
+
+In this section, we provide additional qualitative analyses to further validate the effectiveness of our proposed local motion representations. We present visualizations spanning three aspects: source-domain video prediction, image re-construction, and t-SNE analysis of local motion represen-tations. 
+
+12.1. Source-Domain Video Prediction 
+
+In addition to Figure 8(a) in the main manuscript, we pro-vide more open-loop video prediction results on the source domain SSV2 test set to further evaluate the effectiveness of the learned local motion representations. Given initial video frames, the latent dynamics model performs open-loop pre-dictions conditioned on the local motion representations. As shown in Figure 15, our model generates more ac-curate future frame predictions compared to the baselines. Specifically: (1) Hand Motion: DRP accurately captures the hand’s movement and its subsequent exit from the frame, whereas the predictions from IPV and PreLAR fail to exhibit this motion. (2) Relative Positional Relation-ships: In the process of pushing an object toward a wall corner, DRP accurately predicts the relative positional rela-tionship as the object approaches the wall corner. In con-trast, the subsequent predictions of IPV and PreLAR fail to exhibit this dynamic change in relative position. Further-more, the wall corner disappears in IPV’s later predictions, while PreLAR fails to capture the corner throughout the en-tire sequence. (3) Object Removal: DRP accurately pre-dicts the process of the hand and cup being removed from the view. Conversely, IPV and PreLAR incorrectly predict the cup as still visible. (Note: Since the object under the cup is occluded in the initial frames, DRP is unable to pre-dict this purple object after the cup is removed, which is a reasonable and expected behavior). (4) Complex Manip-ulation: DRP successfully captures the complex forward and backward motion in the plugging task. Both IPV and PreLAR fail to predict the backward movement of the arm. Furthermore, arm deformation is observed in PreLAR’s pre-dictions. These extended results further confirm that our learned local motion representations effectively capture robust and transferable motion patterns. 
+
+12.2. Image Reconstruction Analysis 
+
+To further investigate the advantages of our proposed lo-cal motion representations, we visualize the image recon-struction results generated by the pre-trained latent dynam-ics model. As shown in Figure 16, compared to the base-line model, our model’s latent state captures finer visual details. Specifically: (1) Visual accuracy: DRP accu-rately preserves the specific shape of the hand, whereas 5Figure 14. t-SNE Visualization of Composed Local Motion Representations. We perform t-SNE visualization on the com-posed local motion representations corresponding to three manip-ulation behaviors that share overall visual similarity (“Pushing something from left to right”, “Pushing something from right to left”, and “Putting something on a surface”). 
+
+IPV generates a blurry reconstruction of hands. Similarly, DRP clearly captures the shape of the manipulated object, while PreLAR produces a blurry appearance. (2) Geomet-ric accuracy: DRP correctly maintains the object’s length, whereas IPV shortens it in the reconstruction. Moreover, DRP successfully captures the object’s orientation, whereas PreLAR fails to reproduce the correct orientation. These results demonstrate that the latent dynamics model based on local motion representations is better at capturing motion-relevant visual features. 
+
+12.3. t-SNE Analysis of Local Motion Representa-tions 
+
+To further investigate the effectiveness of our proposed lo-cal motion representations, we perform t-SNE visualization on the recomposed local motion representations during pre-training, as shown in Figure 14. Specifically, we sample video clips of length T = 25 
+
+from the SSV2 dataset, which are respectively annotated with three different labels: “Pushing something from left to right”, “Pushing something from right to left”, and “Putting something on a surface”. We then visualize the recomposed local motion representations of these clips using t-SNE, as shown in Figure 14. Notably, no video labels are utilized during the pre-training stage. Although these three manipu-lation behaviors exhibit overall visual similarity (especially the two pushing actions in opposite directions), their cor-responding recomposed local motion representations form clearly distinct clusters in the latent space.                          
+
+> Table 2. Hyperparameter analysis on the Keypoints number
+> K.
+> Keypoints number KK= 8 K= 16 K= 32
+> Walker Run 646 ±45 681 ±39 667 ±43 Hopper Stand 775 ±123 796 ±114 799 ±105
+> Table 3. Hyperparameter analysis on the MAE mask ratio ρ.
+
+Mak Ratio ρ ρ = 0 .3 ρ = 0 .5 ρ = 0 .7
+
+Walker Run 648 ± 42 681 ± 39 660 ± 47 
+
+This visualization result strongly demonstrates that our learned local motion representations are capable of effec-tively capturing and distinguishing the agent’s different mo-tion patterns. 
+
+## 13. Hyperparameter Analysis 
+
+Apart from the newly introduced hyperparameters: the number of tracked keypoints K, the MAE mask ratio ρ, the local optical flow patch size P , and the number of Dual-Attention Blocks L, we adopt the same hyperparameter set-tings as IPV and PreLAR to ensure a fair comparison. The complete set of hyperparameters is provided in Table 5. 
+
+13.1. Number of Tracked Motion Keypoints 
+
+This section analyzes the selection of the hyperparameter 
+
+K, the number of motion keypoints tracked in our Atomic Action Extraction module. We investigate the influence of 
+
+K by varying its value across K ∈ { 8, 16 , 32 }. These hyperparameter experiments are conducted on the DMCR tasks “Walker Run” and “Hopper Stand”, with the results summarized in Table 2. As shown in the results, selecting an insufficient num-ber of keypoints ( K = 8 ) leads to suboptimal performance. This is likely because a small K fails to adequately cap-ture all meaningful local motion components that constitute the global motion. Conversely, increasing the number of tracked keypoints from K = 16 to K = 32 yields mini-mal performance improvement, and even results in a slight decrease on the “Walker Run” task. Crucially, this increase significantly improves the overall computational cost. Therefore, we select K = 16 as the default number of tracked motion keypoints in this work, as it strikes the bal-ance between performance and computational cost. 
+
+13.2. MAE Mask Ratio 
+
+We investigate the influence of the MAE masking ratio ρ by evaluating ρ ∈ { 0.3, 0.5, 0.7}. These hyperparameter ex-periments are conducted on the DMCR tasks “Walker Run”, with the results summarized in Table 3. 6Table 4. Hyperparameter analysis on the local optical flow patch size P .
+
+Patch Size P P = 12 P = 16 P = 24 
+
+Walker Run 649 ± 52 681 ± 39 652 ± 32 
+
+A low masking ratio ( ρ = 0 .3) reduces the reconstruc-tion difficulty, which may fail to learn robust spatiotemporal relationships. Conversely, an excessively high masking ra-tio ( ρ = 0 .7) leads to excessive information loss, making effective reconstruction impossible. As shown in Table 3, a ratio of 0.5 achieves the optimal performance. 
+
+13.3. Local Patch Size 
+
+We evaluate the influence of the local optical flow patch size P by varying its value across P ∈ { 12 , 16 , 24 }. These hyperparameter experiments are conducted on the DMCR task “Walker Run”, with the results summarized in Table 4. A smaller patch size ( P = 12 ) results in an excessively localized receptive field. Such localized features tend to ex-hibit high variance when capturing motion patterns and are highly sensitive to small fluctuations, leading to representa-tions that lack robustness. Conversely, an excessively large patch size ( P = 24 ) implies insufficient deconstruction, where a single patch may include multiple distinct local motion patterns, thereby hindering effective cross-domain transfer. The experimental results demonstrate that P = 16 
+
+balances precise local motion capture and representation ro-bustness. 7GT: 
+
+# DRP: 
+
+# IPV: 
+
+# PreLAR: 
+
+# GT: 
+
+# DRP: 
+
+# IPV: 
+
+# PreLAR: 
+
+# GT: 
+
+# DRP: 
+
+# IPV: 
+
+# PreLAR: 
+
+# GT: 
+
+# DRP: 
+
+# IPV: 
+
+# PreLAR: Figure 15. Open-loop video prediction on the source domain (SSV2) test set. We compare the prediction results of our method (DRP) with IPV and PreLAR, where “GT” denotes Ground Truth. 
+
+8GT: 
+
+## DRP: 
+
+## IPV: 
+
+## PreLAR: 
+
+## GT: 
+
+## DRP: 
+
+## IPV: 
+
+## PreLAR: 
+
+# （1）
+
+# （2）Figure 16. Image reconstruction visualization from the latent dynamics model. We compare the reconstruction results of our method (DRP) with IPV and PreLAR, where “GT” denotes Ground Truth. 
+
+9Table 5. Hyperparameters in our experiments. We use the same hyperparameter setting as IPV. 
+
+Hyperparameter Value Pre-training from Videos Image size 64 × 64 × 3
+
+Image preprocess Linearly rescale from [0, 255] to [-0.5, 0.5] Video segment length T 25 KL weight βz 1.0 Optimizer Adam Learning rate 3 × 10 −4
+
+Batch size 16 Training iterations 6 × 10 5
+
+Number of tracked keypoints K 16 Local optical flow patch size P 16 MAE mask ratio ρ 0.5 Number of Dual Attention Blocks L 6Fine-tuning with MBRL Observation size 64 × 64 × 3
+
+Observation preprocess Linearly rescale from [0, 255] to [-0.5, 0.5] Trajectory segment length T 50 Random exploration 5000 environment steps for Meta-world 1000 environment steps for DMCR Replay buffer capacity 10 6
+
+Training frequency Every 5 environment steps Action-conditional KL weight βs 1.0 Representative reward predictor weight βr 1.0 Intrinsic reward weight λ 1.0 for Meta-World 0.1 for DMCR Imagination horizon H 15 Discount γ 0.99 
+
+λ-target discount 0.95 Entropy regularization η 1 × 10 −4
+
+Batch size 50 for Meta-World 16 for DMCR World model optimizer Adam World model learning rate 3 × 10 −4
+
+Actor optimizer Adam Actor learning rate 8 × 10 −5
+
+Critic optimizer Adam Critic learning rate 8 × 10 −5
+
+Evaluation episodes 10 Number of tracked keypoints K 16 Local optical flow patch size P 16 MAE mask ratio ρ 0.5 Number of Dual Attention Blocks L 610

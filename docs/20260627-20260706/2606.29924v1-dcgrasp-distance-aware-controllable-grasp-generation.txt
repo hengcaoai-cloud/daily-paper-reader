@@ -1,0 +1,450 @@
+Title: DCGrasp: Distance-aware Controllable Grasp Generation
+
+URL Source: https://arxiv.org/pdf/2606.29924v1
+
+Published Time: Tue, 30 Jun 2026 02:13:11 GMT
+
+Number of Pages: 13
+
+Markdown Content:
+# DCGrasp: Distance-aware Controllable Grasp Generation 
+
+# Hiroyasu Akada 1,2 Jes´ us P´ erez 1 Emre Aksan 1 Vasileios Choutas 1 Cristian Romero Alberto Garcia-Garcia 1 Vladislav Golyanik 2 Christian Theobalt 2 Thabo Beeler 11Google 2Max Planck Institute for Informatics, SIC 
+
+Figure 1. Qualitative results for various hand direction signals. Our framework effectively produces physically plausible results complying with the conditioning signal with out-of-domain objects. 
+
+# Abstract 
+
+Generating 3D hand-object interactions is essential for ap-plications in robotics, AR/VR, and synthetic data genera-tion, where flexible controllability and strong generalization to diverse object geometries are required. However, exist-ing methods rarely satisfy these requirements, limiting their practical applicability. We present DCGrasp, a distance-aware controllable grasp generation system built on a novel grasp energy term. This term computes Distance Profile, a signed distance from each hand vertex to the nearest object point, coupled with distance-aware weighting, effectively capturing the semantically similar hand–object interaction in near-contact regions while remaining invariant to object and hand identity. Given various controllable signals, DC-Grasp first generates a Distance Profile based on a Diffu-sion Transformer, together with a corresponding candidate hand pose. We then refine the candidate pose through opti-mization, enforcing consistency between the optimized hand pose and the generated Distance Profile in near-contact re-gions. Our experiments show that DCGrasp produces high-quality, physically plausible grasps with flexible user con-trol, generalizing to diverse object and hand shapes and scales. Our work establishes a robust and versatile pipeline for the synthesis of controllable 3D hand–object interac-tions. 
+
+# 1. Introduction 
+
+Synthesizing realistic 3D hand–object interactions (HOI) is fundamental to applications such as robotics, AR/VR, and synthetic data generation. These applications require not only physically plausible grasps but also flexible control-lability and strong generalization to a variety of object ge-ometries and scales. However, existing methods do not fully satisfy these requirements. Controllability is largely under-explored in the HOI literature, with limited support for ex-plicit conditioning signals. Moreover, learning-based ap-proaches often struggle to generalize to different hand iden-tities and novel objects with diverse shapes and scales out-side of the training datasets. These shortcomings largely limit their practical applicability. In this paper, we propose DCGrasp , a novel system for 
+
+Distance-aware and Controllable Grasp synthesis. DC-Grasp supports multiple conditioning signals, including ob-1  
+
+> arXiv:2606.29924v1 [cs.CV] 29 Jun 2026 Figure 2. Left : Distance Profiles are computed as the signed distance from a selection of hand surface vertices (the inner palm and finger surfaces) Right : A set of interactions yielding similar Distance Profiles, which preserves overall structural semantics across diverse hand-object grasp pairs.
+
+ject geometry, hand shape, orientation, and root distance. Achieving robust generalization across such a diverse input domain constitutes a great challenge with publicly available training data. Moreover, capturing hand-object interactions is time-consuming, involving non-trivial mesh reconstruc-tion and object tracking. Therefore, we aim to improve cross-object generalization by exploring alternative grasp representations. In particular, we observe that Euclidean distances re-main similar across near-contact geometries for the groups of semantically close grasping interactions, as illustrated in Fig. 2. Motivated by this insight, we build our frame-work upon a novel grasp energy term. This term comprises two concepts: Distance Profile and distance-aware weight-ing. Distance Profile encodes the signed distance from each hand vertex to its nearest object point. Despite its simplic-ity, we find that Distance Profile captures hand-object grasp patterns in a manner that is invariant to geometry while pre-serving the overall structural semantics: poke , touch , grab ,
+
+pinch , etc. We then introduce a distance-aware weight-ing, which prioritizes interaction-critical geometries while reducing the influence of distant, non-interacting regions. Based on this grasp energy term, our framework exhibits strong cross-object generalization, enabling the synthesis of high-quality grasps for unseen or arbitrarily scaled hands and objects. DCGrasp consists of two stages: (1) Diffusion–based Distance Profile generation and (2) grasp energy-based op-timization. Firstly, given various controllable signals, our Diffusion Transformer model generates a Distance Profile together with a corresponding candidate hand pose. Sec-ondly, we refine the candidate pose via grasp energy–based optimization, enforcing consistency between the synthe-sized pose and the generated Distance Profile in near-contact regions. This two-stage design decouples interac-tion modeling from object-specific geometry, leading to im-proved controllability and robustness to a wide variety of objects. Unlike existing methods [17, 24] that typically require two separate models to generate initial poses and contact maps for subsequent optimization ( i.e., three-stage pipelines), DCGrasp employs a unified model that jointly produces initial poses and target profiles, simplifying the system training. Our experiments show that DCGrasp produces high-quality, semantically consistent grasps that generalize effec-tively to unseen object geometries and scales. Our method establishes a robust pipeline for physics-plausible and user-controllable hand–object interaction synthesis (Fig. 1). In summary, our contributions are threefold: • A distance-aware grasp energy term : Our energy term combines Distance Profile with a distance weight-ing scheme, producing families of semantically similar grasps in near-contact regions while invariant to geome-tries. • A controllable grasp generation system : We propose 
+
+DCGrasp , a two-stage pipeline that combines Diffusion-based Distance Profile generation with Distance Profile-based optimization, allowing explicit conditioning on ob-ject geometry, hand shape, orientation, and root distance. • Generalization to new hands, object shapes, and scales : DCGrasp decouples interaction modeling from object-specific geometry, producing high-quality, physi-cally plausible grasps that effectively generalize to new object shapes and scales. 
+
+# 2. Related Work 
+
+2.1. Hand Models. 
+
+Recent years have seen substantial progress in hand-object interaction, driven by the development of various hand models. Early works explicitly model 3D hand shape with meshes [2, 39] and parametric models [31, 43]. Other works use implicit functions to represent hand shapes, such as 3D Gaussians [46] or 3D distance fields [11, 25] that re-quires computing Marching Cubes [37] using a large num-ber of 3D point queries. Our formulation is also based on a 2parametric hand model, but could be applied to any other hand representation. One of our novelties is the combi-nation of a simple distance representation and a distance-aware weighting scheme, capturing the main structural se-mantics of near-contact interactions while remaining agnos-tic to hand-object relative poses. 
+
+2.2. Hand-Object Datasets. 
+
+Following the diverse hand model formats, many datasets have been proposed using single [5, 8, 15, 18, 35, 69] or two-hand [19, 26] images. Some work captures hand meshes [41] that grasp rigid [36, 48] or articulated ob-jects [13, 34]. Recent work generates synthetic HOI datasets using a diffusion model [65] or an optimization approach [56]. Although these existing datasets cover di-verse object categories, their hand shape variations are lim-ited ( e.g., 10 subjects [13, 48]). Therefore, we collected a large-scale HOI dataset with 100 subjects for a thorough evaluation of our framework that supports hand shape con-ditioning. However, object diversity is still limited (5 total objects), and thus our distance-aware grasp energy term re-mains critical to achieve cross-object generalization. 
+
+2.3. Grasp Generation. 
+
+Existing works can be broadly categorized into two groups: hand-only grasp generation and whole-body generation with hands. The first group includes grasp estimation from im-ages [10, 14, 21, 47, 59], grasp motion synthesis [7, 9, 20, 33, 44, 50, 61, 62, 64, 66–68], two-hand inter-action [7, 27, 30, 44, 63, 64, 66], and robotic hands grasping [23, 28, 38, 53–55, 57, 60]. Contact-based ap-proaches [4, 7, 17, 24, 32, 48, 52, 66] also generate promis-ing grasps by explicitly modeling physical interaction, e.g., 
+
+leveraging a real contact dataset [3] or predicted contact maps, as in ContactOpt [17] and GraspTTA [24]. These ap-proaches generally rely on a three-stage pipeline: an initial hand pose is first generated, followed by contact prediction and subsequent optimization. In contrast, our grasp energy-based approach allows for a unified formulation that jointly produces both initial poses and target interaction profiles. The second group focuses on the whole-body genera-tion with hands [1, 12, 16, 29, 40, 49, 51, 58]. Many of these works generate poses by optimizing full-body config-urations to align with a guiding grasp hand or wrist pose. Such is the case of FLEX [51] and CWGrasp [40], for static poses, and CIRCLE [1] and WANDR [12] for body motions. Other works [49, 58] directly generate full-body motions that approach an object and converge to a static end grasp pose through optimization, also in a stochastic way [58]. Among the above works, only a limited number of grasp generation methods explicitly address grasp controllabil-ity, primarily focusing on hand direction control via re-inforcement learning [62] or conditioning on hand direc-tion vectors [40]. In contrast, our method extends beyond directional control and provides a broader range of user-controllable interaction attributes, while achieving robust generalization to out-of-domain object shapes and scales. 
+
+# 3. Method 
+
+3.1. Hand and Object Representation 
+
+3.1.1. Hand Representation. 
+
+We use a statistical model H(ˆ γ, ˆθ, β) where H(·) denotes the forward kinematics and mesh deformation function, pa-rameterized by translation γ ∈ R3, pose θ ∈ RJ×3 encoded as axis-angle rotations, and shape β ∈ RI , where J and I
+
+denote the number of hand joints and the dimensionality of the shape space, respectively. These parameters define a 3D hand mesh H ∈ RS×3 with normals Nhand ∈ RS×3
+
+where S is the number of hand vertices. For training, we use global translation and rotations in an object-centric co-ordinate, with the rotations converted from axis-angle to 6D representation θ6D ∈ RJ×6. As one of the conditioning signals, we introduce a hand direction vector d ∈ R3, com-puted from two vertices located on the outer palm of the hand mesh. Note that our hand representation is quasi-rigid around the outer palm area, and thus these vertices stay con-sistent across poses. 
+
+3.1.2. Object Representation. 
+
+We follow prior works [29, 40, 48, 66] and use Basis Point Sets (BPS) [42] B ∈ R4096 as the object feature represen-tation. For optimization, we use object point clouds O ∈
+
+RP ×3 with their corresponding surface normals Nobj ∈
+
+RP ×3.
+
+3.1.3. Interaction Representation. 
+
+To model the spatial relationship of the hand-object interac-tion, we adopt a simple representation, i.e., Distance Pro-file . Specifically, we construct a Distance Profile D ∈ Rk
+
+by pre-sampling k vertices on the hand mesh (covering the inner palm and finger surfaces, where hand-object contacts frequently happen) and computing the signed distance be-tween each hand vertex and its nearest object point. This one-sided distance representation ( i.e., hand to object) will be used with a distance weighting scheme described in Sec. 3.3 to capture grasp patterns in a manner that is in-variant to object identity while preserving semantic grasp structure in near-contact regions. In addition, we incorpo-rate the distance between the root joint and its nearest object point r ∈ R as an additional controllable signal. 3Self -Attention       
+
+> Dropout
+> LayerNorm
+> Cross -Attention
+> Dropout
+> LayerNorm
+> MLP w/ GELU
+> Dropout
+> Noised
+> Translation
+> Noised
+> Rotations
+> Noised
+> Distance
+> Profile
+> Clean
+> Translation
+> Clean
+> Rotations
+> Clean
+> Distance
+> Profile
+> Positional
+> Encoder
+> Object
+> Encoder
+> Vertex
+> Encoder
+> ×N
+> Root Distance
+> Encoder
+> Hand Direction
+> Encoder
+> Diffusion Step Object BPS Rest Pose
+> w/ Hand Shape
+> Hand Direction Root Distance
+> Initial Candidate Pose
+> Target Distance Profile
+> base
+> shape
+> pose
+> Diffusion -based Distance Profile Generation (Sec. 3.2 )
+> Clean
+> Translation
+> Clean
+> Rotations
+> Clean
+> Distance
+> Profile
+> Optimized Pose
+> Grasp Energy -based Optimization (Sec. 3.3 )
+> Grasp Energy -
+> based
+> Optimization
+
+Figure 3. Method overview. Given object BPS and a series of control signals, our diffusion model first generates a Distance Profile along with the parameters of an initial candidate pose (Sec. 3.2). We then refine the parameters of the candidate pose via grasp energy–based optimization, enforcing consistency between the synthesized hand pose and the generated profile in near-contact regions (Sec. 3.3). 
+
+3.2. Distance Profile Generation Model 
+
+3.2.1. Conditional Diffusion Transformer. 
+
+Given the object feature B and a set of controllable con-ditioning signals, our model is designed to generate a Dis-tance Profile along with the parameters of an initial candi-date grasp ( D, γ, θ6D ), as illustrated in Fig. 3. Here, we adopt a transformer decoder architecture as our diffusion denoiser M .The denoiser first employs task-specific MLP encoders to encode noisy representations ( ˆD, ˆγ, ˆθ6D ) into latent fea-tures ZD′ ∈ RQ, Zγ′ ∈ RQ, and Zθ′6D ∈ RJ×Q, where 
+
+Q denotes the latent dimension. Second, these features are concatenated into Z ∈ R(J+2) ×Q with J + 2 tokens, and interact with each other by a self-attention layer. Next, the output features from the self-attention layer are processed with the following conditioning modalities: The object BPS 
+
+B, shape parameters β, hand direction vector d, root dis-tance r, and the denoising timestep t. Specifically, these conditioning data are encoded by their corresponding MLP encoders into the same latent space. Here, the shape param-eters β are converted into a hand rest pose Hrest ∈ RS×3
+
+as an input to the encoder. Then, the self-attention features and conditioning embeddings are injected through a cross-attention layer, enabling the model to learn the correspond-ing conditional distributions. Finally, we use task-specific MLP heads to construct model outputs: the Distance Pro-file ˆD, translation ˆγ, and rotation ˆθ6D . See the supplement for additional architectural details. 
+
+3.2.2. Diffusion Formulation. 
+
+We adopt the DDPM formulation and train the Conditional Diffusion Transformer with X0-prediction parameteriza-tion. The forward diffusion process is defined as: 
+
+Xt = √¯αtX0 + √1 − ¯αtϵ, ϵ ∼ N (0, I), (1) where ¯αt = Qts=1 αs. Given the noisy sample Xt at timestep t and conditions C, the denoiser M predicts the clean representation: 
+
+ˆX0 = M (Xt, t, C). (2) By decomposing the prediction ˆX0 = [ ˆD | ˆγ | ˆθ6D ], we de-fine the training objective: 
+
+Ltotal = λdp ∥ ˆD − D∥22 + λtrans ∥ˆγ − γ∥22 + λrot ∥ˆθ6D − θ6D ∥22,
+
+(3) where λdp , λtrans , and λrot denote weighting scales. 
+
+3.2.3. Diffusion Guidance. 
+
+Classifier-free guidance (CFG) [22] is a common technique to improve the quality of generated data and to make sam-pled data better correspond with their conditions. CFG is implemented by jointly training the model in both condi-tional and unconditional settings. During inference, the out-puts from these two branches are combined at each denois-ing timestep: 
+
+ˆX0 = M (Xt, t, ∅)+ λ(M (Xt, t, C)−M (Xt, t, ∅)) , (4) where λ denotes a guidance scale and ∅ denotes a null con-dition. At inference time, setting λ ≥ 1 steers the sampling trajectory toward the conditional prediction while moving it away from the unconditional one, thereby enhancing condi-tion fidelity. In our framework, we integrate a multi-modal classifier-free guidance strategy [6] to accommodate multiple condi-tioning signals. Specifically, we partition the conditions into three groups: 4• Cbase , which includes the object BPS B.• Cshape , which includes the shape parameters β.• Cpose , which includes the input hand direction vector d
+
+and the root distance r,where Cbase is always present, and the other two are randomly masked out during training. Thus, the full conditional prediction is denoted as ˆXfull  
+
+> 0
+
+=
+
+M (Xt, t, Cbase , Cshape , Cpose ). Based on the defined con-dition groups, we construct the model output as follows: 
+
+ˆX0 = M0 + λshape (M1 − M0) + λpose (M2 − M1), (5) 
+
+M0 = M (Xt, t, Cbase , ∅, ∅), (6) 
+
+M1 = M (Xt, t, Cbase , Cshape , ∅), (7) 
+
+M2 = M (Xt, t, Cbase , Cshape , Cpose ), (8) where λshape and λpose are guidance scales for the shape and pose-related conditions, respectively. This formulation enables flexible control over hand shape and interaction-related signals during sampling. We also integrate addi-tional guidance on the Distance Profile to regularize the de-noising process, and adopt DDIM [45] for faster sampling. See our supplement for more details. 
+
+3.3. Grasp Energy-based Optimization 
+
+One of our main contributions lies in the refinement of ini-tial candidate pose ( ˆγ and ˆθ6D ) with respect to the target object, using the generated Distance Profile ˆD. Here, we convert the pose ˆθ6D from 6D to axis-angle representation 
+
+ˆθ for optimization. We define the optimization objective as follows: 
+
+Lopt = Lge + γroot Lroot + γreg Lreg + γcol Lcol , (9) where γroot , γreg and γcol are weighting scales. 
+
+3.3.1. Distance-aware Grasp Energy Loss. 
+
+We first recompute the Distance Profile Dopt from the re-fined hand poses Hopt at each optimization step, using the same pre-sampled hand vertices and distance computation described in Sec. 3.1. Next, we will align the refined config-uration Dopt with the generated interaction profile ˆD. Here, since grasp functionality is primarily governed by near-contact geometry—where small spatial deviations can sig-nificantly alter contact locations and force exchange—we emphasize hand vertices that lie close to the object surface. Specifically, we assign each hand vertex i a distance-aware weight based on the predicted target distance ˆDi:
+
+wi = exp 
+
+
+
+−δ( ˆDi)2
+
+, (10) where δ controls the fall-off sensitivity. This formulation assigns larger weights to vertices with smaller target dis-tances, prioritizing alignment in interaction-critical regions 0.0  1.0  2.0  3.0  4.0  5.0 
+
+Distance (cm) 
+
+δ = 2000 
+
+δ = 5000 
+
+δ = 8000 
+
+> Weight
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+
+Figure 4. Distance Profile per-vertex weight : The relative impor-tance wi of each hand vertex distance ˆDi falls off exponentially depending on a sensitivity parameter δ. For our chosen value δ =5000, the weight virtually drops to 0 for distances further than 3 cm. 
+
+while reducing the influence of distant, non-interacting ver-tices, as shown in Fig. 4. The grasp energy loss is defined as: 
+
+Lge =
+
+Pki=1 wi
+
+
+
+Di 
+
+> opt
+
+− ˆDi
+
+2
+
+Pki=1 wi + ϵ . (11) where ϵ = 10 −9 ensures numerical stability. This term aligns the optimized grasp with the generated interaction profile, emphasizing geometrically and physically meaning-ful near-contact regions. 
+
+3.3.2. Root Distance Loss. 
+
+Let ropt denote the distance between the optimized root joint and its nearest object vertex. We preserve the intended hand–object proximity by: 
+
+Lroot = ∥ropt − ˆr∥22 . (12) 
+
+3.3.3. Rotation Regularization Loss. 
+
+To prevent excessive deviation from the diffusion prior and maintain anatomically plausible grasp, we regularize local joint rotations toward the initialization: 
+
+Lreg =
+
+> J
+
+X
+
+> j=1
+
+θj 
+
+> opt
+
+− ˆθj 22
+
+. (13) This term constrains local pose variations while maintaining flexibility to satisfy the interaction constraints Ldp and Lroot .
+
+3.3.4. Collision Loss. 
+
+We penalize interpenetration between the optimized hand and the object surface to ensure physically plausible hand–object interactions in those regions more weakly affected by the grasp energy loss. Specifically, we compute signed penetration depths using surface normals and nearest-neighbor correspondences. Firstly, based on nearest-neighbor signed distances computed from each hand vertex Hj 
+
+> opt
+
+and object point cloud Oi, we form an 5object-to-hand Vj 
+
+> o→h
+
+and a hand-to-object vector Vi
+
+> h→o
+
+.Signed penetration depths are computed with normals as: 
+
+di 
+
+> h→o
+
+= ⟨N(i)
+
+> hand
+
+, Vi
+
+> h→o
+
+⟩, dj 
+
+> o→h
+
+= ⟨N(j) 
+
+> obj
+
+, Vj
+
+> o→h
+
+⟩.
+
+(14) Negative values indicate penetration. We allow limited pen-etration up to a tolerance τcol ≥ 0 and penalize only the excess penetration: 
+
+Lcol =
+
+> P
+
+X
+
+> i=1
+
+max( −di 
+
+> h→o
+
+− τcol , 0) 2
+
++
+
+> S
+
+X
+
+> j=1
+
+max( −dj 
+
+> o→h
+
+− τcol , 0) 2. (15) Overall, the refinement step enforces consistency with the generated Distance Profile and conditional signals while remaining close to the diffusion-initialized grasp prior, leading to physically coherent and semantically faithful hand–object interactions. 
+
+# 4. Experiments 
+
+4.1. Experiment Details 
+
+4.1.1. Datasets and Implementation. 
+
+Existing HOI datasets cover a range of object categories but provide limited variation in hand identities. To address this limitation, we collect an internal real-world dataset, Grasp-Shape , comprising 350k frames from 100 distinct identities performing diverse grasps with 5 objects. In addition, we utilize a subset 1 of the GRAB dataset [48], which includes 25 objects and 3 identities. See the supplement for more details of the implementation and model architecture. 
+
+4.1.2. Evaluation Protocol. 
+
+No prior work addresses multi-modal conditioning for grasp generation with simultaneous control over hand shape, di-rection, and root distance. Therefore, we develop a baseline by using the same Diffusion model as ours, which accepts a series of controllable signals and generates only transla-tion and rotations ( i.e., without predicting a Distance Pro-file). We also provide the evaluation for the initial predic-tion from our system. To evaluate the system sensitivity to various object shapes and scales, we use six objects under scaled-variation settings: 3 training-category objects from GraspShape (mug, can, and smartphone) with 70, 80, 90, 110, and 120% scales, and 3 testing-category objects from GRAB (apple, doorknob, and torus) with 70 ∼ 120% scales. Note that none of these objects are used during training; they are re-served exclusively for evaluation to assess generalization, 
+
+> 1Due to license restrictions, we can use 25 of the 51 available GRAB objects. Please refer to the supplementary material for the object list.
+
+and training objects are not scaled ( i.e., 100%). This eval-uation protocol creates a wider variety of unseen objects and scales for an evaluation of our system trained only on single-scale objects. In addition, we consider diverse con-ditional settings by sampling controllable signals from a normal distribution. For hand shape parameters, we fur-ther sample from a uniform distribution within [−3.0, 3.0] 
+
+to evaluate performance under extreme shape variations. For each object and each scale, we generate 64 samples (i.e., 384 samples per object group across 70–120% scales) and follow existing works [40, 66] to report common met-rics to evaluate physical plausibility with their standard de-viations over generated samples (see parentheses in each ta-ble). • Pen : Measures physical plausibility, defined as the per-centage of grasp frames exhibiting hand–object interpen-etration, using a 1 cm distance threshold. • F-Con : Evaluates frame-level contact fidelity, computed as the percentage of frames in which the hand establishes contact with the object within a 1 cm threshold. • V-Con : Measures vertex-level contact fidelity, defined as the percentage of hand vertices that are in contact with the object within a 1 cm threshold. Note that V-Con also in-cludes vertices on the outer palm, which typically do not contact the object; therefore, values around 50% represent the practical upper bound. Moreover, there is no single optimal value for this metric since valid grasps may in-volve different contact patterns. Nevertheless, it remains useful for assessing controllability. Nonetheless, this met-ric is still valuable to evaluate the controllability aspect. • r-Dist : Assesses the hand-object proximity, computed as the mean Euclidean error between the root distances from the input signals and those of the generated grasps. • Angle : Evaluates directional consistency, defined as the mean angular error between the direction vectors from the input signals and those of the generated grasps. Furthermore, although our primary focus is on ensuring the physical plausibility of generated grasps under diverse con-trollable signals—which may constrain the outputs to spe-cific regions of the training distribution—we additionally report a diversity metric, ”Div”, for completeness. This metric quantifies generative diversity as the mean pairwise vertex distance across all generated grasps, averaged over all grasp pairs, after rigidly aligning the hands to the same wrist position and palm orientation, essentially indicating the diversity of fingers given a series of controllable signals. 
+
+4.2. Results 
+
+4.2.1. Contact Fidelity 
+
+Table 1 shows that DCGrasp achieves significantly low pen-etration rates (Pen), indicating that the framework effec-tively enforces penetration-robust hand–object interactions. Even under substantial scale variations (70 ∼120%), pene-6Table 1. Quantitative results on the scaled objects with various hand directions and hand shapes. Init : our initial prediction, GE-opt :Distance Profile optimization. The root distance is set to 7 mm. The standard deviations over generated samples are shown in parentheses. 
+
+GraspShape Objects (70, 80, 90, 110, and 120% scales) Scale Pen [%] ↓ F-Con [%] ↑ V-Con [%] − r-Dist [mm] ↓ Angle [degree] ↓ Div [mm] ↑
+
+Baseline All 65.89 (39.62) 99.57 (3.03) 23.55 (9.69) 11.99 (6.50) 3.95 (2.06) 18.31 (6.48) Ours (Init) All 22.60 (16.73) 98.16 (7.19) 23.78 (10.19) 10.13 (5.78) 5.49 (2.29) 20.43 (6.80) Ours (GE-opt) All 5.52 (3.86) 100.00 (0.00) 31.81 (9.12) 5.74 (5.60) 6.02 (3.11) 20.23 (6.77) Baseline 70% 84.38 (27.81) 99.48 (4.13) 9.16 (4.57) 21.87 (7.90) 3.54 (1.85) 14.95 (5.93) Ours (Init) 70% 15.10 (13.43) 93.75 (21.52) 7.26 (5.51) 17.17 (7.10) 5.47 (2.29) 20.53 (6.89) Ours (GE-opt) 70% 4.17 (4.62) 100.00 (0.00) 28.76 (8.48) 6.07 (5.25) 5.67 (3.00) 19.70 (6.72) Baseline 120% 65.10 (45.03) 100.00 (0.00) 32.44 (12.80) 10.97 (7.99) 4.18 (2.17) 18.20 (6.55) Ours (Init) 120% 39.58 (31.37) 100.00 (0.00) 43.91 (14.75) 11.84 (6.44) 5.47 (2.29) 20.53 (6.89) Ours (GE-opt) 120% 8.33 (3.51) 100.00 (0.00) 34.37 (9.89) 6.62 (6.58) 6.14 (3.10) 20.86 (6.91) GRAB Objects (70, 80, 90, 100, 110 and 120% scales) Scale Pen [%] ↓ F-Con [%] ↑ V-Con [%] − r-Dist [mm] ↓ Angle [degree] ↓ Div [mm] ↑
+
+Baseline All 76.88 (33.15) 97.09 (2.72) 10.34 (4.89) 24.71 (8.61) 4.07 (2.21) 14.02 (6.77) Ours (Init) All 54.69 (29.70) 99.74 (1.66) 21.21 (7.38) 9.38 (6.03) 3.83 (1.67) 14.01 (5.02) Ours (GE-opt) All 0.00 (0.00) 100.00 (0.00) 24.27 (6.53) 6.48 (4.83) 4.07 (2.13) 14.11 (4.78) Baseline 70% 71.88 (25.13) 97.92 (8.07) 4.77 (1.93) 30.23 (6.84) 4.01 (2.00) 14.24 (6.30) Ours (Init) 70% 11.98 (19.97) 98.44 (9.93) 6.59 (3.61) 10.02 (6.56) 3.83 (1.67) 14.02 (5.02) Ours (GE-opt) 70% 0.00 (0.00) 100.00 (0.00) 20.56 (6.08) 5.95 (4.73) 4.23 (2.26) 13.72 (4.63) Baseline 120% 62.45 (35.23) 100.00 (0.00) 14.54 (7.32) 16.22 (8.23) 4.39 (2.02) 14.17 (6.44) Ours (Init) 120% 97.92 (11.18) 100.00 (0.00) 36.03 (9.55) 12.39 (7.39) 3.83 (1.67) 14.01 (5.02) Ours (GE-opt) 120% 0.00 (0.00) 100.00 (0.00) 26.83 (6.56) 8.48 (5.52) 4.13 (2.14) 14.62 (4.92) 
+
+Table 2. Object-wise evaluations with various hand directions and hand shapes. Init : our initial prediction, GE-opt : grasp energy-based optimization. The root distance is set to 7 mm. The standard deviations over generated samples are shown in parentheses. 
+
+GraspShape Objects (70, 80, 90, 110, and 120% scales) Object Pen [%] ↓ F-Con [%] ↑ V-Con [%] − r-Dist [mm] ↓ Angle [degree] ↓ Div [mm] ↑
+
+Baseline Mug 43.75 (44.33) 99.74 (2,07) 28.32 (11.91) 12.24 (7.93) 3.95 (1.92) 18.81 (6.79) Ours (Init) Mug 22.19 (23.41) 94.69 (18.50) 22.85 (11.26) 10.23 (5.58) 5.06 (2.39) 22.13 (8.21) Ours (GE-opt) Mug 0.63 (0.89) 100.00 (0.00) 32.95 (9.76) 4.90 (4.10) 5.67 (2.73) 21.60 (8.10) Baseline Can 80.73 (30.70) 100.00 (0.00) 23.24 (7.65) 16.33 (6.50) 3.77 (2.00) 16.64 (6.02) Ours (Init) Can 36.6 (23.88) 99.48 (2.90) 27.98 (9.71) 8.67 (5.23) 5.02 (2.14) 18.70 (5.70) Ours (GE-opt) Can 3.13 (2.77) 100.00 (0.00) 35.28 (8.63) 5.79 (6.15) 5.12 (2.84) 18.42 (5.67) Baseline Smartphone 73.18 (43.83) 98.96 (7.03) 19.11 (9.50) 7.40 (5.07) 4.14 (2.25) 19.45 (6.63) Ours (Init) Smartphone 30.63 (5.37) 99.74 (2.07) 20.36 (9.77) 11.51 (6.50) 6.33 (2.35) 20.76 (6.76) Ours (GE-opt) Smartphone 12.81 (1.92) 100.00 (0.00) 27.41 (9.09) 6.40 (6.31) 7.23 (3.69) 20.91 (6.76) GRAB Objects (70, 80, 90, 100, 110 and 120% scales) Object Pen [%] ↓ F-Con [%] ↑ V-Con [%] − r-Dist [mm] ↓ Angle [degree] ↓ Div [mm] ↑
+
+Baseline Apple 77.04 (26.28) 99.20 (3.75) 10.72 (4.67) 25.27 (7.44) 3.71 (1.98) 14.48 (5.89) Ours (Init) Apple 52.86 (24.97) 99.74 (2.07) 28.01 (9.10) 8.81 (5.15) 3.27 (1.67) 13.32 (4.37) Ours (GE-opt) Apple 0.00 (0.00) 100.00 (0.00) 34.22 (6.79) 5.18 (3.19) 3.13 (1.67) 12.70 (4.27) Baseline Doorknob 73.30 (40.01) 100.00 (0.00) 13.29 (5.48) 21.71 (9.85) 3.14 (1.57) 12.81 (5.00) Ours (Init) Doorknob 71.61 (37.06) 100.00 (0.00) 19.28 (6.78) 10.56 (7.59) 4.89 (1.99) 13.05 (5.29) Ours (GE-opt) Doorknob 0.00 (0.00) 100.00 (0.00) 18.91 (6.49) 7.87 (6.64) 5.34 (2.64) 13.48 (4.98) Baseline Torus 74.24 (37.88) 99.28 (3.77) 10.52 (4.76) 24.38 (8.44) 3.97 (1.96) 14.47 (6.34) Ours (Init) Torus 39.58 (27.06) 99.48 (2.90) 16.34 (6.26) 8.76 (5.34) 3.33 (1.34) 15.67 (5.42) Ours (GE-opt) Torus 0.00 (0.00) 100.00 (0.00) 19.67 (6.31) 6.40 (4.66) 3.75 (2.08) 16.17 (5.09) 
+
+7OPT           
+
+> 70% 100% 120%
+> INI
+> 70% 100% 120%
+> OPT
+> INI
+> OPT
+> INI Figure 5. Qualitative results on scaled objects with various hand directions and hand shapes. Left : GraspShape objects, Right :GRAB objects. INI : Initial pose, OPT : Optimized pose. The optimization step refines the initial poses into physically plausible and functional grasp poses.
+
+tration remains minimal — often nearly zero — highlight-ing strong robustness to geometric transformations. Fur-thermore, the refinement process attains high frame-level contact (F-Con, nearly 100%) and stable vertex-level con-tact (V-Con), suggesting that generated grasps establish meaningful and spatially coherent hand–object interactions. DCGrasp preserves consistent contact across scales, vali-dating the effectiveness of the grasp energy-based approach. Notably, even our initial prediction provides a better pen-etration ratio compared to the baseline, e.g., 22.60% vs. 65.89% on average with GraspShape, while maintaining on-par results on the contact ratio (F-Con), e.g., 98.16% vs. 99.57% on average with GraspShape. This result suggests that the Distance Profile representation itself may also help the model learn the spatial relationship of hand-object inter-action. 8Table 3. Quantitative results with varying root distances.                               
+
+> Metrics Pen [%] ↓F-Con [%] ↑V-Con [%] −
+> 5 cm 0.00 (0.00) 100.00 (0.00) 24.40 (7.99) 8 cm 0.52 (4.13) 100.00 (0.00) 26.23 (5.39) 11 cm 0.00 (0.00) 100.00 (0.00) 17.64 (4.68) Metrics r-Dist [mm] ↓Angle [degree] ↓Div [mm] ↑
+> 5 cm 15.18 (5.99) 7.47 (3.01) 14.23 (5.71) 8 cm 7.25 (3.81) 3.97 (2.18) 13.25 (5.10) 11 cm 8.33 (4.69) 4.47 (2.25) 14.22 (5.38)
+
+Table 4. Quantitative results with extreme hand shapes.                         
+
+> Metrics Pen [%] ↓F-Con [%] ↑V-Con [%] −
+> Normal 0.00 (0.00) 100.00 (0.00) 28.09 (5.93) Uniform 0.00 (0.00) 100.00 (0.00) 26.03 (6.75) Metrics r-Dist [mm] ↓Angle [degree] ↓Div [mm] ↑
+> Normal 6.67 (4.24) 3.72 (2.08) 12.41 (4.65) Uniform 7.25 (5.38) 5.80 (3.23) 16.04 (6.56)
+
+5 cm  8 cm  11 cm 
+
+Figure 6. Qualitative results with varying root distance condi-tioning . This signal effectively controls the closeness of the inter-action while preserving plausibility. Small 
+
+hands 
+
+Large 
+
+hands 
+
+Figure 7. Qualitative results with extreme hand shape condition-ing . The semantics of the interaction are effectively maintained for different hand identities. 
+
+Table 2 shows that DCGrasp consistently generates grasps with highly physical plausibility across different ob-jects, achieving 0% Pen, 100% F-Con, and approximately 20% V-Con on average. Note that the physical errors on smartphones are slightly higher than other objects. This is due to the initial predictions that contain severe interpene-tration. During optimization, the collision penalty may pull the hand in different directions, occasionally leading to lo-cal minima. See the supplement for more discussion on fail-ure cases. Fig. 5 visualizes both the initial and optimized grasp poses. The grasp energy–based optimization naturally guides the fingers to remain close to the object surface while avoiding excessive interpenetration. Notably, many initial poses on the 70% scaled objects already satisfy frame-level contact and thus trigger F-Con ( e.g., more than 90%), as commonly reported in prior works; however, these poses do not always correspond to functional grasps as shown in the visualizations. DCGrasp effectively refines such superficial contacts into stable and semantically valid grasping poses. 
+
+4.2.2. Controllability 
+
+DCGrasp shows accurate adherence to the control signals. The root distance error ( r-Dist) remains consistently low across all settings, e.g., 5.74 mm on GraspShape and 6.48 mm on GRAB objects, indicating that global hand–object proximity can be reliably regulated by our system. Simi-larly, the angular deviation (Angle) between input and gen-erated grasps is small, e.g., 6.02 and 4.07 degrees on the GraspShape and GRAB objects, respectively, demonstrat-ing precise directional controllability. Furthermore, Fig. 1 visualizes poses generated by DC-Grasp under closely varying directional inputs. The result-ing grasps faithfully follow the specified direction trajecto-ries while maintaining natural hand configurations. These results highlight that DCGrasp supports flexible control, making it suitable for a wide range of applications requiring explicit grasp manipulation, as discussed in Sec. 1. 
+
+4.2.3. Diversity 
+
+Our full pipeline preserves diversity levels comparable to those of the initial predictions and the baseline outputs. While the controllable signals guide the diffusion sampling trajectory toward specific regions of the learned distribu-tion, our system maintains generative variability. On Grasp-Shape, the diversity measures 20.43 mm for raw samples from the diffusion prior and 20.23 mm after optimization. Together with the results discussed above, these findings show that the grasp energy-based refinement process pre-serves generative diversity while improving physical plau-9sibility and generalizing effectively to novel object shapes and scales. 
+
+4.2.4. Varying Root Distance Conditioning 
+
+We further evaluate explicit control over root distance us-ing three distinct target distances (5 cm, 8 cm, 11 cm), as shown in Table 3. Importantly, increasing the target root distance does not degrade frame-level contact stability. In-stead, it primarily modulates the vertex-level contact ratio, effectively controlling the degree of surface engagement. When smaller root distances are specified ( e.g., 5 cm), the model balances hand-object proximity with physical plausi-bility, maintaining low penetration and stable contact while approximating the desired distance. Qualitative results in Fig. 6 show smooth and continuous variation in hand–object proximity. The transition across different distance settings is geometrically consistent, demonstrating that root distance control is both interpretable and stable. 
+
+4.2.5. Extreme Hand Shape Conditioning 
+
+To assess robustness to shape variations, we test DCGrasp with both normally distributed and uniformly sampled ex-treme hand shape parameters within [−3.0, 3.0] . As re-ported in Table 4, DCGrasp maintains low penetration (0% on Pen) and stable contact (100% on F-Con and 26% on V-Con) under extreme shape conditions. Fig. 7 shows that the synthesized grasps adapt naturally to significantly different hand geometries, including slender and wide palms. De-spite large identity variations, interaction semantics remain consistent across shapes. This demonstrates that the pro-posed grasp energy-based approach generalizes grasp struc-ture beyond specific hand identities, enabling articulation and contact formation to remain stable under extreme mor-phological changes. 
+
+# 5. Discussion and Future Work 
+
+Although DCGrasp is based on a parametric hand model, the proposed grasp energy term is conceptually general. It simply encodes grasp interaction as weighted signed dis-tances between two surfaces and does not inherently de-pend on a specific kinematic structure or embodiment. This abstraction suggests that the grasp energy term can be naturally extended to other articulated effectors, such as multi-fingered robotic hands or even the full human body with different kinematic chains. By redefining the sam-pled surface vertices on the manipulator and computing dis-tances to target objects, the same interaction representation could be preserved. This opens the possibility of transfer-ring grasp semantics learned from human demonstrations to robotic platforms. Beyond hands, the formulation may also be applicable to full-body interactions ( e.g., human– or robot–object contact involving arms, legs, or torso), where modeling spatial proximity between articulated surfaces is essential. Extending the grasp energy term to whole-body interaction modeling could provide a unified representation for diverse embodied agents. 
+
+# 6. Conclusion 
+
+We introduced DCGrasp, a controllable system for hand–object interaction synthesis built upon a distance-aware grasp energy term. By encoding per-vertex proximity between the hand and object as Distance Profile and weight-ing it based on the hand-object proximity, the proposed grasp energy term produces families of semantically simi-lar grasps in near-contact regions while remaining invariant to object and hand identity. DCGrasp combines diffusion-based Distance Profile generation with grasp energy–guided optimization, effectively decoupling interaction modeling from object-specific geometry. This design not only en-ables flexible conditioning on multiple user-defined signals but also enhances robustness and generalization across di-verse object geometries and scales. Our experiments show that DCGrasp produces high-quality, physically plausible grasps, even with unseen objects with varying shapes and scales. Our work provides a promising foundation for fu-ture research in hand–object interaction modeling, with po-tential impact on robotics, AR/VR, and synthetic data gen-eration. 
+
+# References              
+
+> [1] Jo˜ ao Pedro Ara´ ujo, Jiaman Li, Karthik Vetrivel, Rishi Agar-wal, Jiajun Wu, Deepak Gopinath, Alexander Clegg, and C. Karen Liu. CIRCLE: Capture in rich contextual environ-ments. In Computer Vision and Pattern Recognition (CVPR) ,pages 21211–21221, 2023. 3 [2] Luca Ballan, Aparna Taneja, J¨ urgen Gall, Luc Van Gool, and Marc Pollefeys. Motion capture of hands in action using discriminative salient points. In European Conference on Computer Vision (ECCV) , pages 640–653, 2012. 2 [3] Samarth Brahmbhatt, Cusuh Ham, Charles C. Kemp, and James Hays. ContactDB: Analyzing and predicting grasp contact via thermal imaging. In Computer Vision and Pat-tern Recognition (CVPR) , pages 8709–8719, 2019. 3 [4] Samarth Brahmbhatt, Ankur Handa, James Hays, and Dieter Fox. ContactGrasp: Functional multi-finger grasp synthe-sis from contact. In International Conference on Intelligent Robots and Systems (IROS) , pages 2386–2393, 2019. 3 [5] Samarth Brahmbhatt, Chengcheng Tang, Christopher D. Twigg, Charles C. Kemp, and James Hays. ContactPose: A dataset of grasps with object contact and hand pose. In Eu-ropean Conference on Computer Vision (ECCV) , pages 361– 378, 2020. 3 [6] Tim Brooks, Aleksander Holynski, and Alexei A Efros. In-structpix2pix: Learning to follow image editing instructions. In Computer Vision and Pattern Recognition (CVPR) , 2023. 4
+
+10 [7] Junuk Cha, Jihyeon Kim, Jae Shin Yoon, and Seungryul Baek. Text2hoi: Text-guided 3d motion generation for hand-object interaction. In Computer Vision and Pattern Recogni-tion (CVPR) , 2024. 3 [8] Yu-Wei Chao, Wei Yang, Yu Xiang, Pavlo Molchanov, Ankur Handa, Jonathan Tremblay, Yashraj S. Narang, Karl Van Wyk, Umar Iqbal, Stan Birchfield, Jan Kautz, and Dieter Fox. DexYCB: Abenchmark for capturing hand grasping of objects. In Computer Vision and Pattern Recog-nition (CVPR) , pages 9044–9053, 2021. 3 [9] Sammy Joe Christen, Muhammed Kocabas, Emre Aksan, Jemin Hwangbo, Jie Song, and Otmar Hilliges. D-Grasp: Physically plausible dynamic grasp synthesis for hand-object interactions. In Computer Vision and Pattern Recognition (CVPR) , pages 20577–20586, 2022. 3 [10] Enric Corona, Albert Pumarola, Guillem Aleny` a, Francesc Moreno-Noguer, and Gr´ egory Rogez. GanHand: Predicting human grasp affordances in multi-object scenes. In Com-puter Vision and Pattern Recognition (CVPR) , pages 5031– 5041, 2020. 3 [11] Enric Corona, Tomas Hodan, Minh Vo, Francesc Moreno-Noguer, Chris Sweeney, Richard A. Newcombe, and Lingni Ma. LISA: learning implicit shape and appearance of hands. In Computer Vision and Pattern Recognition (CVPR) , pages 20501–20511, 2022. 2 [12] Markos Diomataris, Nikos Athanasiou, Omid Taheri, Xi Wang, Otmar Hilliges, and Michael J. Black. WANDR: Intention-guided human motion generation. In Computer Vi-sion and Pattern Recognition (CVPR) , pages 927–936, 2024. 3[13] Zicong Fan, Omid Taheri, Dimitrios Tzionas, Muhammed Kocabas, Manuel Kaufmann, Michael J. Black, and Otmar Hilliges. ARCTIC: A dataset for dexterous bimanual hand-object manipulation. In Computer Vision and Pattern Recog-nition (CVPR) , pages 12943–12954, 2023. 3 [14] Zicong Fan, Maria Parelli, Maria Eleni Kadoglou, Xu Chen, Muhammed Kocabas, Michael J. Black, and Otmar Hilliges. HOLD: Category-agnostic 3D reconstruction of interacting hands and objects from video. In Computer Vision and Pat-tern Recognition (CVPR) , pages 494–504, 2024. 3 [15] Guillermo Garcia-Hernando, Shanxin Yuan, Seungryul Baek, and Tae-Kyun Kim. First-person hand action bench-mark with RGB-D videos and 3D hand pose annotations. In Computer Vision and Pattern Recognition (CVPR) , pages 409–419, 2018. 3 [16] Anindita Ghosh, Rishabh Dabral, Vladislav Golyanik, Chris-tian Theobalt, and Philipp Slusallek. IMoS: Intent-driven full-body motion synthesis for human-object interactions. In 
+
+Computer Graphics Forum (CGF) , 2023. 3 [17] Patrick Grady, Chengcheng Tang, Christopher D. Twigg, Minh Vo, Samarth Brahmbhatt, and Charles C. Kemp. Con-tactOpt: Optimizing contact to improve grasps. In Computer Vision and Pattern Recognition (CVPR) , pages 1471–1481, 2021. 2, 3 [18] Shreyas Hampali, Mahdi Rad, Markus Oberweger, and Vin-cent Lepetit. HOnnotate: A method for 3D annotation of hand and object poses. In Computer Vision and Pattern Recognition (CVPR) , pages 3196–3206, 2020. 3 [19] Shreyas Hampali, Sayan Deb Sarkar, Mahdi Rad, and Vin-cent Lepetit. Keypoint transformer: Solving joint identifica-tion in challenging hands and object interactions for accurate 3D pose estimation. In Computer Vision and Pattern Recog-nition (CVPR) , pages 11090–11100, 2022. 3 [20] Yuze Hao, Jianrong Zhang, Tao Zhuo, Fuan Wen, and Hehe Fan. Hand-centric motion refinement for 3d hand-object interaction via hierarchical spatial-temporal modeling. In 
+
+AAAI Conference on Artificial Intelligence , 2024. 3 [21] Yana Hasson, G¨ ul Varol, Dimitrios Tzionas, Igor Kale-vatykh, Michael J. Black, Ivan Laptev, and Cordelia Schmid. Learning joint reconstruction of hands and manipulated ob-jects. In Computer Vision and Pattern Recognition (CVPR) ,pages 11807–11816, 2019. 3 [22] Jonathan Ho and Tim Salimans. Classifier-free diffusion guidance. arXiv preprint arXiv:2207.12598 , 2022. 4 [23] Binghao Huang, Yuanpei Chen, Tianyu Wang, Yuzhe Qin, Yaodong Yang, Nikolay Atanasov, and Xiaolong Wang. Dy-namic handover: Throw and catch with bimanual hands. 
+
+Conference on Robot Learning (CoRL) , 2023. 3 [24] Hanwen Jiang, Shaowei Liu, Jiashun Wang, and Xiaolong Wang. Hand-object contact consistency reasoning for human grasps generation. In International Conference on Computer Vision (ICCV) , pages 11087–11096, 2021. 2, 3 [25] Korrawe Karunratanakul, Jinlong Yang, Yan Zhang, Michael J. Black, Krikamol Muandet, and Siyu Tang. Grasping field: Learning implicit representations for human grasps. In International Conference on 3D Vision (3DV) ,pages 333–344, 2020. 2 [26] Taein Kwon, Bugra Tekin, Jan St¨ uhmer, Federica Bogo, and Marc Pollefeys. H2O: Two hands manipulating objects for first person interaction recognition. In International Confer-ence on Computer Vision (ICCV) , pages 10138–10148, 2021. 3[27] Jihyun Lee, Shunsuke Saito, Giljoo Nam, Minhyuk Sung, and Tae-Kyun Kim. Interhandgen: Two-hand interaction generation via cascaded reverse diffusion. In Computer Vi-sion and Pattern Recognition (CVPR) , 2024. 3 [28] Kang-Won Lee, Yuzhe Qin, Xiaolong Wang, and Soo-Chul Lim. Dextouch: Learning to seek and manipulate objects with tactile dexterity. Robotics and Automation Letters (RA-L) , 2024. 3 [29] Jiaman Li, Jiajun Wu, and C. Karen Liu. Object motion guided human motion synthesis. In Transactions on Graph-ics (TOG) , pages 197:1–197:11, 2023. 3 [30] Muchen Li, Sammy Christen, Chengde Wan, Yujun Cai, Renjie Liao, Leonid Sigal, and Shugao Ma. Latenthoi: On the generalizable hand object motion generation with latent hand diffusion. In Computer Vision and Pattern Recognition (CVPR) , 2025. 3 [31] Yuwei Li, Longwen Zhang, Zesong Qiu, Yingwenqi Jiang, Nianyi Li, Yuexin Ma, Yuyao Zhang, Lan Xu, and Jingyi Yu. NIMBLE: A non-rigid hand model with bones and mus-cles. Transactions on Graphics (TOG) , 41(4):120:1–120:16, 2022. 2 [32] Shaowei Liu, Yang Zhou, Jimei Yang, Saurabh Gupta, and Shenlong Wang. ContactGen: Generative contact modeling 
+
+11 for grasp generation. In International Conference on Com-puter Vision (ICCV) , pages 20552–20563, 2023. 3 [33] Xueyi Liu and Li Yi. GeneOH diffusion: Towards general-izable hand-object interaction denoising via denoising diffu-sion. In International Conference on Learning Representa-tions (ICLR) , 2024. 3 [34] Yunze Liu, Yun Liu, Che Jiang, Kangbo Lyu, Weikang Wan, Hao Shen, Boqiang Liang, Zhoujie Fu, He Wang, and Li Yi. Hoi4d: A 4d egocentric dataset for category-level human-object interaction. In Computer Vision and Pattern Recogni-tion (CVPR) , 2022. 3 [35] Yunze Liu, Yun Liu, Che Jiang, Kangbo Lyu, Weikang Wan, Hao Shen, Boqiang Liang, Zhoujie Fu, He Wang, and Li Yi. HOI4D: A 4D egocentric dataset for category-level human-object interaction. In Computer Vision and Pattern Recogni-tion (CVPR) , pages 21013–21022, 2022. 3 [36] Yun Liu, Haolin Yang, Xu Si, Ling Liu, Zipeng Li, Yuxiang Zhang, Yebin Liu, and Li Yi. Taco: Benchmarking general-izable bimanual tool-action-object understanding. In Com-puter Vision and Pattern Recognition (CVPR) , 2024. 3 [37] William E. Lorensen and Harvey E. Cline. Marching cubes: A high resolution 3d surface construction algorithm. In Inter-national Conference on Computer Graphics and Interactive Techniques (SIGGRAPH) , page 163–169, 1987. 2 [38] Adithyavairavan Murali, Balakumar Sundaralingam, Yu-Wei Chao, Jun Yamada, Wentao Yuan, Mark Carlson, Fabio Ramos, Stan Birchfield, Dieter Fox, and Clemens Eppner. Graspgen: A diffusion-based framework for 6-dof grasping with on-generator training. In International Conference on Robotics and Automation (ICRA) , 2026. 3 [39] Iason Oikonomidis, Nikolaos Kyriazis, and Antonis A. Ar-gyros. Efficient model-based 3D tracking of hand articula-tions using Kinect. In British Machine Vision Conference (BMVC) , pages 1–11, 2011. 2 [40] Georgios Paschalidis, Romana Wilschut, Dimitrije Anti´ c, Omid Taheri, and Dimitrios Tzionas. 3D Whole-body grasp synthesis with directional controllability. In International Conference on 3D Vision (3DV) , 2025. 3, 6 [41] Georgios Pavlakos, Vasileios Choutas, Nima Ghorbani, Timo Bolkart, Ahmed A. A. Osman, Dimitrios Tzionas, and Michael J. Black. Expressive body capture: 3D hands, face, and body from a single image. In Computer Vision and Pat-tern Recognition (CVPR) , pages 10975–10985, 2019. 3 [42] Sergey Prokudin, Christoph Lassner, and Javier Romero. Ef-ficient Learning on Point Clouds With Basis Point Sets. In 
+
+International Conference on Computer Vision (ICCV) , pages 4332–4341, 2019. 3 [43] Javier Romero, Dimitrios Tzionas, and Michael J. Black. Embodied hands: Modeling and capturing hands and bod-ies together. Transactions on Graphics (TOG) , 36(6):1–17, 2017. 2 [44] Soshi Shimada, Franziska Mueller, Jan Bednarik, Bardia Doosti, Bernd Bickel, Danhang Tang, Vladislav Golyanik, Jonathan Taylor, Christian Theobalt, and Thabo Beeler. Macs: Mass conditioned 3d hand and object motion synthe-sis. In International Conference on 3D Vision (3DV) , 2024. 3[45] Jiaming Song, Chenlin Meng, and Stefano Ermon. Denois-ing diffusion implicit models. International Conference on Learning Representations (ICLR) , 2021. 5 [46] Srinath Sridhar, Antti Oulasvirta, and Christian Theobalt. In-teractive markerless articulated hand motion tracking using rgb and depth data. In International Conference on Com-puter Vision (ICCV) , pages 2456–2463, 2013. 2 [47] Anilkumar Swamy, Vincent Leroy, Philippe Weinzaepfel, Fabien Baradel, Salma Galaaoui, Romain Br´ egier, Matthieu Armando, Jean-S´ ebastien Franco, and Gr´ egory Rogez. SHOWMe: Benchmarking object-agnostic hand-object 3D reconstruction. In International Conference on Computer Vi-sion (ICCV) , pages 1927–1936, 2023. 3 [48] Omid Taheri, Nima Ghorbani, Michael J. Black, and Dim-itrios Tzionas. GRAB: A dataset of whole-body human grasping of objects. In European Conference on Computer Vision (ECCV) , pages 581–600, 2020. 3, 6 [49] Omid Taheri, Vasileios Choutas, Michael J. Black, and Dim-itrios Tzionas. GOAL: Generating 4D whole-body motion for hand-object grasping. In Computer Vision and Pattern Recognition (CVPR) , pages 13263–13273, 2022. 3 [50] Omid Taheri, Yi Zhou, Dimitrios Tzionas, Yang Zhou, Duygu Ceylan, Soren Pirk, and Michael J. Black. GRIP: Generating interaction poses using spatial cues and latent consistency. In International Conference on 3D Vision (3DV) , pages 933–943, 2024. 3 [51] Purva Tendulkar, D´ ıdac Sur´ ıs, and Carl Vondrick. FLEX: Full-body grasping without full-body grasps. In Com-puter Vision and Pattern Recognition (CVPR) , pages 21179– 21189, 2023. 3 [52] Dylan Turpin, Liquang Wang, Eric Heiden, Yun-Chun Chen, Miles Macklin, Stavros Tsogkas, Sven J. Dickinson, and Animesh Garg. Grasp’D: Differentiable contact-rich grasp synthesis for multi-fingered hands. In European Conference on Computer Vision (ECCV) , pages 201–221, 2022. 3 [53] Dylan Turpin, Tao Zhong, Shutong Zhang, Guanglei Zhu, Eric Heiden, Miles Macklin, Stavros Tsogkas, Sven Dick-inson, and Animesh Garg. Fast-grasp’d: Dexterous multi-finger grasp generation through differentiable simulation. In International Conference on Robotics and Automation (ICRA) , 2023. 3 [54] Weikang Wan, Haoran Geng, Yun Liu, Zikang Shan, Yaodong Yang, Li Yi, and He Wang. Unidexgrasp++: Im-proving dexterous grasping policy learning via geometry-aware curriculum and iterative generalist-specialist learning. 
+
+International Conference on Computer Vision (ICCV) , 2023. [55] Jun Wang, Yuzhe Qin, Kaiming Kuang, Yigit Korkmaz, Akhilan Gurumoorthy, Hao Su, and Xiaolong Wang. Cy-berdemo: Augmenting simulated human demonstration for real-world dexterous manipulation. In Computer Vision and Pattern Recognition (CVPR) , 2024. 3 [56] Ruicheng Wang, Jialiang Zhang, Jiayi Chen, Yinzhen Xu, Puhao Li, Tengyu Liu, and He Wang. DexGraspNet: Alarge-scale robotic dexterous grasp dataset for general ob-jects based on simulation. In International Conference on Robotics and Automation (ICRA) , pages 11359–11366, 2022. 3 
+
+12 [57] Ruicheng Wang, Jialiang Zhang, Jiayi Chen, Yinzhen Xu, Puhao Li, Tengyu Liu, and He Wang. Dexgraspnet: A large-scale robotic dexterous grasp dataset for general objects based on simulation. International Conference on Robotics and Automation (ICRA) , 2022. 3 [58] Yan Wu, Jiahao Wang, Yan Zhang, Siwei Zhang, Otmar Hilliges, Fisher Yu, and Siyu Tang. SAGA: Stochastic whole-body grasping with contact. In European Conference on Computer Vision (ECCV) , pages 257–274, 2022. 3 [59] Yufei Ye, Abhinav Gupta, Kris Kitani, and Shubham Tul-siani. G-hop: Generative hand-object prior for interaction reconstruction and grasp synthesis. In Computer Vision and Pattern Recognition (CVPR) , 2024. 3 [60] Zhao-Heng Yin, Binghao Huang, Yuzhe Qin, Qifeng Chen, and Xiaolong Wang. Rotating without seeing: Towards in-hand dexterity through touch. International Conference on Robotics and Automation (ICRA) , 2023. 3 [61] He Zhang, Yuting Ye, Takaaki Shiratori, and Taku Ko-mura. ManipNet: Neural manipulation synthesis with a hand-object spatial representation. Transactions on Graphics (TOG) , 40(4):121:1–121:14, 2021. 3 [62] Hui Zhang, Sammy Christen, Zicong Fan, Otmar Hilliges, and Jie Song. GraspXL: Generating grasping motions for di-verse objects at scale. In European Conference on Computer Vision (ECCV) , pages 386–403, 2024. 3 [63] Hui Zhang, Sammy Christen, Zicong Fan, Luocheng Zheng, Jemin Hwangbo, Jie Song, and Otmar Hilliges. ArtiGrasp: Physically plausible synthesis of bi-manual dexterous grasp-ing and articulation. In International Conference on 3D Vi-sion (3DV) , 2024. 3 [64] Jiajun Zhang, Yuxiang Zhang, Liang An, Mengcheng Li, Hongwen Zhang, Zonghai Hu, and Yebin Liu. Manidext: Hand-object manipulation synthesis via continuous corre-spondence embeddings and residual-guided diffusion. 2025. 3[65] Mengqi Zhang, Yang Fu, Zheng Ding, Sifei Liu, Zhuowen Tu, and Xiaolong Wang. HOIDiffusion: Generating realistic 3D hand-object interaction data. In Computer Vision and Pattern Recognition (CVPR) , pages 8521–8531, 2024. 3 [66] Wanyue Zhang, Rishabh Dabral, Vladislav Golyanik, Vasileios Choutas, Eduardo Alvarado, Thabo Beeler, Marc Habermann, and Christian Theobalt. Bimart: A unified ap-proach for the synthesis of 3d bimanual interaction with ar-ticulated objects. In Computer Vision and Pattern Recogni-tion (CVPR) , 2025. 3, 6 [67] Juntian Zheng, Qingyuan Zheng, Lixing Fang, Yun Liu, and Li Yi. Cams: Canonicalized manipulation spaces for category-level functional hand-object manipulation synthe-sis. In Computer Vision and Pattern Recognition (CVPR) ,2023. [68] Keyang Zhou, Bharat Lal Bhatnagar, Jan Eric Lenssen, and Gerard Pons-Moll. TOCH: Spatio-temporal object-to-hand correspondence for motion refinement. In European Confer-ence on Computer Vision (ECCV) , pages 1–19, 2022. 3 [69] Christian Zimmermann, Duygu Ceylan, Jimei Yang, Bryan C. Russell, Max J. Argus, and Thomas Brox. Frei-HAND: A Dataset for Markerless Capture of Hand Pose and Shape From Single RGB Images. In International Confer-ence on Computer Vision (ICCV) , pages 813–822, 2019. 3 
+
+13
