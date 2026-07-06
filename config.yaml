@@ -27,7 +27,7 @@ subscriptions:
   keyword_recall_mode: or
   intent_profiles:
     - tag: Data
-      description: 将人类视频转化为机器人可用的操作数据，特别是重构手物交互、对齐人体运动与机器人形态、可复现的机器人学习缩放规律、生成可执行动作/演示数据的方法。
+      description: 将人类视频转化为机器人可用的操作数据，让机器人可以利用大规模互联网数据以及人类示教去学习，特别是重构手物交互、对齐人体运动与机器人形态、可复现的机器人学习缩放规律、生成可执行动作/演示数据的方法。
       enabled: true
       paper_sources:
         - arxiv
@@ -51,22 +51,27 @@ subscriptions:
           keyword_cn: 人机迁移
           query: transferring human skills to robots
       intent_queries:
-        - query: human demonstration retargeting
-          query_cn: ''
+        - query: methods for converting human video demonstrations into robot executable action data
+          query_cn: 将人类视频演示转化为机器人可执行动作数据的方法
           enabled: true
-          source: manual
+          source: generated
           note: ''
-        - query: robot learning from videos
-          query_cn: ''
+        - query: reconstructing hand object interactions from human videos for robot manipulation learning
+          query_cn: 从人类视频中重构手物交互以用于机器人操作学习
           enabled: true
-          source: manual
+          source: generated
           note: ''
-        - query: web scale robot learning
-          query_cn: ''
+        - query: aligning human body motion with different robot morphologies for robot learning from human demonstrations
+          query_cn: 将人体运动与不同机器人形态对齐以进行人类示教的机器人学习
           enabled: true
-          source: manual
+          source: generated
           note: ''
-      updated_at: '2026-07-06T00:17:07.868Z'
+        - query: scaling laws for robot learning from large scale internet video data
+          query_cn: 基于大规模互联网视频数据的机器人学习缩放规律
+          enabled: true
+          source: generated
+          note: ''
+      updated_at: '2026-07-06T00:45:37.456Z'
 source_backends:
   arxiv:
     papers_table: arxiv_papers
