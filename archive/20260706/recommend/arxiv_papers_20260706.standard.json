@@ -1,0 +1,318 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-06T21:35:33.080884+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 6,
+    "quick_skim_target": 11,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2606.31694v1",
+      "source": "arxiv",
+      "title": "RCT: A Robot-Collected Touch-Vision-Language Dataset for Tactile Generalization",
+      "abstract": "For robots manipulating open-world objects, tactile representations must generalize to unseen materials. We introduce RCT (Robotic Contact Tactile), a robot-collected touch-vision-language dataset with 29,279 tactile frames from full robot presses on 122 industrial reference materials in 7 categories, recorded with three DIGIT sensors at multiple contact positions. RCT preserves each press as a contact sequence, enabling held-out evaluation across materials, categories, sensors, contact positions, and contact sequences. Frames from one press are strongly correlated: frame-random splits can place near-duplicate observations of the same physical interaction in both training and test. With the encoder held fixed, removing contact-sequence overlap reduces tactile-to-text Recall@1 by 17.7 percentage points. When materials are additionally held out at training time, performance drops sharply, leaving held-out-material Recall@1 at 25.1 +/- 6.1% averaged over three held-out draws. The public TVL/HCT split shows the same structure: every test contact sequence appears in training, and raw-pixel nearest neighbors recover the correct sequence in 98.3% of cases. Uniformly sampling a press improves contrastive training, and RCT-trained embeddings improve category probes on unseen materials. RCT makes contact-sequence-aware, held-out-material evaluation reproducible and exposes novel-material generalization as a central challenge for robotic tactile perception. The RCT dataset is open-sourced at https://faerber-lab.github.io/RCT/",
+      "authors": [
+        "Jingbo He",
+        "Michael Färber",
+        "Roberto Calandra"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.CL",
+        "cs.CV"
+      ],
+      "published": "2026-06-30T14:05:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.31694v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "provides a robot-collected touch-vision-language dataset for manipulation",
+      "llm_evidence_cn": "提供一个机器人采集的触觉-视觉-语言操作数据集",
+      "llm_evidence": "提供一个机器人采集的触觉-视觉-语言操作数据集",
+      "canonical_evidence": "提供一个机器人采集的触觉-视觉-语言操作数据集",
+      "llm_tldr_en": "Introduces RCT, a robot-collected dataset of 29k tactile frames from 122 materials, enabling systematic evaluation of tactile generalization.",
+      "llm_tldr_cn": "为提升机器人操作中的触觉泛化能力，提出机器人采集的 RCT 数据集，包含对 122 种工业材料的按压触觉序列，共 29,279 帧，记录三种传感器多接触位置数据。该数据集允许跨材料、类别、传感器和接触方式的留出法评估，并强调接触序列关联性对划分策略的影响。贡献了一个标准化触觉数据集，推动触觉表征学习的严格评估。",
+      "llm_tldr": "为提升机器人操作中的触觉泛化能力，提出机器人采集的 RCT 数据集，包含对 122 种工业材料的按压触觉序列，共 29,279 帧，记录三种传感器多接触位置数据。该数据集允许跨材料、类别、传感器和接触方式的留出法评估，并强调接触序列关联性对划分策略的影响。贡献了一个标准化触觉数据集，推动触觉表征学习的严格评估。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot manipulation data engine",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.30749v1",
+      "source": "arxiv",
+      "title": "From Grasps to Dexterity: Large-Scale Grasp Pretraining for Dexterous Manipulation",
+      "abstract": "Large-scale dexterous grasp datasets encode rich priors over hand-object interaction, but their use has largely been confined to grasp generation and pick-and-place manipulation. We study whether such data can instead support functional dexterity in articulated tool use, where a robot must acquire a tool, maintain contact, and operate its functional moving parts. We adapt a hierarchical imitation learning framework that combines high-level hand sub-goal prediction with a low-level goal-conditioned controller. We construct a 355k-trajectory grasp-pretraining dataset from large-scale dexterous grasp annotations and use it to pretrain the low-level controller. The controller is then fine-tuned on downstream task demonstrations. To evaluate this setting, we introduce DexCraft, a simulation benchmark with six articulated tool-use tasks requiring coordinated finger motion. Across simulation and real-world experiments, our approach outperforms end-to-end diffusion policy baselines and hierarchical policies trained from scratch. In the real world, it improves full-task success by 33.3 percentage points over DP3. These results show that grasp datasets can serve not only as resources for grasp synthesis, but also as scalable pretraining data for contact-rich dexterous manipulation. Videos are shown on https://yingyuan0414.github.io/grasp2dexterity/ .",
+      "authors": [
+        "Ying Yuan",
+        "Xinyu Liu",
+        "Sriram Krishna",
+        "David Held"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-29T18:00:22+00:00",
+      "link": "https://arxiv.org/pdf/2606.30749v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "constructs 355k-trajectory grasp-pretraining dataset for dexterous manipulation",
+      "llm_evidence_cn": "构建了35.5万条抓取预训练轨迹数据集用于灵巧操作",
+      "llm_evidence": "构建了35.5万条抓取预训练轨迹数据集用于灵巧操作",
+      "canonical_evidence": "构建了35.5万条抓取预训练轨迹数据集用于灵巧操作",
+      "llm_tldr_en": "Uses large-scale grasp pretraining to enable dexterous tool use, demonstrating scalable dataset benefits for robot learning.",
+      "llm_tldr_cn": "本文针对灵巧操作中需要大量训练数据的问题，构建了包含35.5万条轨迹的大规模抓取预训练数据集，并采用分层模仿学习框架，先在高层次预测手部子目标，再由低层次目标条件控制器执行。实验表明，使用该数据集预训练后微调，显著提升了机器人在铰接工具使用上的功能灵巧性，证明大规模抓取数据可以作为操作学习的有效先验。",
+      "llm_tldr": "本文针对灵巧操作中需要大量训练数据的问题，构建了包含35.5万条轨迹的大规模抓取预训练数据集，并采用分层模仿学习框架，先在高层次预测手部子目标，再由低层次目标条件控制器执行。实验表明，使用该数据集预训练后微调，显著提升了机器人在铰接工具使用上的功能灵巧性，证明大规模抓取数据可以作为操作学习的有效先验。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot manipulation data engine",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.29501v1",
+      "source": "arxiv",
+      "title": "Learning Transferable Dynamics Priors from Action to World Modeling",
+      "abstract": "We study action-conditioned world modeling as a scalable way to learn transferable dynamics priors for robot learning. By pretraining a model to predict how actions drive visual scene evolution, the resulting world model captures reusable interaction dynamics beyond appearance-level video generation. Concretely, we pretrain a multi-view interactive base diffusion world model, A2World, on large-scale robot manipulation data with real action annotations. We validate the learned dynamics priors from two complementary perspectives. First, we adapt A2World into a task- or scene-specialized real-world simulator, A2World-sim, whose long-horizon rollouts support simulator-based policy evaluation and scalable what-if analysis by replacing real-robot rollouts with world model rollouts. Second, starting from the same pretrained weights, we adapt A2World into a video-action joint prediction model, A2World-policy, that predicts actions under visual and instruction conditioning. Experiments across simulation benchmarks and real-robot settings demonstrate that action-conditioned world model pretraining yields transferable dynamics priors that benefit both simulator-centric and policy-centric robot learning.",
+      "authors": [
+        "Ze Huang",
+        "Jiahui Zhang",
+        "Hairuo Liu",
+        "Chenxi Zhang",
+        "Ran Cheng",
+        "Li Zhang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-28T17:01:55+00:00",
+      "link": "https://arxiv.org/pdf/2606.29501v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "pretrains world model on large-scale robot manipulation data with action labels",
+      "llm_evidence_cn": "在大规模机器人操作数据上预训练世界模型，学习动作条件动力学",
+      "llm_evidence": "在大规模机器人操作数据上预训练世界模型，学习动作条件动力学",
+      "canonical_evidence": "在大规模机器人操作数据上预训练世界模型，学习动作条件动力学",
+      "llm_tldr_en": "Pretrains a multi-view diffusion world model on large-scale robot manipulation data to learn transferable dynamics priors, enabling simulator-based policy evaluation.",
+      "llm_tldr_cn": "针对机器人学习中对可迁移动力学先验的需求，提出在大规模机器人操作数据上预训练动作条件世界模型 A2World。该多视图交互扩散模型学习预测动作驱动的视觉场景演化，捕获可复用的交互动力学。微调后能作为真实模拟器进行策略评估和可扩展分析，展示了利用大规模数据学习通用世界先验的潜力。",
+      "llm_tldr": "针对机器人学习中对可迁移动力学先验的需求，提出在大规模机器人操作数据上预训练动作条件世界模型 A2World。该多视图交互扩散模型学习预测动作驱动的视觉场景演化，捕获可复用的交互动力学。微调后能作为真实模拟器进行策略评估和可扩展分析，展示了利用大规模数据学习通用世界先验的潜力。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "web-scale robot learning data",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.02466v1",
+      "source": "arxiv",
+      "title": "Learning to Move Before Learning to Do: Task-Agnostic pretraining for VLAs",
+      "abstract": "Vision-Language-Action (VLA) models are fundamentally bottlenecked by the scarcity of expert demonstrations -- triplets of observations, instructions, and actions that are costly to collect at scale. We argue that this bottleneck stems from conflating two distinct learning objectives: acquiring physical competence (how to move) and acquiring semantic alignment (what to do). Crucially, only the latter requires language supervision. Building on this Decomposition Hypothesis, we propose Task-Agnostic Pretraining (TAP), a two-stage framework that first learns transferable motor priors from cheap, unlabeled interaction data -- including discarded off-task trajectories and autonomous robot play -- via a self-supervised Inverse Dynamics objective. A lightweight second stage then grounds these priors in language using minimal expert data. On the SIMPLER benchmark, TAP matches models trained on over 1M expert trajectories while using orders of magnitude less labeled data, yielding a 10% absolute gain over standard behavior cloning. On a real-world WidowX platform, TAP retains 25% success under camera perturbations where internet-scale baselines collapse to 0%, demonstrating that task-agnostic pretraining produces robust, transferable physical representations and offers a scalable path forward for Embodied AI.",
+      "authors": [
+        "Junhao Shi",
+        "Siyin Wang",
+        "Xiaopeng Yu",
+        "Li Ji",
+        "Jingjing Gong",
+        "Xipeng Qiu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-07-02T17:33:37+00:00",
+      "link": "https://arxiv.org/pdf/2607.02466v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "uses cheap unlabeled robot interaction data for scalable pretraining of motor priors",
+      "llm_evidence_cn": "利用廉价无标註机器人交互数据进行可扩展的运动先验预训练",
+      "llm_evidence": "利用廉价无标註机器人交互数据进行可扩展的运动先验预训练",
+      "canonical_evidence": "利用廉价无标註机器人交互数据进行可扩展的运动先验预训练",
+      "llm_tldr_en": "Proposes TAP, a two-stage VLA pretraining that learns motor priors from cheap unlabeled robot interaction data, decoupling physical competence from semantic alignment to overcome demonstration scarcity.",
+      "llm_tldr_cn": "针对 VLA 模型专家演示数据稀缺的问题，提出任务无关预训练框架 TAP，将学习解耦为物理能力获取与语义对齐。第一阶段利用廉价的机器人交互数据（包括失败轨迹和自主玩耍）通过自监督逆动力学预训练可迁移的运动先验，第二阶段再微调语义任务。实验表明该方法能有效利用大规模未标註数据，显著减少对昂贵示教的需求，为可扩展的机器人学习数据利用提供了新思路。",
+      "llm_tldr": "针对 VLA 模型专家演示数据稀缺的问题，提出任务无关预训练框架 TAP，将学习解耦为物理能力获取与语义对齐。第一阶段利用廉价的机器人交互数据（包括失败轨迹和自主玩耍）通过自监督逆动力学预训练可迁移的运动先验，第二阶段再微调语义任务。实验表明该方法能有效利用大规模未标註数据，显著减少对昂贵示教的需求，为可扩展的机器人学习数据利用提供了新思路。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "scalable manipulation dataset",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.29834v1",
+      "source": "arxiv",
+      "title": "STEAM: Self-Supervised Temporal Ensemble Advantage Modeling for Real-World Robot Learning",
+      "abstract": "Real-world robot learning increasingly relies on heterogeneous data, but demonstrations and rollouts often mix useful progress with stalls, corrections, and suboptimal behavior. Effective policy learning therefore requires frame-level advantages that distinguish reliable local progress from failures and regressions. We propose Self-supervised Temporal Ensemble Advantage Modeling (STEAM), a label-free method that learns such advantages from expert demonstrations. STEAM trains an ensemble of temporal-offset predictors on frame pairs within expert trajectories, using the normalized temporal offset between two frames as a self-supervised signal. Each predictor maps a frame pair to a distribution over temporal offsets, which is converted into a scalar advantage. STEAM then takes the minimum advantage across the ensemble to score mixed-quality rollout data conservatively. Across real-world bimanual towel folding, chip checkout, cola restocking, and single-arm pick-and-place tasks, STEAM identifies stalls, failures, and recoveries. When combined with CFGRL, STEAM further improves policy success rate by 59%, 54.3%, 23% and 16.2% over baselines, respectively.",
+      "authors": [
+        "Zhihao Liu",
+        "Qiuyi Gu",
+        "Yitao Wang",
+        "Dongming Qiao",
+        "Yixian Zhang",
+        "Shuaihang Chen",
+        "Liangzhi Shi",
+        "Tianxing Zhou",
+        "Zefang Huang",
+        "Kang Chen",
+        "Zhen Guo",
+        "Quanlu Zhang",
+        "Jincheng Yu",
+        "Xiaodan Liang",
+        "Guoliang Fan",
+        "Yu Wang",
+        "Feng Gao",
+        "Xinlei Chen",
+        "Chao Yu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-29T06:19:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.29834v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Self-supervised advantage modeling from expert demonstrations for robot policy learning",
+      "llm_evidence_cn": "自监督时序集成优势建模，从专家示范中学习机器人策略",
+      "llm_evidence": "自监督时序集成优势建模，从专家示范中学习机器人策略",
+      "canonical_evidence": "自监督时序集成优势建模，从专家示范中学习机器人策略",
+      "llm_tldr_en": "Proposes STEAM to learn frame-level advantages from expert demos, improving policy learning from heterogeneous data.",
+      "llm_tldr_cn": "针对机器人演示数据混杂有用进展与次优行为的问题，提出STEAM，利用自监督时序偏移预测集成从专家轨迹中学习帧级优势估计，实现无标签的高效策略学习，提升真实世界机器人学习的鲁棒性。",
+      "llm_tldr": "针对机器人演示数据混杂有用进展与次优行为的问题，提出STEAM，利用自监督时序偏移预测集成从专家轨迹中学习帧级优势估计，实现无标签的高效策略学习，提升真实世界机器人学习的鲁棒性。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot learning from human videos",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.30552v2",
+      "source": "arxiv",
+      "title": "Training Vision-Language-Action Models with Dense Embodied Chain-of-Thought Supervision",
+      "abstract": "Cross-embodiment transfer in vision-language-action (VLA) models remains challenging because low-level state and action spaces differ fundamentally across robot platforms. We observe that the high-level cognitive process underlying manipulation, including scene perception, object identification, task planning, and sub-task decomposition, is largely shared across embodiments. Based on this observation, we present ZR-0, a 2.6 billion parameter end-to-end VLA model that uses dense Embodied Chain-of-Thought (ECoT) supervision to align cross-embodiment representations within the vision-language model (VLM). ZR-0 adopts a dual-stream architecture: a pre-trained VLM (System 2) generates structured ECoT reasoning during training, while a Diffusion Transformer-based action expert (System 1) produces continuous action chunks via flow matching. The two components are coupled through cross-attention, with an attention mask that restricts the action expert to input prompt features only, enabling ECoT generation to be entirely skipped at inference without any performance loss. ZR-0 is pre-trained on ProcCorpus-60M, a large-scale dataset comprising approximately 60 million frames (approximately 1,000 hours) from over 400K trajectories, with dense ECoT annotations covering 96.8% of all frames. We evaluate ZR-0 on three simulation benchmarks spanning single-arm (LIBERO), bimanual (RoboTwin 2.0), and humanoid (RoboCasa GR-1 Tabletop) embodiments, as well as real-world experiments on the xArm platform, demonstrating strong performance across all settings. Code and model checkpoints are available at https://github.com/RUCKBReasoning/ZR-0.",
+      "authors": [
+        "Haoyang Li",
+        "Guanlin Li",
+        "Youhe Feng",
+        "Chen Zhao",
+        "Zhuoran Wang",
+        "Yang Li",
+        "Qizhe Wei",
+        "Shifeng Bao",
+        "Haitao Shen",
+        "Yihan Zhao",
+        "Tong Yang",
+        "Jing Zhang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV"
+      ],
+      "published": "2026-06-29T16:48:48+00:00",
+      "link": "https://arxiv.org/pdf/2606.30552v2",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Uses Embodied Chain-of-Thought to align cross-embodiment representations in VLA models, enabling transfer across robot platforms",
+      "llm_evidence_cn": "使用具身思维链监督对齐跨形态的VLA表示，实现跨机器人平台迁移",
+      "llm_evidence": "使用具身思维链监督对齐跨形态的VLA表示，实现跨机器人平台迁移",
+      "canonical_evidence": "使用具身思维链监督对齐跨形态的VLA表示，实现跨机器人平台迁移",
+      "llm_tldr_en": "Proposes ZR-0, a VLA model that uses dense ECoT supervision to align cross-embodiment representations, improving transfer across robots.",
+      "llm_tldr_cn": "针对跨形态视觉-语言-动作模型低层状态动作空间差异大的问题，提出ZR-0，通过密集具身思维链监督对齐不同机器人平台的表示，实现跨形态策略迁移，提升多平台操作性能。",
+      "llm_tldr": "针对跨形态视觉-语言-动作模型低层状态动作空间差异大的问题，提出ZR-0，通过密集具身思维链监督对齐不同机器人平台的表示，实现跨形态策略迁移，提升多平台操作性能。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "aligning human body motion with different robot morphologies for robot learning from human demonstrations",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.31101v1",
+      "source": "arxiv",
+      "title": "Efficient Sim-to-Real Transfer of World-Action Models from Synthetic Priors",
+      "abstract": "Bridging the sim-to-real gap is a core challenge in deploying learned manipulation policies. Sim-to-real learning is attractive because it can replace expensive real robot demonstrations with scalable synthetic data, yet world-action models have not previously been shown to transfer from simulation to real robotic manipulation. We study whether a world-action model can be trained from synthetic priors and deployed zero-shot in the real world. To this end, we build upon Cosmos Policy, a video diffusion model adapted for visuomotor control. We construct simulation environments with extensive domain randomization and generate demonstrations using the AnyTask motion planning pipeline. We evaluate our approach across object lifting, drawer opening, and pick-and-place tasks using ${\\sim}800$ synthetic demonstrations per task and no real demonstrations. When deployed zero-shot on a Franka Robot, our policy attains a 35\\% average success rate. To our knowledge, this represents the first successful sim-to-real transfer of a world-action model for robotic manipulation.",
+      "authors": [
+        "Zixing Wang",
+        "Kausik Sivakumar",
+        "Jinghuan Shang",
+        "Yafei Hu",
+        "Zhaoming Xie",
+        "Ran Gong",
+        "Xiaohan Zhang",
+        "Karl Schmeckpeper"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-30T03:49:31+00:00",
+      "link": "https://arxiv.org/pdf/2606.31101v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "uses simulation with domain randomization to generate scalable manipulation demonstrations for training world-action models",
+      "llm_evidence_cn": "使用仿真与域随机化生成可扩展的操作演示，用于训练世界行动模型",
+      "llm_evidence": "使用仿真与域随机化生成可扩展的操作演示，用于训练世界行动模型",
+      "canonical_evidence": "使用仿真与域随机化生成可扩展的操作演示，用于训练世界行动模型",
+      "llm_tldr_en": "Proposes a method to zero-shot transfer world-action models from simulation to real robot manipulation by training on synthetic data from randomized simulation environments, demonstrating on tasks like lifting and drawer opening.",
+      "llm_tldr_cn": "本文研究从合成先验训练世界行动模型并零样本迁移到真实机器人操作。通过在域随机化仿真环境中生成操作演示，并在物体提升、抽屉打开等任务上验证，展示了合成数据在可扩展操作学习中的有效性。",
+      "llm_tldr": "本文研究从合成先验训练世界行动模型并零样本迁移到真实机器人操作。通过在域随机化仿真环境中生成操作演示，并在物体提升、抽屉打开等任务上验证，展示了合成数据在可扩展操作学习中的有效性。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "scalable manipulation dataset",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
