@@ -1,0 +1,3294 @@
+{
+  "top_k": 200,
+  "generated_at": "2026-07-06T23:59:36.895417+00:00",
+  "papers": [
+    {
+      "id": "openreview-iclr-2025-pislzg7ktl",
+      "source": "ICLR-2025-Accepted",
+      "title": "Data Scaling Laws in Imitation Learning for Robotic Manipulation",
+      "abstract": "Data scaling has revolutionized fields like natural language processing and computer vision, providing models with remarkable generalization capabilities. In this paper, we investigate whether similar data scaling laws exist in robotics, particularly in robotic manipulation, and whether appropriate data scaling can yield single-task robot policies that can be deployed zero-shot for any object within the same category in any environment. To this end, we conduct a comprehensive empirical study on data scaling in imitation learning. By collecting data across numerous environments and objects, we study how a policy’s generalization performance changes with the number of training environments, objects, and demonstrations. Throughout our research, we collect over 40,000 demonstrations and execute more than 15,000 real-world robot rollouts under a rigorous evaluation protocol. Our findings reveal several intriguing results: the generalization performance of the policy follows a roughly power-law relationship with the number of environments and objects. The diversity of environments and objects is far more important than the absolute number of demonstrations; once the number of demonstrations per environment or object reaches a certain threshold, additional demonstrations have minimal effect. Based on these insights, we propose an efficient data collection strategy. With four data collectors working for one afternoon, we collect sufficient data to enable the policies for two tasks to achieve approximately 90\\% success rates in novel environments with unseen objects.",
+      "authors": [
+        "Fanqi Lin",
+        "Yingdong Hu",
+        "Pingyue Sheng",
+        "Chuan Wen",
+        "Jiacheng You",
+        "Yang Gao"
+      ],
+      "primary_category": "Data Scaling Laws",
+      "categories": [
+        "Data Scaling Laws",
+        "Imitation Learning",
+        "Robotic Manipulation"
+      ],
+      "published": "2025-01-22T16:14:21.254+00:00",
+      "link": "https://openreview.net/forum?id=pISLZG7ktL",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-avvxx0erkt",
+      "source": "ICML-2025-Accepted",
+      "title": "DexScale: Automating Data Scaling for Sim2Real Generalizable Robot Control",
+      "abstract": "A critical prerequisite for achieving generalizable robot control is the availability of a large-scale robot training dataset. Due to the expense of collecting realistic robotic data, recent studies explored simulating and recording robot skills in virtual environments. While simulated data can be generated at higher speeds, lower costs, and larger scales, the applicability of such simulated data remains questionable due to the gap between simulated and realistic environments. To advance the Sim2Real generalization, in this study, we present DexScale, a data engine designed to perform automatic skills simulation and scaling for learning deployable robot manipulation policies. Specifically, DexScale ensures the usability of simulated skills by integrating diverse forms of realistic data into the simulated environment, preserving semantic alignment with the target tasks. For each simulated skill in the environment, DexScale facilitates effective Sim2Real data scaling by automating the process of domain randomization and adaptation. Tuned by the scaled dataset, the control policy achieves zero-shot Sim2Real generalization across diverse tasks, multiple robot embodiments, and widely studied policy model architectures, highlighting its importance in advancing Sim2Real embodied intelligence.",
+      "authors": [
+        "Guiliang Liu",
+        "Yueci Deng",
+        "Runyi Zhao",
+        "Huayi Zhou",
+        "Jian Chen",
+        "Jietao Chen",
+        "Ruiyan Xu",
+        "Yunxin Tai",
+        "Kui Jia"
+      ],
+      "primary_category": "Data Engine",
+      "categories": [
+        "Data Engine",
+        "Embodied AI",
+        "Robot Control",
+        "Manipulation",
+        "Policy Learning"
+      ],
+      "published": "2025-05-01T13:14:50.081+00:00",
+      "link": "https://openreview.net/forum?id=AVVXX0erKT",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data"
+      ]
+    },
+    {
+      "id": "cvpr-2025-lee-dynscene-scalable-generation-of-dynamic-robotic-manipulation-scenes-for-embodied-cvpr-2025-paper",
+      "source": "CVPR-2025-Accepted",
+      "title": "DynScene: Scalable Generation of Dynamic Robotic Manipulation Scenes for Embodied AI",
+      "abstract": "Robotic manipulation in embodied AI critically depends on large-scale, high-quality datasets that reflect realistic object interactions and physical dynamics. However, existing data collection pipelines are often slow, expensive, and heavily reliant on manual efforts. We present DynScene, a diffusion-based framework for generating dynamic robotic manipulation scenes directly from textual instructions. Unlike prior methods that focus solely on static environments or isolated robot actions, DynScene decomposes the generation into two phases static scene synthesis and action trajectory generation allowing fine-grained control and diversity. Our model enhances realism and physical feasibility through scene refinement (layout sampling, quaternion quantization) and leverages residual action representation to enable action augmentation, generating multiple diverse trajectories from a single static configuration. Experiments show DynScene achieves 26.8x faster generation, 1.84x higher accuracy, and 28% greater action diversity than human-crafted data. Furthermore, agents trained with DynScene exhibit up to 19.4% higher success rates across complex manipulation tasks. Our approach paves the way for scalable, automated dataset generation in robot learning.",
+      "authors": [
+        "Lee, Sangmin",
+        "Park, Sungyong",
+        "Kim, Heewon"
+      ],
+      "primary_category": "CVPR-2025",
+      "categories": [
+        "CVPR-2025"
+      ],
+      "published": "2025-06-01T00:00:00+00:00",
+      "link": "https://openaccess.thecvf.com/content/CVPR2025/html/Lee_DynScene_Scalable_Generation_of_Dynamic_Robotic_Manipulation_Scenes_for_Embodied_CVPR_2025_paper.html",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "aaai-2026-40127",
+      "source": "AAAI-2026-Accepted",
+      "title": "Learning Diverse Bimanual Dexterous Manipulation Skills from Human Demonstrations",
+      "abstract": "Bimanual dexterous manipulation is a critical yet underexplored area in robotics. Its high-dimensional action space and inherent task complexity present significant challenges for policy learning, and the limited task diversity in existing benchmarks hinders general-purpose skill development. Existing approaches largely depend on reinforcement learning, often constrained by intricately designed reward functions tailored to a narrow set of tasks. In this work, we present a novel approach for efficiently learning diverse bimanual dexterous skills from abundant human demonstrations. Specifically, we introduce BiDexHD, a framework that unifies task construction from existing bimanual datasets and employs teacher-student policy learning to address all tasks. The teacher learns state-based policies using a general two-stage reward function across tasks with shared behaviors, while the student distills the learned multi-task policies into a vision-based policy. With BiDexHD, scalable learning of numerous bimanual dexterous skills from auto-constructed tasks becomes feasible, offering promising advances toward universal bimanual dexterous manipulation. Experiments on TACO tool-using dataset spanning 141 tasks across 6 categories demonstrate a task fulfillment rate of 74.59% on trained tasks and 51.07% on unseen tasks. We further transfer BiDexHD to 11 ARCTIC collaborative tasks and achieve an average of 80.49% task fulfillment rate on trained tasks and 65.99% on unseen task. All empirical results demonstrate the effectiveness and competitive zero-shot generalization capabilities of BiDexHD.",
+      "authors": [
+        "Bohan Zhou",
+        "Haoqi Yuan",
+        "Yuhui Fu",
+        "Zongqing Lu"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 34",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 34"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/40127",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/40127/44088",
+      "tags": [
+        "keyword:Data"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2025-8yeotbceap",
+      "source": "ICLR-2025-Rejected-Public",
+      "title": "Learning Diverse Bimanual Dexterous Manipulation Skills from Human Demonstrations",
+      "abstract": "Bimanual dexterous manipulation is a critical yet underexplored area in robotics. Its high-dimensional action space and inherent task complexity present significant challenges for policy learning, and the limited task diversity in existing benchmarks hinders general-purpose skill development. Existing approaches largely depend on reinforcement learning, often constrained by intricately designed reward functions tailored to a narrow set of tasks. In this work, we present a novel approach for efficiently learning diverse bimanual dexterous skills from abundant human demonstrations. Specifically, we introduce BiDexHD, a framework that unifies task construction from existing bimanual datasets and employs teacher-student policy learning to address all tasks. The teacher learns state-based policies using a general two-stage reward function across tasks with shared behaviors, while the student distills the learned multi-task policies into a vision-based policy. With BiDexHD, scalable learning of numerous bimanual dexterous skills from auto-constructed tasks becomes feasible, offering promising advances toward universal bimanual dexterous manipulation. Our empirical evaluation on the TACO dataset, spanning 141 tasks across six categories, demonstrates a task fulfillment rate of 74.59% on trained tasks and 51.07% on unseen tasks, showcasing the effectiveness and competitive zero-shot generalization capabilities of BiDexHD. For videos and more information, visit our project page.",
+      "authors": [
+        "Bohan Zhou",
+        "Haoqi Yuan",
+        "Yuhui Fu",
+        "Zongqing Lu"
+      ],
+      "primary_category": "bimanual dexterous manipulation",
+      "categories": [
+        "bimanual dexterous manipulation",
+        "reinforcement learning"
+      ],
+      "published": "2024-09-17T06:48:18.67+00:00",
+      "link": "https://openreview.net/forum?id=8yEoTBceap",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2025-rhfyijux9d",
+      "source": "ICLR-2025-Rejected-Public",
+      "title": "Video2Policy: Scaling up Manipulation Tasks in Simulation through Internet Videos",
+      "abstract": "Simulation offers a promising approach for cheaply scaling training data for generalist policies. To scalably generate data from diverse and realistic tasks, existing algorithms either rely on large language models (LLMs) that may hallucinate tasks not interesting for robotics; or digital twins, which require careful real-to-sim alignment and are hard to scale. To address these challenges, we introduce Video2Policy, a novel framework that leverages large amounts of internet RGB videos to reconstruct tasks based on everyday human behavior. Our approach comprises two phases: (1) task generation through object mesh reconstruction and 6D position tracking; and (2) reinforcement learning utilizing LLM-generated reward functions and iterative in-context reward reflection for the task. We demonstrate the efficacy of Video2Policy by reconstructing over 100 videos from the Something-Something-v2 (SSv2) dataset, which depicts diverse and complex human behaviors on 9 different tasks. Our method can successfully train RL policies on such tasks, including complex and challenging tasks such as throwing. Furthermore, we show that a generalist policy trained on the collected sim data generalizes effectively to new tasks and outperforms prior approaches. Finally, we show the performance of our policies improves by simply including more internet videos. We believe that the proposed Video2Policy framework is a step towards generalist policies that can execute practical robotic tasks based on everyday human behavior.",
+      "authors": [
+        "Weirui Ye",
+        "Fangchen Liu",
+        "Zheng Ding",
+        "Yang Gao",
+        "Oleh Rybkin",
+        "Pieter Abbeel"
+      ],
+      "primary_category": "robotics manipulation",
+      "categories": [
+        "robotics manipulation",
+        "internet videos",
+        "real2sim",
+        "Foundation models",
+        "reinforcement learning"
+      ],
+      "published": "2024-09-27T03:58:33.971+00:00",
+      "link": "https://openreview.net/forum?id=RhfYIJux9d",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-kxmiivub9u",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Self-Improving Embodied Foundation Models",
+      "abstract": "Foundation models trained on web-scale data have revolutionized robotics, but their application to low-level control remains largely limited to behavioral cloning. Drawing inspiration from the success of the reinforcement learning stage in fine-tuning large language models, we propose a two-stage post-training approach for robotics. The first stage, Supervised Fine-Tuning (SFT), fine-tunes pretrained foundation models using both: a) behavioral cloning, and b) steps-to-go prediction objectives. In the second stage, Self-Improvement, steps-to-go prediction enables the extraction of a well-shaped reward function and a robust success detector, enabling a fleet of robots to autonomously practice downstream tasks with minimal human supervision. Through extensive experiments on real-world and simulated robot embodiments, our novel post-training recipe unveils significant results on Embodied Foundation Models. First, we demonstrate that the combination of SFT and Self-Improvement is significantly more sample-efficient than scaling imitation data collection for supervised learning, and that it leads to policies with significantly higher success rates. Further ablations highlight that the combination of web-scale pretraining and Self-Improvement is the key to this sample-efficiency. Next, we demonstrate that our proposed combination uniquely unlocks a capability that current methods cannot achieve: autonomously practicing and acquiring novel skills that generalize far beyond the behaviors observed in the imitation learning datasets used during training. These findings highlight the transformative potential of combining pretrained foundation models with online Self-Improvement to enable autonomous skill acquisition in robotics.",
+      "authors": [
+        "Seyed Kamyar Seyed Ghasemipour",
+        "Ayzaan Wahid",
+        "Jonathan Tompson",
+        "Pannag R Sanketi",
+        "Igor Mordatch"
+      ],
+      "primary_category": "Robotics",
+      "categories": [
+        "Robotics",
+        "Foundation Models",
+        "Self-Improvement",
+        "Reinforcement Learning"
+      ],
+      "published": "2025-09-18T17:40:18.422+00:00",
+      "link": "https://openreview.net/forum?id=KXMIIVUB9U",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2025-i0to0g5j7g",
+      "source": "ICLR-2025-Rejected-Public",
+      "title": "On the Surprising Efficacy of Online Self-Improvement for Embodied Multimodal Foundation Models",
+      "abstract": "Foundation models trained on web-scale data have revolutionized robotics, but their application to low-level control remains largely limited to behavioral cloning. Drawing inspiration from the sample efficiency and success of reinforcement learning (RL) fine-tuning in large language models (LLMs), we propose a two-stage approach suited to robotics. The first stage, Supervised Fine-Tuning (SFT), fine-tunes pre-trained foundation models using goal-conditioned behavioral cloning and “steps-to-go” prediction objectives. In the second stage, this foundation enables the extraction of a well-shaped reward function and a success detector, eliminating the need for manual reward engineering and real-world instrumentation, and allowing robots to practice autonomously with minimal human supervision. Our experiments on both real-world and simulated robots demonstrate that the combination of SFT and online Self-Improvement is significantly more sample-efficient than supervised learning alone. Furthermore, the combination of our proposed approach with web-scale pre-trained foundation models enables rapid acquisition of new skills, allowing robots to generalize far beyond the behaviors observed in the imitation learning datasets used during training. These findings highlight the transformative potential of combining pre-trained foundation models with online fine-tuning to unlock new levels of autonomy and skill acquisition in robotics.",
+      "authors": [
+        "Seyed Kamyar Seyed Ghasemipour",
+        "Ayzaan Wahid",
+        "Jonathan Tompson",
+        "Pannag R Sanketi",
+        "Igor Mordatch"
+      ],
+      "primary_category": "Robotics",
+      "categories": [
+        "Robotics",
+        "Multimodal Foundation Models",
+        "Post-Training",
+        "Self-Improvement",
+        "Reinforcement Learning"
+      ],
+      "published": "2024-09-28T06:44:14.727+00:00",
+      "link": "https://openreview.net/forum?id=I0To0G5J7g",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2025-vyoe2ebqeh",
+      "source": "ICLR-2025-Accepted",
+      "title": "Latent Action Pretraining from Videos",
+      "abstract": "We introduce Latent Action Pretraining for general Action models (LAPA), the first unsupervised method for pretraining Vision-Language-Action (VLA) models without ground-truth robot action labels. Existing Vision-Language-Action models require action labels typically collected by human teleoperators during pretraining, which significantly limits possible data sources and scale. In this work, we propose a method to learn from internet-scale videos that do not have robot action labels. We first train an action quantization model leveraging VQ-VAE-based objective to learn discrete latent actions between image frames, then pretrain a latent VLA model to predict these latent actions from observations and task descriptions, and finally finetune the VLA on small-scale robot manipulation data to map from latent to robot actions. Experimental results demonstrate that our method significantly outperforms existing techniques that train robot manipulation policies from large-scale videos. Furthermore, it outperforms the state-of-the-art VLA model trained with robotic action labels on real-world manipulation tasks that require language conditioning, generalization to unseen objects, and semantic generalization to unseen instructions. Training only on human manipulation videos also shows positive transfer, opening up the potential for leveraging web-scale data for robotics foundation models.",
+      "authors": [
+        "Seonghyeon Ye",
+        "Joel Jang",
+        "Byeongguk Jeon",
+        "Se June Joo",
+        "Jianwei Yang",
+        "Baolin Peng",
+        "Ajay Mandlekar",
+        "Reuben Tan",
+        "Yu-Wei Chao",
+        "Bill Yuchen Lin",
+        "Lars Liden",
+        "Kimin Lee",
+        "Jianfeng Gao",
+        "Luke Zettlemoyer",
+        "Dieter Fox",
+        "Minjoon Seo"
+      ],
+      "primary_category": "vision-language-action models",
+      "categories": [
+        "vision-language-action models",
+        "robotics"
+      ],
+      "published": "2025-01-22T16:11:57.415+00:00",
+      "link": "https://openreview.net/forum?id=VYOe2eBQeh",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-kp9b9iqdit",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Object-centric 3D Motion Field for Robot Learning from Human Videos",
+      "abstract": "Learning robot control policies from human videos is a promising direction for scaling up robot learning. However, how to extract action knowledge (or action representations) from videos for policy learning remains a key challenge. Existing action representations such as video frames, pixelflow, and pointcloud flow have inherent limitations such as modeling complexity or loss of information. In this paper, we propose to use object-centric 3D motion field to represent actions for robot learning from human videos, and present a novel framework for extracting this representation from videos for zero-shot control. We introduce two novel components. First, a novel training pipeline for training a ``denoising'' 3D motion field estimator to extract fine object 3D motions from human videos with noisy depth robustly. Second, a dense object-centric 3D motion field prediction architecture that favors both cross-embodiment transfer and policy generalization to background. We evaluate the system in real world setups. Experiments show that our method reduces 3D motion estimation error by over 50% compared to the latest method, achieve 55% average success rate in diverse tasks where prior approaches fail ($\\lesssim 10$\\%), and can even acquire fine-grained manipulation skills like insertion.",
+      "authors": [
+        "Zhao-Heng Yin",
+        "Sherry Yang",
+        "Pieter Abbeel"
+      ],
+      "primary_category": "Learning from videos; Robot Learning; 3D Perception",
+      "categories": [
+        "Learning from videos; Robot Learning; 3D Perception"
+      ],
+      "published": "2025-09-18T17:31:09.945+00:00",
+      "link": "https://openreview.net/forum?id=kp9B9iQDIt",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "cvpr-2025-chen-vidbot-learning-generalizable-3d-actions-from-in-the-wild-2d-human-videos-cvpr-2025-paper",
+      "source": "CVPR-2025-Accepted",
+      "title": "VidBot: Learning Generalizable 3D Actions from In-the-Wild 2D Human Videos for Zero-Shot Robotic Manipulation",
+      "abstract": "Future robots are envisioned as versatile systems capable of performing a variety of household tasks. The big question remains, how can we bridge the embodiment gap while minimizing physical robot learning, which fundamentally does not scale well. We argue that learning from in-the-wild human videos offers a promising solution for robotic manipulation tasks, as vast amounts of relevant data already exist on the internet. In this work, we present VidBot, a framework enabling zero-shot robotic manipulation using learned 3D affordance from in-the-wild monocular RGB-only human videos. VidBot leverages a pipeline to extract explicit representations from them, namely 3D hand trajectories from videos, combining a depth foundation model with structure-from-motion techniques to reconstruct temporally consistent, metric-scale 3D affordance representations agnostic to embodiments. We introduce a coarse-to-fine affordance learning model that first identifies coarse actions from the pixel space and then generates fine-grained interaction trajectories with a diffusion model, conditioned on coarse actions and guided by test-time constraints for context-aware interaction planning, enabling substantial generalization to novel scenes and embodiments. Extensive experiments demonstrate the efficacy of VidBot, which significantly outperforms counterparts across 13 manipulation tasks in zero-shot settings and can be seamlessly deployed across robot systems in real-world environments. VidBot paves the way for leveraging everyday human videos to make robot learning more scalable.",
+      "authors": [
+        "Chen, Hanzhi",
+        "Sun, Boyang",
+        "Zhang, Anran",
+        "Pollefeys, Marc",
+        "Leutenegger, Stefan"
+      ],
+      "primary_category": "CVPR-2025",
+      "categories": [
+        "CVPR-2025"
+      ],
+      "published": "2025-06-01T00:00:00+00:00",
+      "link": "https://openaccess.thecvf.com/content/CVPR2025/html/Chen_VidBot_Learning_Generalizable_3D_Actions_from_In-the-Wild_2D_Human_Videos_CVPR_2025_paper.html",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "aaai-2026-38086",
+      "source": "AAAI-2026-Accepted",
+      "title": "Human2Robot: Learning Robot Actions from Paired Human-Robot Videos",
+      "abstract": "Distilling knowledge from human demonstrations is a promising way for robots to learn and act. Existing methods, which often rely on coarsely-aligned video pairs, are typically constrained to learning global or task-level features. As a result, they tend to neglect the fine-grained frame-level dynamics required for complex manipulation and generalization to novel tasks. We posit that this limitation stems from a vicious circle of inadequate datasets and the methods they inspire. To break this cycle, we propose a paradigm shift that treats fine-grained human-robot alignment as a conditional video generation problem. To this end, we first introduce H&R, a novel third-person dataset containing 2,600 episodes of precisely synchronized human and robot motions, collected using a VR teleoperation system. We then present Human2Robot, a framework designed to leverage this data. Human2Robot employs a Video Prediction Model to learn a rich and implicit representation of robot dynamics by generating robot videos from human input, which in turn guides a decoupled action decoder. Our real-world experiments demonstrate that this approach not only achieves high performance on seen tasks but also exhibits significant one-shot generalization to novel positions, objects, instances, and even new task categories.",
+      "authors": [
+        "Sicheng Xie",
+        "Haidong Cao",
+        "Zejia Weng",
+        "Zhen Xing",
+        "Haoran Chen",
+        "Shiwei Shen",
+        "Jiaqi Leng",
+        "Zuxuan Wu",
+        "Yu-Gang Jiang"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 13",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 13"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/38086",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/38086/42048",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2025-bpdiztivq8",
+      "source": "ICLR-2025-Rejected-Public",
+      "title": "IGOR: Image-GOal Representations are the Atomic Building Blocks for Next-Level Generalization in Embodied AI",
+      "abstract": "We introduce Image-GOal Representations (IGOR), aiming to learn a unified, semantically consistent action space across human and various robots. Through this unified latent action space, IGOR enables knowledge transfer among large-scale robot and human activity data. We achieve this by compressing visual changes between an initial image and its goal state into latent actions. IGOR allows us to generate latent action labels for internet-scale video data. This unified latent action space enables the training of foundation policy and world models across a wide variety of tasks performed by both robots and humans. We demonstrate that: (1) IGOR learns a semantically consistent action space for both human and robots, characterizing various possible motions of objects representing the physical interaction knowledge; (2) IGOR can “migrate” the movements of the object in the one video to other videos, even across human and robots, by jointly using the latent action model and world model; (3) IGOR can learn to align latent actions with natural language through the foundation policy model, and integrate latent actions with a low-level policy model to achieve effective robot control. We believe IGOR opens new possibilities for human-to-robot knowledge transfer and control. See video demonstrations on our anonymous webpage.",
+      "authors": [
+        "Xiaoyu Chen",
+        "Junliang Guo",
+        "Tianyu He",
+        "Chuheng Zhang",
+        "Pushi Zhang",
+        "Derek Cathera Yang",
+        "Li Zhao",
+        "Jiang Bian"
+      ],
+      "primary_category": "Embodied AI",
+      "categories": [
+        "Embodied AI",
+        "Foundation Models",
+        "Generalist Agents"
+      ],
+      "published": "2024-09-25T13:32:49.162+00:00",
+      "link": "https://openreview.net/forum?id=bpdIZTIVq8",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "aaai-2026-38875",
+      "source": "AAAI-2026-Accepted",
+      "title": "H-RDT: Human Manipulation Enhanced Bimanual Robotic Manipulation",
+      "abstract": "Imitation learning for robotic manipulation faces a fundamental challenge: the scarcity of large-scale, high-quality robot demonstration data. Recent robotic foundation models often pre-train on cross-embodiment robot datasets to increase data scale, while they face significant limitations as the diverse morphologies and action spaces across different robot embodiments make unified training challenging. In this paper, we present  H-RDT (Human to Robotics Diffusion Transformer), a novel approach that leverages human manipulation data to enhance robot manipulation capabilities. Our key insight is that large-scale egocentric human manipulation videos with paired 3D hand pose annotations provide rich behavioral priors that capture natural manipulation strategies and can benefit robotic policy learning. We introduce a two-stage training paradigm: (1) pre-training on large-scale egocentric human manipulation data, and (2) cross-embodiment fine-tuning on robot-specific data with modular action encoders and decoders. Built on a diffusion transformer architecture with 2B parameters, H-RDT uses flow matching to model complex action distributions. The modular design of action encoder and decoder components enables effective knowledge transfer from the unified human embodiment to diverse robot platforms through efficient fine-tuning. Extensive evaluations encompassing both simulation and real-world experiments, single-task and multitask scenarios, as well as few-shot learning and robustness assessments, demonstrate that H-RDT outperforms training from scratch and existing state-of-the-art methods, including π0 and RDT, achieving significant improvements of 13.9% and 40.5% over training from scratch in simulation and real-world experiments, respectively. The results validate our core hypothesis that human manipulation data can serve as a powerful foundation for learning bimanual robotic manipulation policies.",
+      "authors": [
+        "Hongzhe Bi",
+        "Lingxuan Wu",
+        "Tianwei Lin",
+        "Hengkai Tan",
+        "Zhizhong Su",
+        "Hang Su",
+        "Jun Zhu"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 22",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 22"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/38875",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/38875/42837",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "aaai-2026-37533",
+      "source": "AAAI-2026-Accepted",
+      "title": "Mask2IV: Interaction-Centric Video Generation via Mask Trajectories",
+      "abstract": "Generating interaction-centric videos, such as those depicting humans or robots interacting with objects, is crucial for embodied intelligence, as they provide rich and diverse visual priors for robot learning, manipulation policy training, and affordance reasoning. However, existing methods often struggle to model such complex and dynamic interactions. While recent studies show that masks can serve as effective control signals and enhance generation quality, obtaining dense and precise mask annotations remains a major challenge for real-world use. To overcome this limitation, we introduce Mask2IV, a novel framework specifically designed for interaction-centric video generation. It adopts a decoupled two-stage pipeline that first predicts plausible motion trajectories for both actor and object, then generates a video conditioned on these trajectories. This design eliminates the need for dense mask inputs from users while preserving the flexibility to manipulate the interaction process. Furthermore, Mask2IV supports versatile and intuitive control, allowing users to specify the target object of interaction and guide the motion trajectory through action descriptions or spatial position cues. To support systematic training and evaluation, we curate two benchmarks covering diverse action and object categories across both human-object interaction and robotic manipulation scenarios. Extensive experiments demonstrate that our method achieves superior visual realism and controllability compared to existing baselines.",
+      "authors": [
+        "Gen Li",
+        "Bo Zhao",
+        "Jianfei Yang",
+        "Laura Sevilla-Lara"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 8",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 8"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/37533",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/37533/41495",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2025-mqkve6f3up",
+      "source": "ICLR-2025-Accepted",
+      "title": "Subtask-Aware Visual Reward Learning from Segmented Demonstrations",
+      "abstract": "Reinforcement Learning (RL) agents have demonstrated their potential across various robotic tasks. However, they still heavily rely on human-engineered reward functions, requiring extensive trial-and-error and access to target behavior information, often unavailable in real-world settings. This paper introduces REDS: REward learning from Demonstration with Segmentations, a novel reward learning framework that leverages action-free videos with minimal supervision. Specifically, REDS employs video demonstrations segmented into subtasks from diverse sources and treats these segments as ground-truth rewards. We train a dense reward function conditioned on video segments and their corresponding subtasks to ensure alignment with ground-truth reward signals by minimizing the Equivalent-Policy Invariant Comparison distance. Additionally, we employ contrastive learning objectives to align video representations with subtasks, ensuring precise subtask inference during online interactions. Our experiments show that REDS significantly outperforms baseline methods on complex robotic manipulation tasks in Meta-World and more challenging real-world tasks, such as furniture assembly in FurnitureBench, with minimal human intervention. Moreover, REDS facilitates generalization to unseen tasks and robot embodiments, highlighting its potential for scalable deployment in diverse environments.",
+      "authors": [
+        "Changyeon Kim",
+        "Minho Heo",
+        "Doohyun Lee",
+        "Honglak Lee",
+        "Jinwoo Shin",
+        "Joseph J Lim",
+        "Kimin Lee"
+      ],
+      "primary_category": "Reinforcement Learning",
+      "categories": [
+        "Reinforcement Learning",
+        "Reward Learning",
+        "Robotic Manipulation"
+      ],
+      "published": "2025-01-22T16:12:20.372+00:00",
+      "link": "https://openreview.net/forum?id=mqKVe6F3Up",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "aaai-2026-38874",
+      "source": "AAAI-2026-Accepted",
+      "title": "Dexterous Manipulation Transfer via Progressive Kinematic-Dynamic Alignment",
+      "abstract": "The inherent difficulty and limited scalability of collecting manipulation data using multi-fingered robot hand hardware platforms have resulted in severe data scarcity, impeding research on data-driven dexterous manipulation policy learning. To address this challenge, we present a hand-agnostic manipulation transfer system. It efficiently converts human hand manipulation sequences from demonstration videos into high-quality dexterous manipulation trajectories without requirements of massive training data. To tackle the multi-dimensional disparities between human hands and dexterous hands, as well as the challenges posed by high-degree-of-freedom coordinated control of dexterous hands, we design a progressive transfer framework: first, we establish primary control signals for dexterous hands based on kinematic matching; subsequently, we train residual policies with action space rescaling and thumb-guided initialization to dynamically optimize contact interactions under unified rewards; finally, we compute wrist control trajectories with the objective of preserving operational semantics. Using only human hand manipulation videos, our system automatically configures system parameters for different tasks, balancing kinematic matching and dynamic optimization across dexterous hands, object categories, and tasks. Extensive experimental results demonstrate that our framework can automatically generate smooth and semantically correct dexterous hand manipulation that faithfully reproduces human intentions, achieving high efficiency and strong generalizability with an average transfer success rate of 73%, providing an easily implementable and scalable method for collecting robot dexterous manipulation data. Refer to the arXiv version for the appendix.",
+      "authors": [
+        "Wenbin Bai",
+        "Qiyu Chen",
+        "Xiangbo Lin",
+        "Jw L",
+        "Quancheng Li",
+        "Hejiang Pan",
+        "Yi Sun"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 22",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 22"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/38874",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/38874/42836",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-fgmbxzpgis",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "EgoBridge: Domain Adaptation for Generalizable Imitation from Egocentric Human Data",
+      "abstract": "Egocentric human experience data presents a vast resource for scaling up end-to-end imitation learning for robotic manipulation. However, significant domain gaps in visual appearance, sensor modalities, and kinematics between human and robot impede knowledge transfer. This paper presents EgoBridge, a unified co-training framework that explicitly aligns the policy latent spaces between human and robot data using domain adaptation. Through a measure of discrepancy on the joint policy latent features and actions based on Optimal Transport (OT), we learn observation representations that not only align between the human and robot domain but also preserve the action-relevant information critical for policy learning. EgoBridge achieves a significant absolute policy success rate improvement by 44% over human-augmented cross-embodiment baselines in three real-world single-arm and bimanual manipulation tasks. EgoBridge also generalizes to new objects, scenes, and tasks seen only in human data, where baselines fail entirely. Videos and additional information can be found at https://ego-bridge.github.io/",
+      "authors": [
+        "Ryan Punamiya",
+        "Dhruv Patel",
+        "Patcharapong Aphiwetsa",
+        "Pranav Kuppili",
+        "Lawrence Y. Zhu",
+        "Simar Kareer",
+        "Judy Hoffman",
+        "Danfei Xu"
+      ],
+      "primary_category": "Robot Learning",
+      "categories": [
+        "Robot Learning",
+        "Imitation Learning",
+        "Cross-Embodiment Learning",
+        "Learning from Human Data",
+        "Domain Adaptation"
+      ],
+      "published": "2025-09-18T17:45:11.864+00:00",
+      "link": "https://openreview.net/forum?id=FGMBxzpgis",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "cvpr-2025-zhou-mitigating-the-human-robot-domain-discrepancy-in-visual-pre-training-for-robotic-cvpr-2025-paper",
+      "source": "CVPR-2025-Accepted",
+      "title": "Mitigating the Human-Robot Domain Discrepancy in Visual Pre-training for Robotic Manipulation",
+      "abstract": "Learning generalizable visual representations across different embodied environments is essential for effective robotic manipulation in real-world scenarios. However, the limited scale and diversity of robot demonstration data pose a significant challenge. Recent research has explored leveraging large-scale human activity data for pre-training, but the substantial morphological differences between humans and robots introduce a significant human-robot domain discrepancy, hindering the generalization of these models to downstream manipulation tasks. To overcome this, we propose a novel adaptation paradigm that leverages readily available paired human-robot video data to bridge the domain gap. Our method employs a human-robot contrastive alignment loss to align the semantics of human and robot videos, adapting pre-trained models to the robot domain in a parameter-efficient manner. Experiments on 20 simulated tasks across two different benchmarks and five real-world tasks demonstrate significant improvements. These results span both single-task and language-conditioned multi-task settings, evaluated using two different pre-trained models. Compared to existing pre-trained models, our adaptation method improves the average success rate by over 7% across multiple tasks on both simulated benchmarks and real-world evaluations.",
+      "authors": [
+        "Zhou, Jiaming",
+        "Ma, Teli",
+        "Lin, Kun-Yu",
+        "Wang, Zifan",
+        "Qiu, Ronghe",
+        "Liang, Junwei"
+      ],
+      "primary_category": "CVPR-2025",
+      "categories": [
+        "CVPR-2025"
+      ],
+      "published": "2025-06-01T00:00:00+00:00",
+      "link": "https://openaccess.thecvf.com/content/CVPR2025/html/Zhou_Mitigating_the_Human-Robot_Domain_Discrepancy_in_Visual_Pre-training_for_Robotic_CVPR_2025_paper.html",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2025-gvweq7litg",
+      "source": "ICLR-2025-Rejected-Public",
+      "title": "TF-HOT: Training-Free Hand-Object Pose Tracking and Optimization for Dexterous Manipulation",
+      "abstract": "Robotic manipulation with dexterous hands is inherently challenging due to their high-dimensional action spaces and the lack of large-scale, high-quality demonstrations. While there are many videos involving interactions between human hands and objects, the frequent, dynamic occlusions between human hands and objects complicate the accurate and robust tracking of hand and object poses, making it challenging to convert these interactions into high-quality dexterous robotic demonstrations.\nTo address these challenges, we introduce a novel Training-Free Hand-Object pose tracking pipeline (TF-HOT) that leverages differentiable rendering and rich priors from pre-trained 2D foundation perception models to perform optimization of human hand and object pose trajectories from input videos. Our method is efficient, allowing us to convert an in-the-wild video to pose trajectories in 1 minute, and we demonstrate state-of-the-art performance of our method over in-the-wild videos. Finally, we illustrate an application of our method in imitation learning by training policies to follow the pose trajectories extracted from TF-HOT, allowing us to learn dexterous manipulation policies that significantly outperform reinforcement learning and imitation learning methods that do not utilize hand-object pose trajectory following.",
+      "authors": [
+        "Liangzhi Shi",
+        "Yulin Liu",
+        "Lingqi Zeng",
+        "James Hou",
+        "Linghao Chen",
+        "Zhiao Huang",
+        "Hao Su"
+      ],
+      "primary_category": "Pose estimation",
+      "categories": [
+        "Pose estimation",
+        "Robotics manipulation"
+      ],
+      "published": "2024-09-27T02:30:00.336+00:00",
+      "link": "https://openreview.net/forum?id=gVWEq7LITG",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2025-twipsx9qhn",
+      "source": "ICLR-2025-Accepted",
+      "title": "Cross-Embodiment Dexterous Grasping with Reinforcement Learning",
+      "abstract": "Dexterous hands exhibit significant potential for complex real-world grasping tasks. While recent studies have primarily focused on learning policies for specific robotic hands, the development of a universal policy that controls diverse dexterous hands remains largely unexplored.\nIn this work, we study the learning of cross-embodiment dexterous grasping policies using reinforcement learning (RL). Inspired by the capability of human hands to control various dexterous hands through teleoperation, we propose a universal action space based on the human hand's eigengrasps. The policy outputs eigengrasp actions that are then converted into specific joint actions for each robot hand through a retargeting mapping. We simplify the robot hand's proprioception to include only the positions of fingertips and the palm, offering a unified observation space across different robot hands. Our approach demonstrates an 80\\% success rate in grasping objects from the YCB dataset across four distinct embodiments using a single vision-based policy. Additionally, our policy exhibits zero-shot generalization to two previously unseen embodiments and significant improvement in efficient finetuning. For further details and videos, visit our project page (https://sites.google.com/view/crossdex).",
+      "authors": [
+        "Haoqi Yuan",
+        "Bohan Zhou",
+        "Yuhui Fu",
+        "Zongqing Lu"
+      ],
+      "primary_category": "dexterous grasping",
+      "categories": [
+        "dexterous grasping",
+        "cross-embodiment learning",
+        "reinforcement learning"
+      ],
+      "published": "2025-01-22T16:10:16.531+00:00",
+      "link": "https://openreview.net/forum?id=twIPSx9qHn",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2025-afjf6izlvj",
+      "source": "ICLR-2025-Rejected-Public",
+      "title": "Grounding Robot Policies with Visuomotor Language Guidance",
+      "abstract": "Recent advances in the fields of natural language processing and computer vision have shown great potential in understanding the underlying dynamics of the world from large-scale internet data. However, translating this knowledge into robotic systems remains an open challenge, given the scarcity of human-robot interactions and the lack of large-scale datasets of real-world robotic data. Previous robot learning approaches such as behavior cloning and reinforcement learning have shown great capabilities in learning robotic skills from human demonstrations or from scratch in specific environments. However, these approaches often require task-specific demonstrations or designing complex simulation environments, which limits the development of generalizable and robust policies for new settings. Aiming to address these limitations, we propose an agent-based framework for grounding robot policies to the current context, considering the constraints of a current robot and its environment using visuomotor-grounded language guidance. The proposed framework is composed of a set of conversational agents designed for specific roles—namely, high-level advisor, visual grounding, monitoring, and robotic agents. Given a base policy, the agents collectively generate guidance at run time to shift the action distribution of the base policy towards more desirable future states. We demonstrate that our approach can effectively guide manipulation policies to achieve significantly higher success rates both in simulation and in real-world experiments without the need for additional human demonstrations or extensive exploration. Project videos at https://sites.google.com/view/motorcortex/home.",
+      "authors": [
+        "Arthur Bucker",
+        "Pablo Agustin Ortega-Kral",
+        "Jonathan Francis",
+        "Jean Oh"
+      ],
+      "primary_category": "Foundation Models for Robotics",
+      "categories": [
+        "Foundation Models for Robotics",
+        "Policy-adaptation",
+        "Self-guidance"
+      ],
+      "published": "2024-09-27T05:20:31.2+00:00",
+      "link": "https://openreview.net/forum?id=Afjf6izLvJ",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-mk9ykil8ep",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "HumanoidGen: Data Generation for Bimanual Dexterous Manipulation via LLM Reasoning",
+      "abstract": "For robotic manipulation, existing robotics datasets and simulation benchmarks predominantly cater to robot-arm platforms. However, for humanoid robots equipped with dual arms and dexterous hands, simulation tasks and high-quality demonstrations are notably lacking. Bimanual dexterous manipulation is inherently more complex, as it requires coordinated arm movements and hand operations, making autonomous data collection challenging. This paper presents HumanoidGen, an automated task creation and demonstration collection framework that leverages atomic dexterous operations and LLM reasoning to generate relational constraints. Specifically, we provide spatial annotations for both assets and dexterous hands based on the atomic operations, and perform an LLM planner to generate a chain of actionable spatial constraints for arm movements based on object affordances and scenes. To further improve planning ability, we employ a variant of Monte Carlo tree search to enhance LLM reasoning for long-horizon tasks and insufficient annotation. In experiments, we create a novel benchmark with augmented scenarios to evaluate the quality of the collected data. The results show that the performance of the 2D and 3D diffusion policies can scale with the generated dataset. Project page is https://openhumanoidgen.github.io.",
+      "authors": [
+        "Zhi Jing",
+        "Siyuan Yang",
+        "Jicong Ao",
+        "Ting Xiao",
+        "Yu-Gang Jiang",
+        "Chenjia Bai"
+      ],
+      "primary_category": "Bimanual Manipulation",
+      "categories": [
+        "Bimanual Manipulation",
+        "Dexterous Manipulation",
+        "Humanoid Robots",
+        "LLM Planning"
+      ],
+      "published": "2025-09-18T17:40:25.778+00:00",
+      "link": "https://openreview.net/forum?id=Mk9ykil8eP",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data"
+      ]
+    },
+    {
+      "id": "cvpr-2025-qi-two-by-two-learning-multi-task-pairwise-objects-assembly-for-generalizable-cvpr-2025-paper",
+      "source": "CVPR-2025-Accepted",
+      "title": "Two by Two: Learning Multi-Task Pairwise Objects Assembly for Generalizable Robot Manipulation",
+      "abstract": "3D assembly tasks, such as furniture assembly and component fitting, play a crucial role in daily life and represent essential capabilities for future home robots. Existing benchmarks and datasets predominantly focus on assembling geometric fragments or factory parts, which fall short in addressing the complexities of everyday object interactions and assemblies. To bridge this gap, we present 2BY2, a large-scale annotated dataset for daily pairwise objects assembly, covering 18 fine-grained tasks that reflect real-life scenarios, such as plugging into sockets, arranging flowers in vases, and inserting bread into toasters. 2BY2 dataset includes 1,034 instances and 517 pairwise objects with pose and symmetry annotations, requiring approaches that align geometric shapes while accounting for functional and spatial relationships between objects. Leveraging the 2BY2 dataset, we propose a two-step SE(3) pose estimation method with equivariant features for assembly constraints. Compared to previous shape assembly methods, our approach achieves state-of-the-art performance across all 18 tasks in the 2BY2 dataset. Additionally, robot experiments further validate the reliability and generalization ability of our method for complex 3D assembly tasks. More details and demonstrations can be found at https://tea-lab.github.io/TwoByTwo/.",
+      "authors": [
+        "Qi, Yu",
+        "Ju, Yuanchen",
+        "Wei, Tianming",
+        "Chu, Chi",
+        "Wong, Lawson L.S.",
+        "Xu, Huazhe"
+      ],
+      "primary_category": "CVPR-2025",
+      "categories": [
+        "CVPR-2025"
+      ],
+      "published": "2025-06-01T00:00:00+00:00",
+      "link": "https://openaccess.thecvf.com/content/CVPR2025/html/Qi_Two_by_Two_Learning_Multi-Task_Pairwise_Objects_Assembly_for_Generalizable_CVPR_2025_paper.html",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2025-baq0icrncr",
+      "source": "ICLR-2025-Rejected-Public",
+      "title": "Robotic Programmer: Video Instructed Policy Code Generation for Robotic Manipulation",
+      "abstract": "Zero-shot generalization across various robots, tasks and environments remains a significant challenge in robotic manipulation. Policy code generation methods use executable code to connect high-level task descriptions and low-level action sequences, leveraging the generalization capabilities of large language models and atomic skill libraries. In this work, we propose Robotic Programmer (RoboPro), a robotic foundation model, enabling the capability of perceiving visual information and following free-form instructions to perform robotic manipulation with policy code in a zero-shot manner. To address low efficiency and high cost in collecting runtime code data for robotic tasks, we devise Video2Code to synthesize executable code from extensive videos in-the-wild with off-the-shelf vision-language model and code-domain large language model. Extensive experiments show that RoboPro achieves the state-of-the-art zero-shot performance on robotic manipulation in both simulators and real-world environments. Specifically, the zero-shot success rate of RoboPro on RLBench surpasses the state-of-the-art model GPT-4o by 11.6\\%, which is even comparable to a strong supervised training baseline. Furthermore, RoboPro is robust to different robotic configurations, and demonstrates broad visual understanding in general VQA tasks.",
+      "authors": [
+        "Senwei Xie",
+        "Hongyu Wang",
+        "Zhanqi Xiao",
+        "Ruiping Wang",
+        "Xilin Chen"
+      ],
+      "primary_category": "robotic manipulation",
+      "categories": [
+        "robotic manipulation",
+        "vision language models",
+        "code generation"
+      ],
+      "published": "2024-09-25T01:58:58.707+00:00",
+      "link": "https://openreview.net/forum?id=baQ0ICrnCR",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "cvpr-2025-li-maniptrans-efficient-dexterous-bimanual-manipulation-transfer-via-residual-learning-cvpr-2025-paper",
+      "source": "CVPR-2025-Accepted",
+      "title": "ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning",
+      "abstract": "Human hands play a central role in interacting, motivating increasing research in dexterous robotic manipulation. Data-driven embodied AI algorithms demand precise, large-scale, human-like manipulation sequences, which are challenging to obtain with conventional reinforcement learning or real-world teleoperation. To address this, we introduce ManipTrans, a novel two-stage method for efficiently transferring human bimanual skills to dexterous robotic hands in simulation. ManipTrans first pre-trains a generalist trajectory imitator to mimic hand motion, then fine-tunes a specific residual module under interaction constraints, enabling efficient learning and accurate execution of complex bimanual tasks. Experiments show that ManipTrans surpasses state-of-the-art methods in success rate, fidelity, and efficiency. Leveraging ManipTrans, we transfer multiple hand-object datasets to robotic hands, creating DexManipNet, a large-scale dataset featuring previously unexplored tasks like pen capping and bottle unscrewing. DexManipNet comprises 3.3K episodes of robotic manipulation and is easily extensible, facilitating further policy training for dexterous hands and enabling real-world deployments.",
+      "authors": [
+        "Li, Kailin",
+        "Li, Puhao",
+        "Liu, Tengyu",
+        "Li, Yuyang",
+        "Huang, Siyuan"
+      ],
+      "primary_category": "CVPR-2025",
+      "categories": [
+        "CVPR-2025"
+      ],
+      "published": "2025-06-01T00:00:00+00:00",
+      "link": "https://openaccess.thecvf.com/content/CVPR2025/html/Li_ManipTrans_Efficient_Dexterous_Bimanual_Manipulation_Transfer_via_Residual_Learning_CVPR_2025_paper.html",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "aaai-2026-38892",
+      "source": "AAAI-2026-Accepted",
+      "title": "Learning Object-Centric Motion Priors from Human for Robotic Dexterous Manipulation",
+      "abstract": "Manipulating diverse objects with multi-fingered dexterous hands is challenging due to the high dimensionality and complex dynamics. Human-Object Interaction (HOI) datasets provide rich knowledge about task information and embodied interactions. Instead of solely imitating the human demonstrations, our method learns to holistically predict future hand-object states by leveraging these datasets. The predicted future states of the object can serve as a general-purpose reward term for reinforcement learning, reducing reliance on task-specific reward engineering and enhancing generalization across tasks. We conduct extensive experiments on three manipulation tasks in simulation and the real world. Our approach outperforms existing SOTA methods in both success rate and generalizability on novel objects. Furthermore, we validate the cross-embodiment compatibility of our methods by successfully deploying the skills on different robot hands.",
+      "authors": [
+        "Zhengdong Hong",
+        "Guofeng Zhang"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 22",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 22"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/38892",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/38892/42854",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "cvpr-2025-yoshida-generating-6dof-object-manipulation-trajectories-from-action-description-in-egocentric-cvpr-2025-paper",
+      "source": "CVPR-2025-Accepted",
+      "title": "Generating 6DoF Object Manipulation Trajectories from Action Description in Egocentric Vision",
+      "abstract": "Learning to use tools or objects in common scenes, particularly handling them in various ways as instructed, is a key challenge for developing interactive robots. Training models to generate such manipulation trajectories requires a large and diverse collection of detailed manipulation demonstrations for various objects, which is nearly unfeasible to gather at scale. In this paper, we propose a framework that leverages large-scale ego- and exo-centric video datasets --- constructed globally with substantial effort --- of Exo-Ego4D to extract diverse manipulation trajectories at scale. From these extracted trajectories with the associated textual action description, we develop trajectory generation models based on visual and point cloud-based language models. In the recently proposed egocentric vision-based in-a-quality trajectory dataset of HOT3D, we confirmed that our models successfully generate valid object trajectories, establishing a training dataset and baseline models for the novel task of generating 6DoF manipulation trajectories from action descriptions in egocentric vision.",
+      "authors": [
+        "Yoshida, Tomoya",
+        "Kurita, Shuhei",
+        "Nishimura, Taichi",
+        "Mori, Shinsuke"
+      ],
+      "primary_category": "CVPR-2025",
+      "categories": [
+        "CVPR-2025"
+      ],
+      "published": "2025-06-01T00:00:00+00:00",
+      "link": "https://openaccess.thecvf.com/content/CVPR2025/html/Yoshida_Generating_6DoF_Object_Manipulation_Trajectories_from_Action_Description_in_Egocentric_CVPR_2025_paper.html",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2025-lqhorprlim",
+      "source": "ICLR-2025-Accepted",
+      "title": "What Matters in Learning from Large-Scale Datasets for Robot Manipulation",
+      "abstract": "Imitation learning from large multi-task demonstration datasets has emerged as a promising path for building generally-capable robots. As a result, 1000s of hours have been spent on building such large-scale datasets around the globe. Despite the continuous growth of such efforts, we still lack a systematic understanding of what data should be collected to improve the utility of a robotics dataset and facilitate downstream policy learning. In this work, we conduct a large-scale dataset composition study to answer this question. We develop a data generation framework to procedurally emulate common sources of diversity in existing datasets (such as sensor placements and object types and arrangements), and use it to generate large-scale robot datasets with controlled compositions, enabling a suite of dataset composition studies that would be prohibitively expensive in the real world. We focus on two practical settings: (1) what types of diversity should be emphasized when future researchers collect large-scale datasets for robotics, and (2) how should current practitioners retrieve relevant demonstrations from existing datasets to maximize downstream policy performance on tasks of interest. Our study yields several critical insights -- for example, we find that camera poses and spatial arrangements are crucial dimensions for both diversity in collection and alignment in retrieval. In real-world robot learning settings, we find that not only do our insights from simulation carry over, but our retrieval strategies on existing datasets such as DROID allow us to consistently outperform existing training strategies by up to 70\\%.",
+      "authors": [
+        "Vaibhav Saxena",
+        "Matthew Bronars",
+        "Nadun Ranawaka Arachchige",
+        "Kuancheng Wang",
+        "Woo Chul Shin",
+        "Soroush Nasiriany",
+        "Ajay Mandlekar",
+        "Danfei Xu"
+      ],
+      "primary_category": "imitation learning",
+      "categories": [
+        "imitation learning",
+        "robotics",
+        "dataset composition"
+      ],
+      "published": "2025-01-22T16:21:57.816+00:00",
+      "link": "https://openreview.net/forum?id=LqhorpRLIm",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "cvpr-2025-chen-graphmimic-graph-to-graphs-generative-modeling-from-videos-for-policy-learning-cvpr-2025-paper",
+      "source": "CVPR-2025-Accepted",
+      "title": "GraphMimic: Graph-to-Graphs Generative Modeling from Videos for Policy Learning",
+      "abstract": "Learning from demonstration is a powerful method for robotic skill acquisition. However, the significant expense of collecting such action-labeled robot data presents a major bottleneck. Video data, a rich data source encompassing diverse behavioral and physical knowledge, emerges as a promising alternative. In this paper, we present GraphMimic, a novel paradigm that leverages video data via graph-to-graphs generative modeling, which pre-trains models to generate future graphs conditioned on the graph within a video frame. Specifically, GraphMimic abstracts video frames into object and visual action vertices, and constructs graphs for state representations. The graph generative modeling network then effectively models internal structures and spatial relationships within the constructed graphs, aiming to generate future graphs. The generated graphs serve as conditions for the control policy, mapping to robot actions. Our concise approach captures important spatial relations and enhances future graph generation accuracy, enabling the acquisition of robust policies from limited action-labeled data. Furthermore, the transferable graph representations facilitate the effective learning of manipulation skills from cross-embodiment videos. Our experiments exhibit that GraphMimic achieves superior performance using merely 20% action-labeled data. Moreover, our method outperforms the state-of-the-art method by over 17% and 23% in simulation and real-world experiments, and delivers improvements of over 33% in cross-embodiment transfer experiments.",
+      "authors": [
+        "Chen, Guangyan",
+        "Cui, Te",
+        "Wang, Meiling",
+        "Yang, Chengcai",
+        "Hu, Mengxiao",
+        "Lu, Haoyang",
+        "Mu, Yao",
+        "Peng, Zicai",
+        "Zhou, Tianxing",
+        "Jiang, Xinran",
+        "Yang, Yi",
+        "Yue, Yufeng"
+      ],
+      "primary_category": "CVPR-2025",
+      "categories": [
+        "CVPR-2025"
+      ],
+      "published": "2025-06-01T00:00:00+00:00",
+      "link": "https://openaccess.thecvf.com/content/CVPR2025/html/Chen_GraphMimic_Graph-to-Graphs_Generative_Modeling_from_Videos_for_Policy_Learning_CVPR_2025_paper.html",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2025-p01br4njly",
+      "source": "ICLR-2025-Accepted",
+      "title": "Solving New Tasks by Adapting Internet Video Knowledge",
+      "abstract": "Video generative models demonstrate great promise in robotics by serving as visual planners or as policy supervisors.  When pretrained on internet-scale data, such video models intimately understand alignment with natural language, and can thus facilitate generalization to novel downstream behavior through text-conditioning.  However, they may not be sensitive to the specificities of the particular environment the agent inhabits.  On the other hand, training video models on in-domain examples of robotic behavior naturally encodes environment-specific intricacies, but the scale of available demonstrations may not be sufficient to support generalization to unseen tasks via natural language specification.  In this work, we investigate different adaptation techniques that integrate in-domain information with large-scale pretrained video models, and explore the extent to which they enable novel text-conditioned generalization for robotic tasks, while also considering their independent data and resource considerations.  We successfully demonstrate across robotic environments that adapting powerful video models with small scales of example data can successfully facilitate generalization to novel behaviors.  In particular, we present a novel adaptation strategy, termed *Inverse Probabilistic Adaptation*, that not only consistently achieves strong generalization performance across robotic tasks and settings, but also exhibits robustness to the quality of adaptation data, successfully solving novel tasks even when only suboptimal in-domain demonstrations are available.",
+      "authors": [
+        "Calvin Luo",
+        "Zilai Zeng",
+        "Yilun Du",
+        "Chen Sun"
+      ],
+      "primary_category": "Text-Conditioned Generalization",
+      "categories": [
+        "Text-Conditioned Generalization",
+        "Video Diffusion",
+        "Adaptation",
+        "Planning",
+        "Policy Learning"
+      ],
+      "published": "2025-01-22T16:23:35.488+00:00",
+      "link": "https://openreview.net/forum?id=p01BR4njlY",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "cvpr-2025-wang-mobileh2r-learning-generalizable-human-to-mobile-robot-handover-exclusively-from-cvpr-2025-paper",
+      "source": "CVPR-2025-Accepted",
+      "title": "MobileH2R: Learning Generalizable Human to Mobile Robot Handover Exclusively from Scalable and Diverse Synthetic Data",
+      "abstract": "This paper introduces MobileH2R, a framework for learning generalizable vision-based human-to-mobile-robot (H2MR) handover skills. Unlike traditional fixed-base handovers, this task requires a mobile robot to reliably receive objects in a large workspace enabled by its mobility. Our key insight is that generalizable handover skills can be developed in simulators using high-quality synthetic data, without the need for real-world demonstrations. To achieve this, we propose a scalable pipeline for generating diverse synthetic full-body human motion data, an automated method for creating safe and imitation-friendly demonstrations, and an efficient 4D imitation learning method for distilling large-scale demonstrations into closed-loop policies with base-arm coordination. Experimental evaluations in both simulators and the real world show significant improvements (at least +15% success rate) over baseline methods in all cases. Experiments also validate that large-scale and diverse synthetic data greatly enhances robot learning, highlighting our scalable framework.",
+      "authors": [
+        "Wang, Zifan",
+        "Chen, Ziqing",
+        "Chen, Junyu",
+        "Wang, Jilong",
+        "Yang, Yuxin",
+        "Liu, Yunze",
+        "Liu, Xueyi",
+        "Wang, He",
+        "Yi, Li"
+      ],
+      "primary_category": "CVPR-2025",
+      "categories": [
+        "CVPR-2025"
+      ],
+      "published": "2025-06-01T00:00:00+00:00",
+      "link": "https://openaccess.thecvf.com/content/CVPR2025/html/Wang_MobileH2R_Learning_Generalizable_Human_to_Mobile_Robot_Handover_Exclusively_from_CVPR_2025_paper.html",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-cx1kfzerny",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Videos are Sample-Efficient Supervisions: Behavior Cloning from Videos via Latent Representations",
+      "abstract": "Humans can efficiently extract knowledge and learn skills from the videos within only a few trials and errors. However, it poses a big challenge to replicate this learning process for autonomous agents, due to the complexity of visual input, the absence of action or reward signals, and the limitations of interaction steps. In this paper, we propose a novel, unsupervised, and sample-efficient framework to achieve imitation learning from videos (ILV), named Behavior Cloning from Videos via Latent Representations (BCV-LR). BCV-LR extracts action-related latent features from high-dimensional video inputs through self-supervised tasks, and then leverages a dynamics-based unsupervised objective to predict latent actions between consecutive frames. The pre-trained latent actions are fine-tuned and efficiently aligned to the real action space online (with collected interactions) for policy behavior cloning. The cloned policy in turn enriches the agent experience for further latent action finetuning, resulting in an iterative policy improvement that is highly sample-efficient.\n  We conduct extensive experiments on a set of challenging visual tasks, including both discrete control and continuous control. BCV-LR enables effective (even expert-level on some tasks) policy performance with only a few interactions, surpassing state-of-the-art ILV baselines and reinforcement learning methods (provided with environmental rewards) in terms of sample efficiency across 24/28 tasks.  To the best of our knowledge, this work for the first time demonstrates that videos can support extremely sample-efficient visual policy learning, without the need to access any other expert supervision.",
+      "authors": [
+        "Xin Liu",
+        "Haoran Li",
+        "Dongbin Zhao"
+      ],
+      "primary_category": "Imitation learning from videos",
+      "categories": [
+        "Imitation learning from videos",
+        "Online policy learning",
+        "Behavior cloning",
+        "Unsuerpvised learning",
+        "Visual reinforcement learning"
+      ],
+      "published": "2025-09-18T17:32:49.751+00:00",
+      "link": "https://openreview.net/forum?id=cx1KfZerNY",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-uphlqbzfzb",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "VideoVLA: Video Generators Can Be Generalizable Robot Manipulators",
+      "abstract": "Generalization in robot manipulation is essential for deploying robots in open-world environments and advancing toward artificial general intelligence. While recent Vision-Language-Action (VLA) models leverage large pre-trained understanding models for perception and instruction following, their ability to generalize to novel tasks, objects, and settings remains limited. In this work, we present VideoVLA, a simple approach that explores the potential of transforming large video generation models into robotic VLA manipulators. Given a language instruction and an image, VideoVLA predicts an action sequence as well as the future visual outcomes.  Built on a multi-modal Diffusion Transformer, VideoVLA jointly models video, language, and action modalities, using pre-trained video generative models for joint visual and action forecasting. Our experiments show that high-quality imagined futures correlate with reliable action predictions and task success, highlighting the importance of visual imagination in manipulation. VideoVLA demonstrates strong generalization, including imitating other embodiments' skills and handling novel objects. This dual-prediction strategy—forecasting both actions and their visual consequences—explores a paradigm shift in robot learning and unlocks generalization capabilities in manipulation systems.",
+      "authors": [
+        "Yichao Shen",
+        "Fangyun Wei",
+        "Zhiying Du",
+        "Yaobo Liang",
+        "Yan Lu",
+        "Jiaolong Yang",
+        "Nanning Zheng",
+        "Baining Guo"
+      ],
+      "primary_category": "Robot manipulation",
+      "categories": [
+        "Robot manipulation",
+        "video generation"
+      ],
+      "published": "2025-09-18T17:32:11.011+00:00",
+      "link": "https://openreview.net/forum?id=UPHlqbZFZB",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-p9gwpjdo8i",
+      "source": "ICML-2025-Accepted",
+      "title": "PlaySlot: Learning Inverse Latent Dynamics for Controllable Object-Centric Video Prediction and Planning",
+      "abstract": "Predicting future scene representations is a crucial task for enabling robots to understand and\ninteract with the environment. However, most existing methods rely on videos and simulations\nwith precise action annotations, limiting their ability to leverage the large amount of avail-\nable unlabeled video data. To address this challenge, we propose PlaySlot, an object-centric\nvideo prediction model that infers object representations and latent actions from unlabeled\nvideo sequences. It then uses these representations to forecast future object states and video\nframes. PlaySlot allows the generation of multiple possible futures conditioned on latent actions,\nwhich can be inferred from video dynamics, provided by a user, or generated by a learned action\npolicy, thus enabling versatile and interpretable world modeling. Our results show that PlaySlot\noutperforms both stochastic and object-centric baselines for video prediction across different environments. Furthermore, we show that our inferred latent actions can be used to learn robot behaviors sample-efficiently from unlabeled video\ndemonstrations. Videos and code are available on our project website.",
+      "authors": [
+        "Angel Villar-Corrales",
+        "Sven Behnke"
+      ],
+      "primary_category": "object-centric video prediction",
+      "categories": [
+        "object-centric video prediction",
+        "object-centric learning",
+        "inverse dynamics learning",
+        "action planning"
+      ],
+      "published": "2025-05-01T13:14:34.39+00:00",
+      "link": "https://openreview.net/forum?id=P9gwpJDo8i",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "aaai-2026-39677",
+      "source": "AAAI-2026-Accepted",
+      "title": "Continuous Vision-Language-Action Co-Learning with Semantic-Physical Alignment for Behavioral Cloning",
+      "abstract": "Language-Conditioned Manipulation (LCM) facilitates human-robot interaction via Behavioral Cloning (BC), which learns control policies from human demonstrations and serves as a cornerstone of embodied AI. Overcoming compounding errors in sequential action decisions remains a central challenge to improving BC performance. Existing approaches mitigate compounding errors through data augmentation, expressive representation, or temporal abstraction. However, they suffer from physical discontinuities and semantic-physical misalignment, leading to inaccurate action cloning and intermittent execution. In this paper, we present Continuous vision-language-action Co-Learning with Semantic-Physical Alignment (CCoL), a novel BC framework that ensures temporally consistent execution and fine-grained semantic grounding. It generates robust and smooth action execution trajectories through continuous co-learning across vision, language, and proprioceptive inputs (i.e., robot internal states). Meanwhile, we anchor language semantics to visuomotor representations by a bidirectional cross-attention to learn contextual information for action generation, successfully overcoming the problem of semantic-physical misalignment. Extensive experiments show that CCoL achieves an average 8.0% relative improvement across three simulation suites, with up to 19.2% relative gain in human-demonstrated bimanual insertion tasks. Real-world tests on a 7-DoF robot further confirm CCoL’s generalization under unseen and noisy object states.",
+      "authors": [
+        "Xiuxiu Qi",
+        "Yu Yang",
+        "Jiannong Cao",
+        "Luyao Bai",
+        "Chongshan Fan",
+        "Chengtai Cao",
+        "Hongpeng Wang"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 29",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 29"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/39677",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/39677/43638",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "cvpr-2025-ren-videoworld-exploring-knowledge-learning-from-unlabeled-videos-cvpr-2025-paper",
+      "source": "CVPR-2025-Accepted",
+      "title": "VideoWorld: Exploring Knowledge Learning from Unlabeled Videos",
+      "abstract": "This work explores whether a deep generative model can learn complex knowledge solely from visual input, in contrast to the prevalent focus on text-based models like large language models (LLMs). We develop VideoWorld, an auto-regressive video generation model trained on unlabeled video data, and test its knowledge acquisition abilities in video-based Go and robotic control tasks. Our experiments reveal two key findings: (1) video-only training provides sufficient information for learning knowledge, including rules, reasoning and planning capabilities, and (2) the representation of visual change is crucial for knowledge acquisition. To improve both the efficiency and efficacy of this process, we introduce the Latent Dynamics Model (LDM) as a key component of VideoWorld. Remarkably, VideoWorld reaches a 5-dan professional level in the Video-GoBench with just a 300-million-parameter model, without relying on search algorithms or reward mechanisms typical in reinforcement learning. In robotic tasks, VideoWorld effectively learns diverse control operations and generalizes across environments, approaching the performance of oracle models in CALVIN and RLBench. This study opens new avenues for knowledge acquisition from visual data, with all code, data, and models open-sourced for further research.",
+      "authors": [
+        "Ren, Zhongwei",
+        "Wei, Yunchao",
+        "Guo, Xun",
+        "Zhao, Yao",
+        "Kang, Bingyi",
+        "Feng, Jiashi",
+        "Jin, Xiaojie"
+      ],
+      "primary_category": "CVPR-2025",
+      "categories": [
+        "CVPR-2025"
+      ],
+      "published": "2025-06-01T00:00:00+00:00",
+      "link": "https://openaccess.thecvf.com/content/CVPR2025/html/Ren_VideoWorld_Exploring_Knowledge_Learning_from_Unlabeled_Videos_CVPR_2025_paper.html",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "cvpr-2025-zhao-taste-rob-advancing-video-generation-of-task-oriented-hand-object-interaction-for-generalizable-cvpr-2025-paper",
+      "source": "CVPR-2025-Accepted",
+      "title": "TASTE-Rob: Advancing Video Generation of Task-Oriented Hand-Object Interaction for Generalizable Robotic Manipulation",
+      "abstract": "We address key limitations in existing datasets and models for task-oriented hand-object interaction video generation, a critical approach of generating video demonstrations for robotic imitation learning. Current datasets, such as Ego4D, often suffer from inconsistent view perspectives and misaligned interactions, leading to reduced video quality and limiting their applicability for precise imitation learning tasks. Towards this end, we introduce TASTE-Rob -- a pioneering large-scale dataset of 100,856 ego-centric hand-object interaction videos. Each video is meticulously aligned with language instructions and recorded from a consistent camera viewpoint to ensure interaction clarity. By fine-tuning a Video Diffusion Model (VDM) on TASTE-Rob, we achieve realistic object interactions, though we observed occasional inconsistencies in hand grasping postures. To enhance realism, we introduce a three-stage pose-refinement pipeline that improves hand posture accuracy in generated videos. Our curated dataset, coupled with the specialized pose-refinement framework, provides notable performance gains in generating high-quality, task-oriented hand-object interaction videos, resulting in achieving superior generalizable robotic manipulation. To foster further advancements in the field, TASTE-Rob dataset and source code will be made publicly available on our website https://taste-rob.github.io.",
+      "authors": [
+        "Zhao, Hongxiang",
+        "Liu, Xingchen",
+        "Xu, Mutian",
+        "Hao, Yiming",
+        "Chen, Weikai",
+        "Han, Xiaoguang"
+      ],
+      "primary_category": "CVPR-2025",
+      "categories": [
+        "CVPR-2025"
+      ],
+      "published": "2025-06-01T00:00:00+00:00",
+      "link": "https://openaccess.thecvf.com/content/CVPR2025/html/Zhao_TASTE-Rob_Advancing_Video_Generation_of_Task-Oriented_Hand-Object_Interaction_for_Generalizable_CVPR_2025_paper.html",
+      "pdf_url": null,
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2025-pxyqg9gspq",
+      "source": "ICLR-2025-Public",
+      "title": "3D Affordance Reconstruction from Egocentric Demonstration Video",
+      "abstract": "Developing robots capable of generalized skills remains an exceedingly challenging task. Drawing from psychology, the concept of affordance has emerged as a promising intermediate representation to guide robot manipulation. However, prior work has primarily focused on 2D affordances from video, neglecting critical spatial information such as camera positioning, absolute position, depth and geometry. In this paper, we present a novel training-free method that constructs 3D affordances from egocentric demonstration videos. To address the challenge of insufficient static, high-quality frames for 3D reconstruction in egocentric videos, we employ the 3D foundational model DUST3R, which reconstructs scenes from sparse images without requiring COLMAP. We analyze videos using hand detection to identify contact times and 2D contact points, reconstruct these interactions using DUST3R, and project the 2D contact points into 3D space using gaussian heatmaps. Finally, we derive hand trajectories through 3D hand pose estimation and process them using linear regression to integrate the spatiotemporal dynamics of human-object interactions. We demonstrate the effectiveness of our method on the ego4d-exo dataset for seven real-world hand-object manipulation tasks in cooking scenes.",
+      "authors": [
+        "Egil Diau",
+        "Yueh-Feng Ku",
+        "Chi Ming Chung",
+        "Ting-Jun Wang",
+        "Min Sun",
+        "Winston H. Hsu"
+      ],
+      "primary_category": "3d Affordance",
+      "categories": [
+        "3d Affordance",
+        "Egocentric Vision",
+        "Learning from Demonstration"
+      ],
+      "published": "2024-09-26T14:46:58.58+00:00",
+      "link": "https://openreview.net/forum?id=pxYqG9GSpQ",
+      "pdf_url": null,
+      "tags": [
+        "query:Data"
+      ]
+    },
+    {
+      "id": "aaai-2026-38313",
+      "source": "AAAI-2026-Accepted",
+      "title": "Towards Affordance-Aware Robotic Dexterous Grasping with Human-like Priors",
+      "abstract": "A dexterous hand capable of generalizable grasping objects is fundamental for the development of general-purpose embodied AI. However, previous methods focus narrowly on low-level grasp stability metrics, neglecting affordance-aware positioning and human-like poses which are crucial for downstream manipulation.  To address these limitations, we propose AffordDex, a novel framework with two-stage training that learns a universal grasping policy with an inherent understanding of both motion priors and object affordances.  In the first stage, a trajectory imitator is pre-trained on a large corpus of human hand motions to instill a strong prior for natural movement. In the second stage, a residual module is trained to adapt these general human-like motions to specific object instances. This refinement is critically guided by two components: our Negative Affordance-aware Segmentation (NAA) module, which identifies functionally inappropriate contact regions, and a privileged teacher-student distillation process that ensures the final vision-based policy is highly successful. Extensive experiments demonstrate that AffordDex not only achieves universal dexterous grasping but also remains remarkably human-like in posture and functionally appropriate in contact location. As a result, AffordDex significantly outperforms state-of-the-art baselines across seen objects, unseen instances, and even entirely novel categories.",
+      "authors": [
+        "Haoyu Zhao",
+        "Linghao Zhuang",
+        "Xingyue Zhao",
+        "Cheng Zeng",
+        "Haoran Xu",
+        "Yuming Jiang",
+        "Jun Cen",
+        "Kexiang Wang",
+        "Jiayan Guo",
+        "Siteng Huang",
+        "Xin Li",
+        "Deli Zhao",
+        "Hua Zou"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 15",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 15"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/38313",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/38313/42275",
+      "tags": [
+        "query:Data"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2025-wl1kup6oes",
+      "source": "ICLR-2025-Public",
+      "title": "From Appearance to Motion: Aligning Visual Representations for Robotic Manipulation",
+      "abstract": "Pre-trained vision models used in robotics often misalign with manipulation tasks due to the loss used to train these vision models being focused on appearance rather than motion. In order to enhance motion encoding within vision models, we introduce a simple novel contrastive training framework that operates over predictions of motion. After training over EPIC Kitchens, model evaluations on behavioral cloning show a improvement in success rate over state-of-the-art methods across a benchmark of $3$ environments and $21$ object manipulation tasks.",
+      "authors": [
+        "Eadom T Dessalene",
+        "Dehao Yuan",
+        "Michael Maynord",
+        "Nathan S. Pan",
+        "Cornelia Fermuller",
+        "Yiannis Aloimonos"
+      ],
+      "primary_category": "pretrained",
+      "categories": [
+        "pretrained",
+        "frozen",
+        "motion",
+        "features",
+        "policy",
+        "behavioral-cloning"
+      ],
+      "published": "2024-09-27T04:20:34.781+00:00",
+      "link": "https://openreview.net/forum?id=wl1Kup6oES",
+      "pdf_url": null,
+      "tags": [
+        "query:Data"
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "type": "intent_query",
+      "tag": "Data",
+      "paper_tag": "query:Data",
+      "query_text": "aligning human body motion with different robot morphologies for robot learning from human demonstrations",
+      "sim_scores": {
+        "aaai-2026-38086": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "cvpr-2025-zhou-mitigating-the-human-robot-domain-discrepancy-in-visual-pre-training-for-robotic-cvpr-2025-paper": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "openreview-iclr-2025-wl1kup6oes": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "aaai-2026-38875": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "openreview-neurips-2025-fgmbxzpgis": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "aaai-2026-38892": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "aaai-2026-38874": {
+          "score": 0.01282051282051282,
+          "rank": 18
+        },
+        "openreview-neurips-2025-kp9b9iqdit": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "cvpr-2025-chen-vidbot-learning-generalizable-3d-actions-from-in-the-wild-2d-human-videos-cvpr-2025-paper": {
+          "score": 0.011904761904761904,
+          "rank": 24
+        },
+        "cvpr-2025-qi-two-by-two-learning-multi-task-pairwise-objects-assembly-for-generalizable-cvpr-2025-paper": {
+          "score": 0.01098901098901099,
+          "rank": 31
+        },
+        "aaai-2026-39677": {
+          "score": 0.010752688172043012,
+          "rank": 33
+        },
+        "openreview-iclr-2025-pxyqg9gspq": {
+          "score": 0.01,
+          "rank": 40
+        },
+        "aaai-2026-38313": {
+          "score": 0.009900990099009901,
+          "rank": 41
+        },
+        "cvpr-2025-li-maniptrans-efficient-dexterous-bimanual-manipulation-transfer-via-residual-learning-cvpr-2025-paper": {
+          "score": 0.00980392156862745,
+          "rank": 42
+        },
+        "openreview-iclr-2025-bpdiztivq8": {
+          "score": 0.009433962264150943,
+          "rank": 46
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "aaai-2026-38875",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "aaai-2026-38086",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2025-wl1kup6oes",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-kp9b9iqdit",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-fgmbxzpgis",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "cvpr-2025-chen-vidbot-learning-generalizable-3d-actions-from-in-the-wild-2d-human-videos-cvpr-2025-paper",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "cvpr-2025-zhou-mitigating-the-human-robot-domain-discrepancy-in-visual-pre-training-for-robotic-cvpr-2025-paper",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38874",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-wang-mobileh2r-learning-generalizable-human-to-mobile-robot-handover-exclusively-from-cvpr-2025-paper",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-bpdiztivq8",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38892",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-li-maniptrans-efficient-dexterous-bimanual-manipulation-transfer-via-residual-learning-cvpr-2025-paper",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-39677",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-pxyqg9gspq",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-40127",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-mk9ykil8ep",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-zhao-taste-rob-advancing-video-generation-of-task-oriented-hand-object-interaction-for-generalizable-cvpr-2025-paper",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-8yeotbceap",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-twipsx9qhn",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-mqkve6f3up",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-37533",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38313",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-chen-graphmimic-graph-to-graphs-generative-modeling-from-videos-for-policy-learning-cvpr-2025-paper",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-rhfyijux9d",
+          "score": 0.4411571334648256,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-gvweq7litg",
+          "score": 0.3910256410256411,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-afjf6izlvj",
+          "score": 0.29792429792429775,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "cvpr-2025-yoshida-generating-6dof-object-manipulation-trajectories-from-action-description-in-egocentric-cvpr-2025-paper",
+          "score": 0.2760180995475112,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-kxmiivub9u",
+          "score": 0.25462134764460337,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-vyoe2ebqeh",
+          "score": 0.21328671328671328,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-pislzg7ktl",
+          "score": 0.1737891737891738,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-i0to0g5j7g",
+          "score": 0.15469146238377016,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-lqhorprlim",
+          "score": 0.1360089186176142,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-p01br4njly",
+          "score": 0.11772814998621459,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "cvpr-2025-lee-dynscene-scalable-generation-of-dynamic-robotic-manipulation-scenes-for-embodied-cvpr-2025-paper",
+          "score": 0.015799015799015898,
+          "star_rating": 2
+        }
+      ]
+    },
+    {
+      "type": "intent_query",
+      "tag": "Data",
+      "paper_tag": "query:Data",
+      "query_text": "methods for converting human video demonstrations into robot executable action data",
+      "sim_scores": {
+        "aaai-2026-38086": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "openreview-iclr-2025-vyoe2ebqeh": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-neurips-2025-kp9b9iqdit": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "openreview-neurips-2025-cx1kfzerny": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "aaai-2026-38875": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "openreview-iclr-2025-bpdiztivq8": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "aaai-2026-37533": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "openreview-iclr-2025-baq0icrncr": {
+          "score": 0.014492753623188406,
+          "rank": 9
+        },
+        "openreview-iclr-2025-p01br4njly": {
+          "score": 0.014084507042253521,
+          "rank": 11
+        },
+        "cvpr-2025-zhou-mitigating-the-human-robot-domain-discrepancy-in-visual-pre-training-for-robotic-cvpr-2025-paper": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "cvpr-2025-chen-vidbot-learning-generalizable-3d-actions-from-in-the-wild-2d-human-videos-cvpr-2025-paper": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "openreview-neurips-2025-uphlqbzfzb": {
+          "score": 0.013333333333333334,
+          "rank": 15
+        },
+        "cvpr-2025-chen-graphmimic-graph-to-graphs-generative-modeling-from-videos-for-policy-learning-cvpr-2025-paper": {
+          "score": 0.013157894736842105,
+          "rank": 16
+        },
+        "openreview-icml-2025-p9gwpjdo8i": {
+          "score": 0.012987012987012988,
+          "rank": 17
+        },
+        "cvpr-2025-zhao-taste-rob-advancing-video-generation-of-task-oriented-hand-object-interaction-for-generalizable-cvpr-2025-paper": {
+          "score": 0.0125,
+          "rank": 20
+        },
+        "openreview-iclr-2025-mqkve6f3up": {
+          "score": 0.012345679012345678,
+          "rank": 21
+        },
+        "cvpr-2025-yoshida-generating-6dof-object-manipulation-trajectories-from-action-description-in-egocentric-cvpr-2025-paper": {
+          "score": 0.010752688172043012,
+          "rank": 33
+        },
+        "openreview-neurips-2025-fgmbxzpgis": {
+          "score": 0.01020408163265306,
+          "rank": 38
+        },
+        "openreview-iclr-2025-rhfyijux9d": {
+          "score": 0.009900990099009901,
+          "rank": 41
+        },
+        "cvpr-2025-lee-dynscene-scalable-generation-of-dynamic-robotic-manipulation-scenes-for-embodied-cvpr-2025-paper": {
+          "score": 0.009615384615384616,
+          "rank": 44
+        },
+        "aaai-2026-39677": {
+          "score": 0.009174311926605505,
+          "rank": 49
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "aaai-2026-38086",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-kp9b9iqdit",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2025-baq0icrncr",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2025-vyoe2ebqeh",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "cvpr-2025-chen-vidbot-learning-generalizable-3d-actions-from-in-the-wild-2d-human-videos-cvpr-2025-paper",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2025-pxyqg9gspq",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-chen-graphmimic-graph-to-graphs-generative-modeling-from-videos-for-policy-learning-cvpr-2025-paper",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-rhfyijux9d",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-uphlqbzfzb",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-mqkve6f3up",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38874",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38875",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-zhao-taste-rob-advancing-video-generation-of-task-oriented-hand-object-interaction-for-generalizable-cvpr-2025-paper",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-bpdiztivq8",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-zhou-mitigating-the-human-robot-domain-discrepancy-in-visual-pre-training-for-robotic-cvpr-2025-paper",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-cx1kfzerny",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-gvweq7litg",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-8yeotbceap",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-40127",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-yoshida-generating-6dof-object-manipulation-trajectories-from-action-description-in-egocentric-cvpr-2025-paper",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-lqhorprlim",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-wang-mobileh2r-learning-generalizable-human-to-mobile-robot-handover-exclusively-from-cvpr-2025-paper",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-p01br4njly",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-fgmbxzpgis",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-lee-dynscene-scalable-generation-of-dynamic-robotic-manipulation-scenes-for-embodied-cvpr-2025-paper",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38892",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-37533",
+          "score": 0.49392712550607265,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2025-p9gwpjdo8i",
+          "score": 0.49392712550607265,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-wl1kup6oes",
+          "score": 0.41577409931840303,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-afjf6izlvj",
+          "score": 0.3910256410256411,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-mk9ykil8ep",
+          "score": 0.3433395872420263,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-39677",
+          "score": 0.32035835650293487,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "cvpr-2025-li-maniptrans-efficient-dexterous-bimanual-manipulation-transfer-via-residual-learning-cvpr-2025-paper",
+          "score": 0.23371647509578536,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2025-avvxx0erkt",
+          "score": 0.23371647509578536,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "cvpr-2025-ren-videoworld-exploring-knowledge-learning-from-unlabeled-videos-cvpr-2025-paper",
+          "score": 0.1737891737891738,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-pislzg7ktl",
+          "score": 0.1360089186176142,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-twipsx9qhn",
+          "score": 0.0823211875843454,
+          "star_rating": 2
+        }
+      ]
+    },
+    {
+      "type": "intent_query",
+      "tag": "Data",
+      "paper_tag": "query:Data",
+      "query_text": "reconstructing hand object interactions from human videos for robot manipulation learning",
+      "sim_scores": {
+        "aaai-2026-38892": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "aaai-2026-38874": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "openreview-iclr-2025-gvweq7litg": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "openreview-iclr-2025-pxyqg9gspq": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "aaai-2026-38313": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "cvpr-2025-li-maniptrans-efficient-dexterous-bimanual-manipulation-transfer-via-residual-learning-cvpr-2025-paper": {
+          "score": 0.013513513513513514,
+          "rank": 14
+        },
+        "aaai-2026-38086": {
+          "score": 0.012987012987012988,
+          "rank": 17
+        },
+        "cvpr-2025-chen-vidbot-learning-generalizable-3d-actions-from-in-the-wild-2d-human-videos-cvpr-2025-paper": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "openreview-iclr-2025-wl1kup6oes": {
+          "score": 0.012345679012345678,
+          "rank": 21
+        },
+        "openreview-neurips-2025-kp9b9iqdit": {
+          "score": 0.011764705882352941,
+          "rank": 25
+        },
+        "openreview-iclr-2025-vyoe2ebqeh": {
+          "score": 0.011627906976744186,
+          "rank": 26
+        },
+        "cvpr-2025-zhao-taste-rob-advancing-video-generation-of-task-oriented-hand-object-interaction-for-generalizable-cvpr-2025-paper": {
+          "score": 0.011494252873563218,
+          "rank": 27
+        },
+        "aaai-2026-38875": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "openreview-iclr-2025-twipsx9qhn": {
+          "score": 0.010638297872340425,
+          "rank": 34
+        },
+        "cvpr-2025-zhou-mitigating-the-human-robot-domain-discrepancy-in-visual-pre-training-for-robotic-cvpr-2025-paper": {
+          "score": 0.010416666666666666,
+          "rank": 36
+        },
+        "openreview-neurips-2025-uphlqbzfzb": {
+          "score": 0.01,
+          "rank": 40
+        },
+        "cvpr-2025-yoshida-generating-6dof-object-manipulation-trajectories-from-action-description-in-egocentric-cvpr-2025-paper": {
+          "score": 0.00980392156862745,
+          "rank": 42
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "cvpr-2025-chen-vidbot-learning-generalizable-3d-actions-from-in-the-wild-2d-human-videos-cvpr-2025-paper",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "cvpr-2025-zhao-taste-rob-advancing-video-generation-of-task-oriented-hand-object-interaction-for-generalizable-cvpr-2025-paper",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2025-pxyqg9gspq",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "aaai-2026-38892",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2025-gvweq7litg",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-kp9b9iqdit",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2025-rhfyijux9d",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-37533",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38875",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-yoshida-generating-6dof-object-manipulation-trajectories-from-action-description-in-egocentric-cvpr-2025-paper",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38086",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-wang-mobileh2r-learning-generalizable-human-to-mobile-robot-handover-exclusively-from-cvpr-2025-paper",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-li-maniptrans-efficient-dexterous-bimanual-manipulation-transfer-via-residual-learning-cvpr-2025-paper",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38874",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-qi-two-by-two-learning-multi-task-pairwise-objects-assembly-for-generalizable-cvpr-2025-paper",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-vyoe2ebqeh",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-wl1kup6oes",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-mk9ykil8ep",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2025-p9gwpjdo8i",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-lee-dynscene-scalable-generation-of-dynamic-robotic-manipulation-scenes-for-embodied-cvpr-2025-paper",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38313",
+          "score": 0.49392712550607265,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-fgmbxzpgis",
+          "score": 0.46719946719946726,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-twipsx9qhn",
+          "score": 0.46719946719946726,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-40127",
+          "score": 0.4411571334648256,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-8yeotbceap",
+          "score": 0.41577409931840303,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-lqhorprlim",
+          "score": 0.3910256410256411,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "cvpr-2025-zhou-mitigating-the-human-robot-domain-discrepancy-in-visual-pre-training-for-robotic-cvpr-2025-paper",
+          "score": 0.3668882557771445,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "cvpr-2025-ren-videoworld-exploring-knowledge-learning-from-unlabeled-videos-cvpr-2025-paper",
+          "score": 0.3433395872420263,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-cx1kfzerny",
+          "score": 0.32035835650293487,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-mqkve6f3up",
+          "score": 0.32035835650293487,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "cvpr-2025-chen-graphmimic-graph-to-graphs-generative-modeling-from-videos-for-policy-learning-cvpr-2025-paper",
+          "score": 0.2760180995475112,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-pislzg7ktl",
+          "score": 0.25462134764460337,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-bpdiztivq8",
+          "score": 0.23371647509578536,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-39677",
+          "score": 0.21328671328671328,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-uphlqbzfzb",
+          "score": 0.1933160472486314,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-afjf6izlvj",
+          "score": 0.06517094017094004,
+          "star_rating": 2
+        },
+        {
+          "paper_id": "openreview-iclr-2025-baq0icrncr",
+          "score": 0.0483743061062648,
+          "star_rating": 2
+        }
+      ]
+    },
+    {
+      "type": "intent_query",
+      "tag": "Data",
+      "paper_tag": "query:Data",
+      "query_text": "scaling laws for robot learning from large scale internet video data",
+      "sim_scores": {
+        "openreview-iclr-2025-vyoe2ebqeh": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "aaai-2026-38086": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-iclr-2025-p01br4njly": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "openreview-iclr-2025-bpdiztivq8": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "cvpr-2025-chen-vidbot-learning-generalizable-3d-actions-from-in-the-wild-2d-human-videos-cvpr-2025-paper": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "openreview-neurips-2025-uphlqbzfzb": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "openreview-neurips-2025-kp9b9iqdit": {
+          "score": 0.014084507042253521,
+          "rank": 11
+        },
+        "cvpr-2025-zhou-mitigating-the-human-robot-domain-discrepancy-in-visual-pre-training-for-robotic-cvpr-2025-paper": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "openreview-icml-2025-p9gwpjdo8i": {
+          "score": 0.012345679012345678,
+          "rank": 21
+        },
+        "cvpr-2025-ren-videoworld-exploring-knowledge-learning-from-unlabeled-videos-cvpr-2025-paper": {
+          "score": 0.012048192771084338,
+          "rank": 23
+        },
+        "openreview-iclr-2025-pislzg7ktl": {
+          "score": 0.011764705882352941,
+          "rank": 25
+        },
+        "cvpr-2025-chen-graphmimic-graph-to-graphs-generative-modeling-from-videos-for-policy-learning-cvpr-2025-paper": {
+          "score": 0.011627906976744186,
+          "rank": 26
+        },
+        "openreview-iclr-2025-mqkve6f3up": {
+          "score": 0.011235955056179775,
+          "rank": 29
+        },
+        "cvpr-2025-lee-dynscene-scalable-generation-of-dynamic-robotic-manipulation-scenes-for-embodied-cvpr-2025-paper": {
+          "score": 0.010526315789473684,
+          "rank": 35
+        },
+        "openreview-neurips-2025-cx1kfzerny": {
+          "score": 0.009433962264150943,
+          "rank": 46
+        },
+        "openreview-iclr-2025-lqhorprlim": {
+          "score": 0.009345794392523364,
+          "rank": 47
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "openreview-iclr-2025-lqhorprlim",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2025-pislzg7ktl",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2025-rhfyijux9d",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2025-avvxx0erkt",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-kp9b9iqdit",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-chen-vidbot-learning-generalizable-3d-actions-from-in-the-wild-2d-human-videos-cvpr-2025-paper",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-p01br4njly",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38875",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-vyoe2ebqeh",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-bpdiztivq8",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-yoshida-generating-6dof-object-manipulation-trajectories-from-action-description-in-egocentric-cvpr-2025-paper",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-afjf6izlvj",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-kxmiivub9u",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-ren-videoworld-exploring-knowledge-learning-from-unlabeled-videos-cvpr-2025-paper",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2025-i0to0g5j7g",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-uphlqbzfzb",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-zhao-taste-rob-advancing-video-generation-of-task-oriented-hand-object-interaction-for-generalizable-cvpr-2025-paper",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2025-p9gwpjdo8i",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-fgmbxzpgis",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-wang-mobileh2r-learning-generalizable-human-to-mobile-robot-handover-exclusively-from-cvpr-2025-paper",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-chen-graphmimic-graph-to-graphs-generative-modeling-from-videos-for-policy-learning-cvpr-2025-paper",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-zhou-mitigating-the-human-robot-domain-discrepancy-in-visual-pre-training-for-robotic-cvpr-2025-paper",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38086",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "cvpr-2025-lee-dynscene-scalable-generation-of-dynamic-robotic-manipulation-scenes-for-embodied-cvpr-2025-paper",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38874",
+          "score": 0.3668882557771445,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-pxyqg9gspq",
+          "score": 0.3433395872420263,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-37533",
+          "score": 0.3433395872420263,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-mqkve6f3up",
+          "score": 0.32035835650293487,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-cx1kfzerny",
+          "score": 0.29792429792429775,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-baq0icrncr",
+          "score": 0.21328671328671328,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "cvpr-2025-li-maniptrans-efficient-dexterous-bimanual-manipulation-transfer-via-residual-learning-cvpr-2025-paper",
+          "score": 0.1360089186176142,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2025-gvweq7litg",
+          "score": 0.06517094017094004,
+          "star_rating": 2
+        }
+      ]
+    },
+    {
+      "type": "keyword",
+      "tag": "Data",
+      "paper_tag": "keyword:Data",
+      "query_text": "r",
+      "sim_scores": {}
+    },
+    {
+      "type": "keyword",
+      "tag": "Data",
+      "paper_tag": "keyword:Data",
+      "query_text": "robot learning from human videos",
+      "sim_scores": {
+        "aaai-2026-38086": {
+          "score": 0.032266458495966696,
+          "rank": 1
+        },
+        "openreview-neurips-2025-kp9b9iqdit": {
+          "score": 0.03177805800756621,
+          "rank": 2
+        },
+        "cvpr-2025-chen-vidbot-learning-generalizable-3d-actions-from-in-the-wild-2d-human-videos-cvpr-2025-paper": {
+          "score": 0.031054405392392875,
+          "rank": 3
+        },
+        "openreview-iclr-2025-vyoe2ebqeh": {
+          "score": 0.030798389007344232,
+          "rank": 4
+        },
+        "openreview-iclr-2025-bpdiztivq8": {
+          "score": 0.030536130536130537,
+          "rank": 5
+        },
+        "openreview-iclr-2025-mqkve6f3up": {
+          "score": 0.025937081659973226,
+          "rank": 9
+        },
+        "cvpr-2025-zhou-mitigating-the-human-robot-domain-discrepancy-in-visual-pre-training-for-robotic-cvpr-2025-paper": {
+          "score": 0.02519288301054952,
+          "rank": 10
+        },
+        "aaai-2026-38875": {
+          "score": 0.014705882352941176,
+          "rank": 14
+        },
+        "openreview-neurips-2025-cx1kfzerny": {
+          "score": 0.014492753623188406,
+          "rank": 16
+        },
+        "aaai-2026-37533": {
+          "score": 0.014285714285714285,
+          "rank": 17
+        },
+        "openreview-neurips-2025-uphlqbzfzb": {
+          "score": 0.013888888888888888,
+          "rank": 20
+        },
+        "openreview-iclr-2025-p01br4njly": {
+          "score": 0.013333333333333334,
+          "rank": 23
+        },
+        "aaai-2026-38874": {
+          "score": 0.012987012987012988,
+          "rank": 26
+        },
+        "openreview-icml-2025-p9gwpjdo8i": {
+          "score": 0.012987012987012988,
+          "rank": 27
+        },
+        "openreview-iclr-2025-rhfyijux9d": {
+          "score": 0.01282051282051282,
+          "rank": 28
+        },
+        "openreview-neurips-2025-fgmbxzpgis": {
+          "score": 0.011904761904761904,
+          "rank": 38
+        },
+        "aaai-2026-39677": {
+          "score": 0.011764705882352941,
+          "rank": 41
+        },
+        "openreview-iclr-2025-gvweq7litg": {
+          "score": 0.011235955056179775,
+          "rank": 47
+        },
+        "openreview-iclr-2025-twipsx9qhn": {
+          "score": 0.01098901098901099,
+          "rank": 51
+        },
+        "cvpr-2025-ren-videoworld-exploring-knowledge-learning-from-unlabeled-videos-cvpr-2025-paper": {
+          "score": 0.010869565217391304,
+          "rank": 54
+        },
+        "openreview-iclr-2025-afjf6izlvj": {
+          "score": 0.010526315789473684,
+          "rank": 58
+        },
+        "openreview-iclr-2025-8yeotbceap": {
+          "score": 0.010101010101010102,
+          "rank": 66
+        },
+        "cvpr-2025-zhao-taste-rob-advancing-video-generation-of-task-oriented-hand-object-interaction-for-generalizable-cvpr-2025-paper": {
+          "score": 0.009708737864077669,
+          "rank": 72
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "Data",
+      "paper_tag": "keyword:Data",
+      "query_text": "robot learning scaling law",
+      "sim_scores": {
+        "openreview-iclr-2025-pislzg7ktl": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "Data",
+      "paper_tag": "keyword:Data",
+      "query_text": "robot manipulation data engine",
+      "sim_scores": {
+        "openreview-icml-2025-avvxx0erkt": {
+          "score": 0.032266458495966696,
+          "rank": 1
+        },
+        "openreview-neurips-2025-mk9ykil8ep": {
+          "score": 0.01639344262295082,
+          "rank": 3
+        },
+        "cvpr-2025-qi-two-by-two-learning-multi-task-pairwise-objects-assembly-for-generalizable-cvpr-2025-paper": {
+          "score": 0.015625,
+          "rank": 7
+        },
+        "cvpr-2025-lee-dynscene-scalable-generation-of-dynamic-robotic-manipulation-scenes-for-embodied-cvpr-2025-paper": {
+          "score": 0.015151515151515152,
+          "rank": 10
+        },
+        "openreview-iclr-2025-baq0icrncr": {
+          "score": 0.014705882352941176,
+          "rank": 12
+        },
+        "cvpr-2025-li-maniptrans-efficient-dexterous-bimanual-manipulation-transfer-via-residual-learning-cvpr-2025-paper": {
+          "score": 0.014492753623188406,
+          "rank": 13
+        },
+        "aaai-2026-38086": {
+          "score": 0.011764705882352941,
+          "rank": 29
+        },
+        "aaai-2026-38892": {
+          "score": 0.011627906976744186,
+          "rank": 30
+        },
+        "aaai-2026-38874": {
+          "score": 0.010638297872340425,
+          "rank": 38
+        },
+        "openreview-iclr-2025-pislzg7ktl": {
+          "score": 0.009174311926605505,
+          "rank": 53
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "Data",
+      "paper_tag": "keyword:Data",
+      "query_text": "scalable manipulation dataset",
+      "sim_scores": {
+        "cvpr-2025-lee-dynscene-scalable-generation-of-dynamic-robotic-manipulation-scenes-for-embodied-cvpr-2025-paper": {
+          "score": 0.02629443272196072,
+          "rank": 3
+        },
+        "aaai-2026-40127": {
+          "score": 0.015384615384615385,
+          "rank": 8
+        },
+        "openreview-iclr-2025-8yeotbceap": {
+          "score": 0.015151515151515152,
+          "rank": 10
+        },
+        "openreview-iclr-2025-rhfyijux9d": {
+          "score": 0.012345679012345678,
+          "rank": 39
+        },
+        "aaai-2026-38874": {
+          "score": 0.011235955056179775,
+          "rank": 48
+        },
+        "cvpr-2025-yoshida-generating-6dof-object-manipulation-trajectories-from-action-description-in-egocentric-cvpr-2025-paper": {
+          "score": 0.011111111111111112,
+          "rank": 49
+        },
+        "aaai-2026-38892": {
+          "score": 0.010638297872340425,
+          "rank": 53
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "Data",
+      "paper_tag": "keyword:Data",
+      "query_text": "transferring human skills to robots",
+      "sim_scores": {
+        "aaai-2026-38892": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "cvpr-2025-li-maniptrans-efficient-dexterous-bimanual-manipulation-transfer-via-residual-learning-cvpr-2025-paper": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "aaai-2026-38086": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "cvpr-2025-wang-mobileh2r-learning-generalizable-human-to-mobile-robot-handover-exclusively-from-cvpr-2025-paper": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "cvpr-2025-zhou-mitigating-the-human-robot-domain-discrepancy-in-visual-pre-training-for-robotic-cvpr-2025-paper": {
+          "score": 0.012987012987012988,
+          "rank": 17
+        },
+        "openreview-icml-2025-avvxx0erkt": {
+          "score": 0.01282051282051282,
+          "rank": 18
+        },
+        "aaai-2026-40127": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "openreview-neurips-2025-fgmbxzpgis": {
+          "score": 0.0125,
+          "rank": 20
+        },
+        "aaai-2026-38875": {
+          "score": 0.011904761904761904,
+          "rank": 24
+        },
+        "openreview-iclr-2025-8yeotbceap": {
+          "score": 0.011764705882352941,
+          "rank": 25
+        },
+        "openreview-iclr-2025-baq0icrncr": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "openreview-neurips-2025-kxmiivub9u": {
+          "score": 0.010869565217391304,
+          "rank": 32
+        },
+        "openreview-iclr-2025-afjf6izlvj": {
+          "score": 0.010416666666666666,
+          "rank": 36
+        },
+        "openreview-iclr-2025-bpdiztivq8": {
+          "score": 0.009708737864077669,
+          "rank": 43
+        },
+        "aaai-2026-39677": {
+          "score": 0.009615384615384616,
+          "rank": 44
+        },
+        "openreview-iclr-2025-i0to0g5j7g": {
+          "score": 0.009433962264150943,
+          "rank": 46
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "Data",
+      "paper_tag": "keyword:Data",
+      "query_text": "web-scale robot learning data",
+      "sim_scores": {
+        "openreview-iclr-2025-vyoe2ebqeh": {
+          "score": 0.029877369007803793,
+          "rank": 1
+        },
+        "openreview-neurips-2025-kxmiivub9u": {
+          "score": 0.02681010928961749,
+          "rank": 2
+        },
+        "openreview-iclr-2025-i0to0g5j7g": {
+          "score": 0.016129032258064516,
+          "rank": 4
+        },
+        "aaai-2026-38086": {
+          "score": 0.016129032258064516,
+          "rank": 5
+        },
+        "cvpr-2025-qi-two-by-two-learning-multi-task-pairwise-objects-assembly-for-generalizable-cvpr-2025-paper": {
+          "score": 0.015384615384615385,
+          "rank": 10
+        },
+        "cvpr-2025-zhou-mitigating-the-human-robot-domain-discrepancy-in-visual-pre-training-for-robotic-cvpr-2025-paper": {
+          "score": 0.013888888888888888,
+          "rank": 16
+        },
+        "openreview-iclr-2025-lqhorprlim": {
+          "score": 0.013513513513513514,
+          "rank": 18
+        },
+        "openreview-icml-2025-avvxx0erkt": {
+          "score": 0.012987012987012988,
+          "rank": 21
+        },
+        "cvpr-2025-chen-graphmimic-graph-to-graphs-generative-modeling-from-videos-for-policy-learning-cvpr-2025-paper": {
+          "score": 0.0125,
+          "rank": 24
+        },
+        "aaai-2026-38892": {
+          "score": 0.012195121951219513,
+          "rank": 26
+        },
+        "openreview-iclr-2025-bpdiztivq8": {
+          "score": 0.011627906976744186,
+          "rank": 30
+        },
+        "openreview-iclr-2025-p01br4njly": {
+          "score": 0.011111111111111112,
+          "rank": 34
+        },
+        "aaai-2026-38875": {
+          "score": 0.01098901098901099,
+          "rank": 35
+        },
+        "cvpr-2025-lee-dynscene-scalable-generation-of-dynamic-robotic-manipulation-scenes-for-embodied-cvpr-2025-paper": {
+          "score": 0.010752688172043012,
+          "rank": 37
+        },
+        "cvpr-2025-wang-mobileh2r-learning-generalizable-human-to-mobile-robot-handover-exclusively-from-cvpr-2025-paper": {
+          "score": 0.010526315789473684,
+          "rank": 39
+        },
+        "openreview-iclr-2025-pislzg7ktl": {
+          "score": 0.009615384615384616,
+          "rank": 47
+        },
+        "cvpr-2025-chen-vidbot-learning-generalizable-3d-actions-from-in-the-wild-2d-human-videos-cvpr-2025-paper": {
+          "score": 0.009433962264150943,
+          "rank": 49
+        }
+      }
+    }
+  ],
+  "global_candidate_ids": [
+    "cvpr-2025-liao-shape-my-moves-text-driven-shape-aware-synthesis-of-human-motions-cvpr-2025-paper",
+    "aaai-2026-38086",
+    "openreview-iclr-2025-vyoe2ebqeh",
+    "cvpr-2025-pang-manivideo-generating-hand-object-manipulation-video-with-dexterous-and-generalizable-grasping-cvpr-2025-paper",
+    "aaai-2026-38892",
+    "openreview-neurips-2025-79gwcnxyej",
+    "openreview-icml-2025-lcfpwxymvt",
+    "openreview-neurips-2025-kp9b9iqdit",
+    "openreview-iclr-2025-pislzg7ktl",
+    "openreview-icml-2025-hhwgflokxq",
+    "openreview-icml-2025-avvxx0erkt",
+    "openreview-neurips-2025-a49f7eam6l",
+    "cvpr-2025-cao-instruction-based-image-manipulation-by-watching-how-things-move-cvpr-2025-paper",
+    "openreview-iclr-2025-tpueqmjzis",
+    "aaai-2026-38930",
+    "openreview-neurips-2025-kxmiivub9u",
+    "cvpr-2025-zhou-mitigating-the-human-robot-domain-discrepancy-in-visual-pre-training-for-robotic-cvpr-2025-paper",
+    "cvpr-2025-chen-vidbot-learning-generalizable-3d-actions-from-in-the-wild-2d-human-videos-cvpr-2025-paper",
+    "openreview-neurips-2025-2aioeg2hwz",
+    "aaai-2026-38875",
+    "openreview-iclr-2025-bpdiztivq8",
+    "openreview-iclr-2025-lr8iic1rb8",
+    "openreview-iclr-2025-avyjws1fqq",
+    "openreview-icml-2025-n1cqqk4hhc",
+    "cvpr-2025-lee-dynscene-scalable-generation-of-dynamic-robotic-manipulation-scenes-for-embodied-cvpr-2025-paper",
+    "aaai-2026-38874",
+    "openreview-iclr-2025-vjwjwyt4ed",
+    "openreview-iclr-2025-ytewmr1tjb",
+    "openreview-icml-2025-2fdsh5d2th",
+    "openreview-iclr-2025-p01br4njly",
+    "cvpr-2025-li-maniptrans-efficient-dexterous-bimanual-manipulation-transfer-via-residual-learning-cvpr-2025-paper",
+    "openreview-neurips-2025-uphlqbzfzb",
+    "cvpr-2025-goswami-robopepp-vision-based-robot-pose-and-joint-angle-estimation-through-embedding-cvpr-2025-paper",
+    "openreview-neurips-2025-fgmbxzpgis",
+    "openreview-neurips-2025-n2bluwofz0",
+    "openreview-iclr-2025-frihal5ofg",
+    "cvpr-2025-li-robotic-visual-instruction-cvpr-2025-paper",
+    "cvpr-2025-li-object-centric-prompt-driven-vision-language-action-model-for-robotic-manipulation-cvpr-2025-paper",
+    "openreview-iclr-2025-yr79eyejsg",
+    "cvpr-2025-qi-two-by-two-learning-multi-task-pairwise-objects-assembly-for-generalizable-cvpr-2025-paper",
+    "openreview-neurips-2025-nniwguy50y",
+    "openreview-icml-2025-c0dhw1du33",
+    "openreview-iclr-2025-baq0icrncr",
+    "aaai-2026-39677",
+    "aaai-2026-38926",
+    "cvpr-2025-yao-think-small-act-big-primitive-prompt-learning-for-lifelong-robot-cvpr-2025-paper",
+    "aaai-2026-38950",
+    "openreview-neurips-2025-cx1kfzerny",
+    "openreview-iclr-2025-mqkve6f3up",
+    "openreview-iclr-2025-9gkmcecz7c",
+    "openreview-icml-2025-p9gwpjdo8i",
+    "cvpr-2025-chen-graphmimic-graph-to-graphs-generative-modeling-from-videos-for-policy-learning-cvpr-2025-paper",
+    "cvpr-2025-wang-action-detail-matters-refining-video-recognition-with-local-action-queries-cvpr-2025-paper",
+    "openreview-iclr-2025-vavz4oinpa",
+    "openreview-neurips-2025-bl8h1axr0i",
+    "openreview-iclr-2025-8yeotbceap",
+    "openreview-iclr-2025-yazn4tz7oi",
+    "cvpr-2025-zhao-taste-rob-advancing-video-generation-of-task-oriented-hand-object-interaction-for-generalizable-cvpr-2025-paper",
+    "openreview-iclr-2025-rhfyijux9d",
+    "openreview-neurips-2025-cjcm5lyvwm",
+    "aaai-2026-38922",
+    "cvpr-2025-chen-g3flow-generative-3d-semantic-flow-for-pose-aware-and-generalizable-object-cvpr-2025-paper",
+    "cvpr-2025-yoshida-generating-6dof-object-manipulation-trajectories-from-action-description-in-egocentric-cvpr-2025-paper",
+    "openreview-neurips-2025-r4dzap61qh",
+    "aaai-2026-37337",
+    "aaai-2026-38903",
+    "openreview-iclr-2025-wl1kup6oes",
+    "aaai-2026-37533",
+    "openreview-neurips-2025-im8154ljcx",
+    "openreview-neurips-2025-vzqsrnfnhd",
+    "aaai-2026-40127",
+    "cvpr-2025-liu-citywalker-learning-embodied-urban-navigation-from-web-scale-videos-cvpr-2025-paper",
+    "openreview-neurips-2025-gr9vtbcspy",
+    "aaai-2026-38916",
+    "openreview-iclr-2025-4vhiptx7xe",
+    "openreview-iclr-2025-i0to0g5j7g",
+    "cvpr-2025-huang-move-in-2d-2d-conditioned-human-motion-generation-cvpr-2025-paper",
+    "openreview-iclr-2025-pxyqg9gspq",
+    "aaai-2026-39192",
+    "openreview-iclr-2025-gvweq7litg",
+    "openreview-iclr-2025-vededd13gx",
+    "openreview-iclr-2025-nqtrars2pz",
+    "cvpr-2025-wang-mobileh2r-learning-generalizable-human-to-mobile-robot-handover-exclusively-from-cvpr-2025-paper",
+    "aaai-2026-38313",
+    "openreview-iclr-2025-6bkewevgsd",
+    "openreview-iclr-2025-dbbgasvgyq",
+    "openreview-iclr-2025-3by4n0gadt",
+    "openreview-iclr-2025-jvkdsi7ekg",
+    "openreview-neurips-2025-8lo0vlrxpz",
+    "aaai-2026-38953",
+    "aaai-2026-39028",
+    "openreview-iclr-2025-lqhorprlim",
+    "aaai-2026-38539",
+    "openreview-iclr-2025-7blxhmwvwf",
+    "openreview-neurips-2025-z3otnswuxx",
+    "openreview-iclr-2025-djw1jbtmuk",
+    "aaai-2026-38910",
+    "openreview-iclr-2025-ppdheo2z5v",
+    "cvpr-2025-gadot-rl-rc-dot-a-block-level-rl-agent-for-task-aware-video-compression-cvpr-2025-paper",
+    "openreview-iclr-2025-dzbcoatni7",
+    "openreview-neurips-2025-on6hf0kp20",
+    "cvpr-2025-wang-humandreamer-generating-controllable-human-motion-videos-via-decoupled-generation-cvpr-2025-paper",
+    "cvpr-2025-ren-videoworld-exploring-knowledge-learning-from-unlabeled-videos-cvpr-2025-paper",
+    "aaai-2026-37443",
+    "openreview-neurips-2025-zr2mdbrhjx",
+    "openreview-icml-2025-mzz4bhdifb",
+    "openreview-iclr-2025-fxm7eefra8",
+    "openreview-iclr-2025-8ofvubvf1u",
+    "openreview-iclr-2025-twipsx9qhn",
+    "openreview-icml-2025-vdwdu81uzy",
+    "openreview-iclr-2025-obtmkkbmqw",
+    "openreview-neurips-2025-x7t7b5cfhm",
+    "openreview-iclr-2025-afjf6izlvj",
+    "openreview-iclr-2025-wkbx7brasm",
+    "openreview-iclr-2025-mnwlhvmkmn",
+    "aaai-2026-38881",
+    "aaai-2026-38963",
+    "openreview-iclr-2025-d0xpsucs3l",
+    "openreview-neurips-2025-9ghaldornl",
+    "openreview-neurips-2025-mk9ykil8ep"
+  ],
+  "global_pool_lane_top_k": 30,
+  "global_pool_limit": 120,
+  "global_pool_guaranteed_per_lane": 2,
+  "global_pool_effective_size": 120,
+  "reranked_at": "2026-07-07T00:00:47.900674+00:00",
+  "llm_ranked": [
+    {
+      "paper_id": "openreview-iclr-2025-bpdiztivq8",
+      "score": 10.0,
+      "evidence_en": "learns unified latent action space across humans and robots to label internet-scale video data",
+      "evidence_cn": "学习人-机器人统一的潜在动作空间，为互联网规模视频数据生成标签",
+      "canonical_evidence": "学习人-机器人统一的潜在动作空间，为互联网规模视频数据生成标签",
+      "tldr_en": "IGOR compresses visual changes between initial and goal states into latent actions to create a unified action space for humans and various robots, enabling knowledge transfer from internet-scale video data to train foundation policies.",
+      "tldr_cn": "为实现从大规模人类视频中学习机器人操作，IGOR提出将初始图像与目标状态之间的视觉变化压缩为潜在动作，构建跨人类和多种机器人的统一动作空间，从而为互联网视频自动标注动作标签。该统一空间支持训练基础策略与世界模型，实验证明其语义一致性，为利用海量无标注人类视频进行机器人学习开辟了路径。",
+      "title_zh": "IGOR：图像-目标表示是具身AI下一级泛化的原子构建块",
+      "motivation_cn": "人类与机器人动作空间不一致阻碍了从人类视频中学习机器人技能。",
+      "method_cn": "通过压缩视觉变化为潜在动作，学习统一的语义动作空间，并用于互联网视频标注。",
+      "result_cn": "实现了人类与机器人间的动作空间对齐和知识迁移。",
+      "conclusion_cn": "IGOR展示了通过统一动作表示从大规模视频数据中学习机器人策略的潜力。",
+      "matched_requirement_id": "req-composite-data",
+      "matched_query_tag": "query:data:composite",
+      "matched_query_text": "Papers central to 将人类视频转化为机器人可用的操作数据，让机器人可以利用大规模互联网数据以及人类示教去学习，特别是重构手物交互、对齐人体运动与机器人形态、可复现的机器人学习缩放规律、生成可执行动作/演示数据的方法。, especially work that connects or combines: r; robot manipulation data engine; scalable manipulation dataset; web-scale robot learning data; robot learning from human videos; transferring human skills to robots; methods for converting human video demonstrations into robot executable action data; reconstructing hand object interactions from human videos for robot manipulation learning; aligning human body motion with different robot morphologies for robot learning from human demonstrations; scaling laws for robot learning from large scale internet video data."
+    },
+    {
+      "paper_id": "cvpr-2025-chen-vidbot-learning-generalizable-3d-actions-from-in-the-wild-2d-human-videos-cvpr-2025-paper",
+      "score": 10.0,
+      "evidence_en": "extracts 3D hand trajectories from in-the-wild human videos for zero-shot robotic manipulation",
+      "evidence_cn": "从野生人类视频提取3D手部轨迹，实现零样本机器人操作",
+      "canonical_evidence": "从野生人类视频提取3D手部轨迹，实现零样本机器人操作",
+      "tldr_en": "VidBot extracts 3D hand trajectories from in-the-wild human videos and learns policies for zero-shot robotic manipulation, bridging the embodiment gap.",
+      "tldr_cn": "VidBot提出一种从大规模互联网人类视频中提取3D手部轨迹的框架，用于零样本机器人操作学习。它结合深度估计和手部姿态重建，将人类视频转化为可供机器人执行的3D动作。实验表明，该方法在多种操作任务上实现了零样本泛化，无需真实机器人数据。这为利用互联网人类视频规模化地训练操作技能开辟了新路径。",
+      "title_zh": "VidBot：从野生2D人类视频学习可泛化的3D动作用于零样本机器人操作",
+      "motivation_cn": "物理机器人学习无法规模化，互联网人类视频提供了丰富的数据源但存在具身鸿沟。",
+      "method_cn": "通过从单目RGB人类视频中提取3D手部轨迹，构建3D可供性，并学习零样本操作策略。",
+      "result_cn": "在多个操作任务上，VidBot实现了零样本泛化，成功率显著。",
+      "conclusion_cn": "VidBot展示了利用野生人类视频进行通用机器人操作学习的潜力。",
+      "matched_requirement_id": "req-7",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "methods for converting human video demonstrations into robot executable action data"
+    },
+    {
+      "paper_id": "aaai-2026-38874",
+      "score": 10.0,
+      "evidence_en": "converts human hand manipulation videos into dexterous robot trajectories with progressive kinematic-dynamic alignment",
+      "evidence_cn": "将人手操作视频转换为灵巧机器人轨迹，采用渐进式运动学-动力学对齐",
+      "canonical_evidence": "将人手操作视频转换为灵巧机器人轨迹，采用渐进式运动学-动力学对齐",
+      "tldr_en": "Addresses data scarcity in dexterous manipulation by hand-agnostic transfer from human videos to multi-fingered robots via progressive alignment, enabling high-quality trajectories without massive data.",
+      "tldr_cn": "针对多指机器人操作数据稀缺问题，提出一种与手部无关的操作迁移系统，通过渐进式运动学-动力学对齐框架，高效地将人手演示视频转换为高质量灵巧操作轨迹，无需大量训练数据。实验验证了该方法能从少量人类视频中生成高质量轨迹，支持策略学习。该系统为解决灵巧操作数据稀缺提供了实用方案，促进了从人类演示到机器人技能的迁移。",
+      "title_zh": "通过渐进式运动学-动力学对齐实现灵巧操作迁移",
+      "motivation_cn": "多指机器人硬件平台采集操作数据困难且可扩展性差，导致数据驱动的灵巧操作策略学习受限。",
+      "method_cn": "设计了渐进式迁移框架：首先建立人手与灵巧手之间的运动学对应，然后优化动力学一致性，以生成协调的高自由度控制轨迹。",
+      "result_cn": "实验验证该方法能从小量人类视频中生成高质量的灵巧操作轨迹，支持策略学习。",
+      "conclusion_cn": "该系统为解决灵巧操作数据稀缺提供了实用方案，促进了从人类演示到机器人技能的迁移。",
+      "matched_requirement_id": "req-7",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "methods for converting human video demonstrations into robot executable action data"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-kp9b9iqdit",
+      "score": 10.0,
+      "evidence_en": "extracts object-centric 3D motion field from human videos for zero-shot robot control",
+      "evidence_cn": "从人类视频中提取以物体为中心的三维运动场，用于机器人零样本控制",
+      "canonical_evidence": "从人类视频中提取以物体为中心的三维运动场，用于机器人零样本控制",
+      "tldr_en": "Proposes using object-centric 3D motion fields as action representation from human videos, enabling zero-shot robot policy learning via a denoising estimator and controller.",
+      "tldr_cn": "针对从人类视频中提取动作知识用于策略学习的挑战，提出以物体为中心的3D运动场作为动作表示，并设计去噪估计器和零样本控制器，显著提升了机器人从视频中学习的能力。在多种操作任务中，使用该运动场实现了零样本控制，比现有方法更精确。物体中心3D运动场为从人类视频中学习机器人控制提供了一种高效、可扩展的动作表示方法。",
+      "title_zh": "以物体为中心的三维运动场用于从人类视频中学习机器人",
+      "motivation_cn": "现有动作表示（如视频帧、像素流等）在建模复杂度或信息丢失方面存在局限。",
+      "method_cn": "提出两个新组件：训练去噪3D运动场估计器提取精细物体3D运动，以及基于此运动场的零样本机器人控制框架。",
+      "result_cn": "在多种操作任务中，使用该运动场实现了零样本控制，比现有方法更精确。",
+      "conclusion_cn": "物体中心3D运动场为从人类视频中学习机器人控制提供了一种高效、可扩展的动作表示方法。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot learning from human videos"
+    },
+    {
+      "paper_id": "openreview-iclr-2025-rhfyijux9d",
+      "score": 10.0,
+      "evidence_en": "Reconstructs tasks from internet RGB videos using object mesh reconstruction and 6D tracking to generate manipulation data.",
+      "evidence_cn": "通过物体网格重建和6D位姿追踪从互联网RGB视频中重构任务，生成操作数据。",
+      "canonical_evidence": "通过物体网格重建和6D位姿追踪从互联网RGB视频中重构任务，生成操作数据。",
+      "tldr_en": "Video2Policy turns internet videos into scalable manipulation training data by reconstructing tasks and using RL with LLM-generated rewards, enabling generalist policies.",
+      "tldr_cn": "本文提出Video2Policy框架，将大规模互联网人类视频转化为仿真中的操作任务数据：先通过物体网格重建和6D跟踪复现任务，再结合大模型生成奖励函数进行强化学习训练。该方法在多样化和真实性上显著优于现有方案，为机器人从网络视频中规模化学习提供了可行路径。",
+      "title_zh": "Video2Policy：通过互联网视频扩展仿真中的操作任务",
+      "motivation_cn": "现有生成仿真任务的方法依赖大模型易产生幻觉，或数字孪生难以扩展。",
+      "method_cn": "第一阶段从视频重建物体网格与轨迹生成任务；第二阶段利用LLM奖励进行强化学习。",
+      "result_cn": "在任务多样性和政策泛化能力上远超现有方法。",
+      "conclusion_cn": "互联网视频是机器人学习可扩展且真实的任务来源，Video2Policy有效解锁了这一潜力。",
+      "matched_requirement_id": "req-7",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "methods for converting human video demonstrations into robot executable action data"
+    },
+    {
+      "paper_id": "aaai-2026-38086",
+      "score": 10.0,
+      "evidence_en": "paired human-robot video dataset with fine-grained alignment to learn robot actions from human demonstrations",
+      "evidence_cn": "精确对齐的成对人-机器人视频数据集，从人类演示学习机器人动作",
+      "canonical_evidence": "精确对齐的成对人-机器人视频数据集，从人类演示学习机器人动作",
+      "tldr_en": "Human2Robot introduces a precisely synchronized human-robot video dataset and a conditional video generation approach to achieve fine-grained alignment, enabling direct learning of robot actions from human demonstrations.",
+      "tldr_cn": "Human2Robot 提出了一个包含 2600 个精确同步的人-机器人视频片段的数据集，并将细粒度人机对齐建模为条件视频生成问题，从而从人类演示直接学习机器人动作。该方法突破了传统粗略对齐的局限，实现了帧级动力学学习。实验表明在复杂操作和新任务上泛化能力显著提升，为人类技能向机器人的高效迁移提供了新范式。",
+      "title_zh": "Human2Robot：从成对人-机器人视频学习机器人动作",
+      "motivation_cn": "现有方法依赖粗糙对齐的视频对，无法捕获帧级操作动力学，泛化性差。",
+      "method_cn": "构建精确同步的人-机器人视频数据集，将细粒度对齐视为条件视频生成任务。",
+      "result_cn": "在新颖任务上展现出强泛化能力，优于基于粗略对齐的方法。",
+      "conclusion_cn": "Human2Robot 通过精确对齐的视频生成实现了人类技能到机器人的有效迁移。",
+      "matched_requirement_id": "req-6",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "transferring human skills to robots"
+    },
+    {
+      "paper_id": "cvpr-2025-li-maniptrans-efficient-dexterous-bimanual-manipulation-transfer-via-residual-learning-cvpr-2025-paper",
+      "score": 9.0,
+      "evidence_en": "transferring human bimanual skills to dexterous robotic hands",
+      "evidence_cn": "将人类双手技能迁移到灵巧机械手",
+      "canonical_evidence": "将人类双手技能迁移到灵巧机械手",
+      "tldr_en": "ManipTrans proposes a two-stage method to efficiently transfer human bimanual skills to dexterous robotic hands by pre-training a trajectory imitator and fine-tuning with residual learning under interaction constraints, enabling complex bimanual tasks.",
+      "tldr_cn": "针对人类双手技能向灵巧机器人手迁移的挑战，本文提出ManipTrans，一种两阶段方法：先预训练通用轨迹模仿器学习人手运动，再通过交互约束下的残差模块微调，实现高效且精确的双臂灵巧操作。实验表明，该方法在复杂双手任务上显著优于现有技术，为从人类演示中获取大规模机器人操作数据提供了可行途径。",
+      "title_zh": "ManipTrans：通过残差学习实现高效灵巧双手操作迁移",
+      "motivation_cn": "数据驱动的具身AI需要大规模类人操作序列，但传统方法难以高效获取。",
+      "method_cn": "两阶段方法：预训练轨迹模仿器捕捉人手运动，再通过残差学习适应机器人手形态与交互约束。",
+      "result_cn": "在多种复杂双手任务上实现高效准确的技能迁移。",
+      "conclusion_cn": "ManipTrans为人类灵巧操作技能向机器人迁移提供了有效解决方案。",
+      "matched_requirement_id": "req-6",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "transferring human skills to robots"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-mk9ykil8ep",
+      "score": 9.0,
+      "evidence_en": "automated task creation and demonstration generation for bimanual dexterous manipulation",
+      "evidence_cn": "为双手灵巧操作自动生成任务和演示数据",
+      "canonical_evidence": "为双手灵巧操作自动生成任务和演示数据",
+      "tldr_en": "HumanoidGen presents an automated framework using LLM reasoning and atomic dexterous operations to generate relational constraints and high-quality demonstrations for humanoid bimanual manipulation, addressing the scarcity of simulation data.",
+      "tldr_cn": "现有机器人数据集主要面向单臂平台，缺乏人形机器人双臂灵巧操作的高质量演示。HumanoidGen提出利用原子灵巧操作和LLM推理自动生成任务及约束，为仿真环境构建大规模、可扩展的双手操作数据集。该方法解决了人形机器人数据匮乏问题，为基于数据的灵巧操作学习提供了数据引擎。",
+      "title_zh": "HumanoidGen：通过LLM推理为双手灵巧操作生成数据",
+      "motivation_cn": "人形机器人双臂灵巧操作缺乏大规模高质量仿真数据。",
+      "method_cn": "利用原子操作与LLM推理自动生成关系约束和任务，收集演示数据。",
+      "result_cn": "构建了可扩展的人形机器人双手操作数据集。",
+      "conclusion_cn": "HumanoidGen为灵巧操作学习提供了数据生成引擎，促进数据驱动方法。",
+      "matched_requirement_id": "req-2",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot manipulation data engine"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-fgmbxzpgis",
+      "score": 9.0,
+      "evidence_en": "aligns human and robot policy latent spaces via Optimal Transport for skill transfer",
+      "evidence_cn": "通过最优传输对齐人机策略潜空间，实现人类技能向机器人转移",
+      "canonical_evidence": "通过最优传输对齐人机策略潜空间，实现人类技能向机器人转移",
+      "tldr_en": "EgoBridge aligns human and robot policy latent spaces using OT-based domain adaptation, enabling effective imitation learning from egocentric human data.",
+      "tldr_cn": "EgoBridge提出一种联合训练框架，通过最优传输对齐人类和机器人数据的策略潜空间，解决了自我中心人类数据用于机器人模仿学习时的域差异问题。该方法在多个操作任务上大幅提升了跨形态泛化性能，使得大规模人类经验数据能够有效驱动机器人学习。这为利用人类第一人称视频扩展机器人模仿学习提供了重要的域自适应技术。",
+      "title_zh": "EgoBridge：面向自我中心人类数据的通用模仿领域自适应方法",
+      "motivation_cn": "自我中心人类数据丰富，但视觉、传感器和运动学差异阻碍知识迁移。",
+      "method_cn": "基于最优传输的域自适应，对齐人机数据的策略潜特征和动作空间。",
+      "result_cn": "在多项操作任务上，EgoBridge显著提高了模仿学习的成功率。",
+      "conclusion_cn": "EgoBridge为利用大规模人类视频进行通用操作学习提供了有效的域对齐手段。",
+      "matched_requirement_id": "req-6",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "transferring human skills to robots"
+    },
+    {
+      "paper_id": "openreview-iclr-2025-baq0icrncr",
+      "score": 9.0,
+      "evidence_en": "synthesizes executable policy code from video demonstrations",
+      "evidence_cn": "从视频演示合成可执行策略代码",
+      "canonical_evidence": "从视频演示合成可执行策略代码",
+      "tldr_en": "RoboPro generates executable policy code from video instructions, using Video2Code to convert video demonstrations into runtime code for robotic manipulation.",
+      "tldr_cn": "RoboPro提出了一种视频指导的策略代码生成模型，通过Video2Code将视频演示自动转化为可执行的机器人操作代码。该模型利用大规模语言模型的泛化能力，实现跨机器人、任务和环境的零样本操作。实验表明，生成的策略代码能有效执行复杂操作，且Video2Code显著降低了数据采集成本。这为将人类视频转换为机器人可执行的动作序列提供了直接的代码生成方案。",
+      "title_zh": "机器人程序员：面向机器人操作的视频指导策略代码生成",
+      "motivation_cn": "策略代码生成效率低、成本高，需要更高效的视频到代码转化方法。",
+      "method_cn": "提出Video2Code，从视频演示合成可执行策略代码，结合LLM实现零样本操作。",
+      "result_cn": "RoboPro在多任务中实现零样本泛化，Video2Code提升了可扩展性。",
+      "conclusion_cn": "视频到代码的转化使得大规模人类视频可用于机器人策略部署。",
+      "matched_requirement_id": "req-7",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "methods for converting human video demonstrations into robot executable action data"
+    },
+    {
+      "paper_id": "openreview-iclr-2025-p01br4njly",
+      "score": 9.0,
+      "evidence_en": "adapting internet video knowledge for solving new robotics tasks",
+      "evidence_cn": "通过适应互联网视频知识解决机器人新任务",
+      "canonical_evidence": "通过适应互联网视频知识解决机器人新任务",
+      "tldr_en": "Investigates adapting internet-scale pretrained video generative models to robotics, enabling generalization to novel tasks via text-conditioning while incorporating environment-specific intricacies.",
+      "tldr_cn": "现有视频生成模型在机器人中作为视觉规划器展现出潜力，但难以同时兼顾互联网规模的泛化能力和环境特定性。本文研究不同的适应技术，将互联网预训练的视频模型适配到机器人环境中，以融合通用知识与环境特殊性。实验表明，自适应模型能够在新任务上实现更好的泛化，超越了仅使用域内数据或仅使用预训练模型的方法。该工作为机器人学习提供了一条高效的路径，减轻了对大规模域内演示的依赖。",
+      "title_zh": "通过适应互联网视频知识解决新任务",
+      "motivation_cn": "现有视频生成模型在机器人中作为视觉规划器展现出潜力，但难以同时兼顾互联网规模的泛化能力和环境特定性。",
+      "method_cn": "研究不同的适应技术，将互联网预训练的视频模型适配到机器人环境中，以融合通用知识与环境特殊性。",
+      "result_cn": "实验表明，自适应模型能够在新任务上实现更好的泛化，超越了仅使用域内数据或仅使用预训练模型的方法。",
+      "conclusion_cn": "适应互联网视频知识为机器人学习提供了一条高效的路径，减轻了对大规模域内演示的依赖。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "web-scale robot learning data"
+    },
+    {
+      "paper_id": "openreview-iclr-2025-vyoe2ebqeh",
+      "score": 9.0,
+      "evidence_en": "learns from internet-scale videos without robot action labels to pretrain VLA models",
+      "evidence_cn": "从互联网规模视频中学习，无需机器人动作标签，预训练视觉-语言-动作模型",
+      "canonical_evidence": "从互联网规模视频中学习，无需机器人动作标签，预训练视觉-语言-动作模型",
+      "tldr_en": "Proposes LAPA, unsupervised pretraining of VLA models from internet videos by learning discrete latent actions, then finetuning on small robot data, enabling scalable robot learning.",
+      "tldr_cn": "提出LAPA，首个无需真实动作标签的视觉-语言-动作模型无监督预训练方法。该方法从互联网规模视频中学习离散潜在动作，预训练模型预测这些潜在动作，再在小规模机器人数据上微调，从而大幅扩展机器人学习的可用数据源。在多种机器人操作任务上，LAPA预训练的VLA模型在小数据微调后达到与有监督预训练相当的性能。该方法为大规模利用无标签视频数据进行机器人学习开辟了新途径，降低了对人工标注的依赖。",
+      "title_zh": "从视频中进行潜在动作预训练",
+      "motivation_cn": "现有VLA模型预训练依赖遥操作采集的动作标签，限制了数据规模和来源。",
+      "method_cn": "利用VQ-VAE目标训练动作量化模型学习帧间离散潜在动作，然后预训练潜在VLA模型预测这些动作并融合任务描述。",
+      "result_cn": "在多种机器人操作任务上，LAPA预训练的VLA模型在小数据微调后达到与有监督预训练相当的性能。",
+      "conclusion_cn": "该方法为大规模利用无标签视频数据进行机器人学习开辟了新途径，降低了对人工标注的依赖。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "web-scale robot learning data"
+    },
+    {
+      "paper_id": "cvpr-2025-zhou-mitigating-the-human-robot-domain-discrepancy-in-visual-pre-training-for-robotic-cvpr-2025-paper",
+      "score": 9.0,
+      "evidence_en": "mitigates human-robot domain discrepancy in visual pre-training for manipulation using paired human-robot video data",
+      "evidence_cn": "使用配对的人机视频数据减轻视觉预训练中的人机域差异，用于机器人操作",
+      "canonical_evidence": "使用配对的人机视频数据减轻视觉预训练中的人机域差异，用于机器人操作",
+      "tldr_en": "Proposes a paradigm to adapt large-scale human activity data for robotic manipulation by learning to bridge the visual gap with paired human-robot videos, improving generalization.",
+      "tldr_cn": "针对人类活动数据预训练中存在的人机形态差异导致的域差异问题，提出一种利用配对的人机视频数据来桥接域差距的适应范式，从而提升下游机器人操作的视觉表征泛化能力。实验表明，该方法显著提高了基于人类数据预训练的模型在多种机器人操作任务上的性能。该范式使得大规模人类活动数据能够有效服务于机器人视觉预训练，缓解了数据稀缺问题。",
+      "title_zh": "减轻机器人操作视觉预训练中的人机域差异",
+      "motivation_cn": "利用大规模人类数据预训练视觉表征时，显著的人机形态差异导致了域差异，阻碍模型泛化到机器人操作任务。",
+      "method_cn": "设计了一种人机对比学习策略，利用容易获得的配对数据对齐人类和机器人视频的视觉表征。",
+      "result_cn": "实验表明，该方法显著提高了基于人类数据预训练的模型在多种机器人操作任务上的性能。",
+      "conclusion_cn": "该范式使得大规模人类活动数据能够有效服务于机器人视觉预训练，缓解了数据稀缺问题。",
+      "matched_requirement_id": "req-9",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "aligning human body motion with different robot morphologies for robot learning from human demonstrations"
+    },
+    {
+      "paper_id": "openreview-iclr-2025-8yeotbceap",
+      "score": 9.0,
+      "evidence_en": "Learns diverse bimanual dexterous manipulation skills from human demonstrations.",
+      "evidence_cn": "从人类示教中学习多样化的双手灵巧操作技能。",
+      "canonical_evidence": "从人类示教中学习多样化的双手灵巧操作技能。",
+      "tldr_en": "Proposes BiDexHD, a framework using teacher-student learning to efficiently acquire diverse bimanual dexterous manipulation skills from human demonstrations.",
+      "tldr_cn": "针对双手灵巧操作任务多样性不足和策略学习困难的问题，本文提出BiDexHD框架，利用教师-学生策略学习从丰富的人类演示中高效学习多样化技能。实验表明该方法显著提升了任务覆盖和策略性能，为通用灵巧操作提供了新途径。",
+      "title_zh": "从人类示教学习多样化双手灵巧操作技能",
+      "motivation_cn": "高维动作空间和任务复杂性导致双手灵巧操作策略学习困难，现有基准任务多样性有限。",
+      "method_cn": "BiDexHD统一现有双手数据集构建任务，采用教师-学生策略学习应对高维挑战。",
+      "result_cn": "在多种双手灵巧操作任务上取得优于现有方法的成功率。",
+      "conclusion_cn": "从人类示教中高效学习多样化双手技能是可行的，并能推广至多种任务。",
+      "matched_requirement_id": "req-6",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "transferring human skills to robots"
+    },
+    {
+      "paper_id": "aaai-2026-38892",
+      "score": 9.0,
+      "evidence_en": "Leverages Human-Object Interaction datasets to predict future hand-object states for rewarding dexterous manipulation RL.",
+      "evidence_cn": "利用人-物交互数据集预测未来手-物状态，为灵巧操作强化学习提供奖励。",
+      "canonical_evidence": "利用人-物交互数据集预测未来手-物状态，为灵巧操作强化学习提供奖励。",
+      "tldr_en": "Learns object-centric motion priors from human HOI data to predict future hand-object states, which serve as general-purpose rewards for RL of dexterous manipulation across tasks.",
+      "tldr_cn": "为克服多指灵巧手操作的复杂动态问题，本文从大规模人-物交互数据中学习以物体为中心的运动先验，预测未来手-物状态作为通用奖励，减少对任务特定奖励工程的依赖。在仿真和真实世界的三种操作任务上全面超越现有方法，展现了利用人类交互数据提升泛化性的潜力。",
+      "title_zh": "从人类学习以物体为中心的运动先验用于机器人灵巧操作",
+      "motivation_cn": "多指灵巧手操作高维且动态复杂，现有方法依赖繁重的任务特定奖励设计。",
+      "method_cn": "从HOI数据集全面预测未来手-物状态，将物体未来状态作为强化学习通用奖励。",
+      "result_cn": "在仿真和真实世界三项操作任务中全面超过SOTA方法。",
+      "conclusion_cn": "利用人类交互先验可以显著增强跨任务的灵巧操作泛化能力。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "reconstructing hand object interactions from human videos for robot manipulation learning"
+    },
+    {
+      "paper_id": "openreview-iclr-2025-twipsx9qhn",
+      "score": 9.0,
+      "evidence_en": "Proposes a universal action space based on human hand eigengrasps for cross-embodiment dexterous grasping.",
+      "evidence_cn": "提出基于人手本征抓取的通用动作空间，实现跨形态灵巧抓取。",
+      "canonical_evidence": "提出基于人手本征抓取的通用动作空间，实现跨形态灵巧抓取。",
+      "tldr_en": "Achieves cross-embodiment dexterous grasping by using a universal action space derived from human hand eigengrasps, retargeted to various robot hands via a simple mapping.",
+      "tldr_cn": "为实现不同灵巧手的通用抓取策略，本文受人类遥操作启发，提出基于人手本征抓取的通用动作空间，策略输出本征抓取动作后通过重定向映射转换为各机器人手的关节动作。该方法显著简化跨形态学习，实验验证了其在多种灵巧手上的一致高性能。",
+      "title_zh": "跨形态灵巧抓取与强化学习",
+      "motivation_cn": "现有灵巧抓取策略多针对特定机器人手，缺乏跨形态通用策略。",
+      "method_cn": "定义基于人手本征抓取的通用动作空间，并通过重定向映射适配不同手。",
+      "result_cn": "在多种灵巧手上实现了高性能的跨形态抓取，泛化性强。",
+      "conclusion_cn": "利用人手启发的通用动作空间可实现高效跨形态灵巧操作策略学习。",
+      "matched_requirement_id": "req-9",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "aligning human body motion with different robot morphologies for robot learning from human demonstrations"
+    },
+    {
+      "paper_id": "openreview-iclr-2025-gvweq7litg",
+      "score": 9.0,
+      "evidence_en": "training-free hand-object pose tracking from human videos to convert interactions into dexterous robotic demonstrations",
+      "evidence_cn": "从人类视频中无训练地进行手物姿态跟踪，将交互转化为灵巧机器人演示",
+      "canonical_evidence": "从人类视频中无训练地进行手物姿态跟踪，将交互转化为灵巧机器人演示",
+      "tldr_en": "TF-HOT is a training-free pipeline that accurately tracks hand and object poses from human videos using differentiable rendering and 2D foundation models, enabling conversion of human interactions into high-quality dexterous robotic demonstrations.",
+      "tldr_cn": "TF-HOT 是一个无需训练的流水线，利用可微渲染和二维基础模型从人类视频中精确跟踪手和物体姿态，实现将人类交互转化为高质量灵巧机器人演示。该方法解决了动态遮挡导致的跟踪难题，通过优化获得亚像素精度的恢复。实验在多个基准上取得最优性能，为从大规模人类视频构建机器人数据开辟了道路。",
+      "title_zh": "TF-HOT：面向灵巧操作的无训练手-物姿态跟踪与优化",
+      "motivation_cn": "灵巧操作缺乏大规模高质量演示，人类视频中存在手物动态遮挡，难以准确跟踪姿态。",
+      "method_cn": "提出TF-HOT流水线，利用可微渲染和二维基础模型先验优化手物全局位姿。",
+      "result_cn": "在多个手物交互数据集上实现了最优的手和物体姿态估计精度。",
+      "conclusion_cn": "TF-HOT可从人类视频高效获取高质量机器人演示数据，推动灵巧操作发展。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "reconstructing hand object interactions from human videos for robot manipulation learning"
+    },
+    {
+      "paper_id": "cvpr-2025-zhao-taste-rob-advancing-video-generation-of-task-oriented-hand-object-interaction-for-generalizable-cvpr-2025-paper",
+      "score": 9.0,
+      "evidence_en": "large-scale ego-centric hand-object interaction video dataset for robotic imitation learning",
+      "evidence_cn": "面向机器人模仿学习的大规模自我中心手物交互视频数据集",
+      "canonical_evidence": "面向机器人模仿学习的大规模自我中心手物交互视频数据集",
+      "tldr_en": "TASTE-Rob introduces a large-scale dataset of 100,856 ego-centric hand-object interaction videos aligned with language instructions, addressing the limitations of existing datasets and enabling robust video generation for robotic manipulation learning.",
+      "tldr_cn": "TASTE-Rob 提出了一个包含 100,856 个自我中心手物交互视频的大规模数据集，每个视频均与语言指令对齐，解决现有数据集视角不一致和交互错位的问题。该数据集用于微调视频生成模型，以合成高质量的操作演示。实验证明，基于该数据集训练的模型在下游机器人操作任务中表现出更好的泛化能力，为利用人类视频进行机器人学习提供了宝贵资源。",
+      "title_zh": "TASTE-Rob：推进面向泛化机器人操作的任务导向手物交互视频生成",
+      "motivation_cn": "现有数据集如Ego4D存在视角不一致、交互不对齐等问题，限制其在精确模仿学习中的应用。",
+      "method_cn": "构建大规模自我中心手物交互视频数据集，语言对齐且视角统一，用于微调视频扩散模型。",
+      "result_cn": "生成视频的时序一致性和任务精度显著提升，在下游真实机器人操作中取得好的泛化效果。",
+      "conclusion_cn": "TASTE-Rob为机器人从人类视频学习提供了高质量规模化数据支撑。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot learning from human videos"
+    },
+    {
+      "paper_id": "cvpr-2025-yoshida-generating-6dof-object-manipulation-trajectories-from-action-description-in-egocentric-cvpr-2025-paper",
+      "score": 9.0,
+      "evidence_en": "extracts 6DoF manipulation trajectories from large-scale ego/exo video datasets and generates robot-executable trajectories from textual action descriptions",
+      "evidence_cn": "从大规模第一/第三人称视频数据集中提取6DoF操作轨迹，并根据文本动作描述生成机器人可执行轨迹",
+      "canonical_evidence": "从大规模第一/第三人称视频数据集中提取6DoF操作轨迹，并根据文本动作描述生成机器人可执行轨迹",
+      "tldr_en": "Proposes a framework that leverages Exo-Ego4D videos to extract diverse manipulation trajectories at scale, then trains models to generate 6DoF object manipulation trajectories from action descriptions, effectively converting human video demonstrations into robot executable action data.",
+      "tldr_cn": "该工作提出从Exo-Ego4D大规模视频中提取多样化操作轨迹，并训练模型根据动作描述生成6DoF物体操作轨迹，从而将人类视频演示转化为机器人可执行动作数据。首先解决获取大规模操作演示数据的挑战，然后利用提取的轨迹和文本描述训练生成模型。实验验证了该方法在生成准确轨迹上的有效性，为机器人从人类视频中学习提供了可扩展的数据转换途径。",
+      "title_zh": "从第一人称视觉的动作描述生成6DoF物体操作轨迹",
+      "motivation_cn": "训练交互式机器人需要大量多样化的操作演示，但实际采集几乎不可行。",
+      "method_cn": "利用Exo-Ego4D的大规模视频数据集提取操作轨迹，结合动作描述训练基于视觉和点云的轨迹生成模型。",
+      "result_cn": "展示了从文本描述生成六自由度物体操作轨迹的有效性。",
+      "conclusion_cn": "该框架为从大规模人类视频中获取机器人操作数据提供了可行方案。",
+      "matched_requirement_id": "req-7",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "methods for converting human video demonstrations into robot executable action data"
+    },
+    {
+      "paper_id": "aaai-2026-38875",
+      "score": 9.0,
+      "evidence_en": "leverages large-scale egocentric human manipulation videos with 3D hand pose to enhance bimanual robot manipulation using a diffusion transformer",
+      "evidence_cn": "利用大规模第一人称人类操作视频与3D手部姿态，通过扩散变压器增强双臂机器人操作",
+      "canonical_evidence": "利用大规模第一人称人类操作视频与3D手部姿态，通过扩散变压器增强双臂机器人操作",
+      "tldr_en": "Proposes H-RDT, a Human to Robotics Diffusion Transformer that uses large-scale egocentric human manipulation videos with 3D hand pose annotations to provide behavioral priors, enabling effective transfer of human skills to bimanual robots.",
+      "tldr_cn": "提出H-RDT（人-机器人扩散变压器），利用大规模带有3D手部姿态标注的第一人称人类操作视频提供行为先验，增强双臂机器人操作能力。针对机器人演示数据稀缺的问题，该方法将人类操作数据转化为机器人可用的动作先验，实现从人类技能到机器人的迁移。实验表明该方法能有效提升双臂操作策略的性能，为跨形态机器人学习提供了新途径。",
+      "title_zh": "H-RDT: 人类操作增强的双臂机器人操作",
+      "motivation_cn": "模仿学习面临大规模高质量机器人演示数据稀缺的挑战。",
+      "method_cn": "利用大规模第一人称人类操作视频和3D手部姿态，训练扩散变压器将人类行为先验迁移到机器人。",
+      "result_cn": "增强了双臂机器人操作策略的学习效果。",
+      "conclusion_cn": "人类操作数据可有效弥补机器人数据不足，提升跨形态操作能力。",
+      "matched_requirement_id": "req-7",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "methods for converting human video demonstrations into robot executable action data"
+    },
+    {
+      "paper_id": "openreview-iclr-2025-lqhorprlim",
+      "score": 9.0,
+      "evidence_en": "large-scale dataset composition study to understand what data matters for robot manipulation, using procedural generation of diverse datasets",
+      "evidence_cn": "大规模数据集组成研究，通过程序化生成多样化数据集，理解何种数据对机器人操作最重要",
+      "canonical_evidence": "大规模数据集组成研究，通过程序化生成多样化数据集，理解何种数据对机器人操作最重要",
+      "tldr_en": "Conducts a systematic study on data composition for robot manipulation by procedurally generating large-scale robot datasets, providing insights into what factors improve dataset utility and downstream policy learning.",
+      "tldr_cn": "开展大规模数据集组成研究，通过程序化生成框架模拟传感器位置、物体类型等多样性来源，生成大规模机器人数据集，系统分析何种数据对策略学习最有效。该工作为构建可扩展的机器人操作数据集提供了指导。",
+      "title_zh": "从大规模数据集中学习机器人操作的关键要素",
+      "motivation_cn": "缺乏对构建大规模机器人数据集中何种数据最重要的系统理解。",
+      "method_cn": "开发数据生成框架，程序化模拟多样性因素，进行大规模数据集组成实验。",
+      "result_cn": "揭示了传感器放置、物体类型等数据特征对策略学习的影响。",
+      "conclusion_cn": "系统性数据组合分析为高效构建机器人数据集提供了依据。",
+      "matched_requirement_id": "req-3",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "scalable manipulation dataset"
+    },
+    {
+      "paper_id": "openreview-icml-2025-avvxx0erkt",
+      "score": 9.0,
+      "evidence_en": "presents DexScale, a data engine that automates skill simulation and scaling for sim2real robot manipulation policies",
+      "evidence_cn": "提出DexScale数据引擎，自动进行技能仿真和扩展，用于sim2real机器人操作策略",
+      "canonical_evidence": "提出DexScale数据引擎，自动进行技能仿真和扩展，用于sim2real机器人操作策略",
+      "tldr_en": "Proposes DexScale, a data engine that automatically simulates and scales robot skills, integrating real-world priors to narrow the sim2real gap, thus enabling scalable generation of usable robot manipulation data.",
+      "tldr_cn": "提出DexScale数据引擎，自动进行技能仿真与扩展，结合真实世界先验以缩小sim2real差距，从而可扩展地生成可部署的机器人操作数据。该引擎解决了仿真数据的可用性问题，为机器人策略学习提供大规模训练数据。",
+      "title_zh": "DexScale: 面向sim2real可泛化机器人控制的自动数据扩展",
+      "motivation_cn": "大规模机器人训练数据对泛化控制至关重要，但真实数据采集昂贵。",
+      "method_cn": "设计数据引擎DexScale，自动仿真和扩展技能，集成真实世界先验确保数据可用性。",
+      "result_cn": "实现了可扩展的sim2real泛化机器人操作策略学习。",
+      "conclusion_cn": "DexScale为机器人操作提供了高效可扩的数据生成手段。",
+      "matched_requirement_id": "req-2",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot manipulation data engine"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-cx1kfzerny",
+      "score": 8.0,
+      "evidence_en": "imitation learning from videos by extracting action-related features and predicting latent actions without labels",
+      "evidence_cn": "从视频中模仿学习，提取动作相关特征并预测潜在动作，无需标签",
+      "canonical_evidence": "从视频中模仿学习，提取动作相关特征并预测潜在动作，无需标签",
+      "tldr_en": "BCV-LR proposes an unsupervised framework for imitation learning from videos by extracting action-related latent features and using a dynamics-based objective to predict latent actions, enabling sample-efficient behavior cloning from raw video demonstrations.",
+      "tldr_cn": "BCV-LR提出一种无监督框架，通过自监督任务从高维视频中提取动作相关潜在特征，并利用动态模型预测连续帧间的潜在动作，实现从视频演示中高效的行为克隆。该方法无需动作标签，可直接将人类视频转化为机器人可执行的动作策略，显著提升了从视频学习的样本效率。",
+      "title_zh": "视频是样本高效的监督：通过潜在表示从视频中实现行为克隆",
+      "motivation_cn": "从视频中学习缺乏动作标签和奖励信号，且样本效率低。",
+      "method_cn": "通过自监督提取动作相关潜在特征，结合动态模型无监督预测潜在动作进行行为克隆。",
+      "result_cn": "在多种控制任务上实现了高效的模仿学习，样本效率大幅提升。",
+      "conclusion_cn": "BCV-LR为从无标签视频中学习机器人技能提供了实用高效的方法。",
+      "matched_requirement_id": "req-7",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "methods for converting human video demonstrations into robot executable action data"
+    },
+    {
+      "paper_id": "openreview-iclr-2025-pxyqg9gspq",
+      "score": 8.0,
+      "evidence_en": "reconstructs 3D affordances from egocentric videos",
+      "evidence_cn": "从第一人称演示视频重建3D可供性",
+      "canonical_evidence": "从第一人称演示视频重建3D可供性",
+      "tldr_en": "Presents a training-free method that constructs 3D affordances from egocentric demo videos using DUST3R for robotic manipulation.",
+      "tldr_cn": "提出一种免训练方法，从第一人称演示视频中重建3D可供性，利用DUST3R基础模型克服2D可供性缺乏空间信息的局限。该方法无需COLMAP，直接分析视频帧，生成含深度与几何的3D可供性，为机器人操作学习提供手物交互的空间表征。实验展示其在机器人操作任务中引导抓取与交互的有效性，推动人类视频向机器人可操作知识的转化。",
+      "title_zh": "从自我中心演示视频的3D可供性重建",
+      "motivation_cn": "现有2D可供性方法忽视空间信息，难以用于精确的机器人操作。",
+      "method_cn": "免训练的框架，使用DUST3R从稀疏帧进行3D重建，并分析视频生成3D可供性。",
+      "result_cn": "在多个操作场景中，3D可供性有效指导了抓取和交互规划。",
+      "conclusion_cn": "3D可供性重建为机器人从人类视频中学习操作技能提供了关键的空间表征。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "reconstructing hand object interactions from human videos for robot manipulation learning"
+    },
+    {
+      "paper_id": "openreview-iclr-2025-wl1kup6oes",
+      "score": 8.0,
+      "evidence_en": "Trains visual representations on human activity videos (EPIC Kitchens) to enhance motion encoding for robotic manipulation.",
+      "evidence_cn": "在人类活动视频（EPIC Kitchens）上训练视觉表示以增强机器人操作的运动编码。",
+      "canonical_evidence": "在人类活动视频（EPIC Kitchens）上训练视觉表示以增强机器人操作的运动编码。",
+      "tldr_en": "Introduces a contrastive training framework that aligns visual representations with motion predictions, improving behavioral cloning success rate over state-of-the-art in 21 object manipulation tasks.",
+      "tldr_cn": "针对预训练视觉模型偏重外观而非运动导致与操作任务失配的问题，本文提出一种基于运动预测的对比训练框架。在EPIC Kitchens视频上训练后，行为克隆成功率在21个物体操作任务上超越现有最佳方法，证明了利用人类视频增强机器人运动感知的有效性。",
+      "title_zh": "从外观到运动：对齐视觉表示用于机器人操作",
+      "motivation_cn": "现有预训练视觉模型聚焦于外观而非运动，与机器人操作任务需求不符。",
+      "method_cn": "提出基于运动预测的对比学习框架，训练模型编码运动信息。",
+      "result_cn": "在3个环境和21项任务上，行为克隆成功率平均提升，优于现有方法。",
+      "conclusion_cn": "通过强调运动信息，可以显著提高视觉表示在机器人操作中的泛化性能。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot learning from human videos"
+    },
+    {
+      "paper_id": "cvpr-2025-qi-two-by-two-learning-multi-task-pairwise-objects-assembly-for-generalizable-cvpr-2025-paper",
+      "score": 8.0,
+      "evidence_en": "Presents 2BY2, a large-scale annotated dataset for daily pairwise object assembly with 18 tasks, 1034 instances.",
+      "evidence_cn": "提出2BY2数据集，包含18种日常成对物体装配任务，1034个实例。",
+      "canonical_evidence": "提出2BY2数据集，包含18种日常成对物体装配任务，1034个实例。",
+      "tldr_en": "2BY2 is a large-scale dataset for multi-task pairwise object assembly, featuring 18 fine-grained tasks with pose and symmetry annotations, facilitating generalizable robot manipulation learning.",
+      "tldr_cn": "针对现有装配数据集集中于几何碎片或工厂零件而忽略日常交互的问题，本文构建了2BY2——一个大规模成对物体装配数据集，涵盖插插座、插花、放面包等18种现实任务，包含1034实例及位姿和对称性标注。该数据集为通用机器人装配研究提供了关键基准。",
+      "title_zh": "两两配对：学习多任务成对物体装配以实现可泛化的机器人操作",
+      "motivation_cn": "日常物体装配任务复杂且现有数据集不足，阻碍通用机器人技能发展。",
+      "method_cn": "构建2BY2数据集，收集并标注18类日常成对物体的装配实例。",
+      "result_cn": "提供了包含1034个实例和位姿、对称性标注的大规模基准。",
+      "conclusion_cn": "2BY2为研究日常场景中可泛化的机器人装配提供了重要数据基础。",
+      "matched_requirement_id": "req-3",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "scalable manipulation dataset"
+    },
+    {
+      "paper_id": "cvpr-2025-lee-dynscene-scalable-generation-of-dynamic-robotic-manipulation-scenes-for-embodied-cvpr-2025-paper",
+      "score": 8.0,
+      "evidence_en": "diffusion-based framework for scalable generation of dynamic robotic manipulation scenes from text",
+      "evidence_cn": "基于扩散的可扩展动态机器人操作场景生成框架",
+      "canonical_evidence": "基于扩散的可扩展动态机器人操作场景生成框架",
+      "tldr_en": "DynScene is a diffusion-based framework that generates scalable, diverse robotic manipulation scenes from text instructions, addressing the need for large-scale high-quality datasets in embodied AI.",
+      "tldr_cn": "DynScene 是一个基于扩散的框架，从文本指令生成可扩展、多样化的机器人操作场景，满足具身AI对大规模高质量数据集的需求。该框架将生成分解为静态场景合成和动作轨迹生成两个阶段，增强了真实感和物理可行性。实验证明其场景多样性优于现有方法，能有效支持操作策略训练。",
+      "title_zh": "DynScene：面向具身AI的可扩展动态机器人操作场景生成",
+      "motivation_cn": "现有机器人操作数据收集流程缓慢、昂贵且依赖人工。",
+      "method_cn": "提出扩散框架，分解生成静态场景和动作轨迹，实现纹理指令驱动的多样化场景生成。",
+      "result_cn": "生成场景在真实感、物理可行性和多样性上超越基线方法。",
+      "conclusion_cn": "DynScene为具身AI提供了高效可扩展的数据生成新范式。",
+      "matched_requirement_id": "req-3",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "scalable manipulation dataset"
+    },
+    {
+      "paper_id": "aaai-2026-40127",
+      "score": 8.0,
+      "evidence_en": "learning diverse bimanual dexterous skills from abundant human demonstrations",
+      "evidence_cn": "从大量人类演示中学习双手灵巧技能",
+      "canonical_evidence": "从大量人类演示中学习双手灵巧技能",
+      "tldr_en": "Proposes BiDexHD, a framework that unifies task construction from existing bimanual datasets and uses teacher-student learning to efficiently learn diverse bimanual dexterous manipulation skills from human demonstrations.",
+      "tldr_cn": "针对双手灵巧操作技能学习面临的高维动作空间和任务多样性挑战，BiDexHD框架统一利用现有双手数据集进行任务构建，并采用教师-学生策略从大量人类演示中高效学习多样化技能。实验表明该方法能学习多种双手操作任务，为机器人从人类示教中学习操作技能提供了可扩展的解决方案。",
+      "title_zh": "从人类演示中学习多样化的双手灵巧操作技能",
+      "motivation_cn": "解决双手灵巧操作技能学习中任务多样性不足和策略学习效率低的问题。",
+      "method_cn": "提出BiDexHD框架，统一任务构建并采用教师-学生学习策略，利用人类演示训练双手操作技能。",
+      "result_cn": "该方法能高效学习多种双手操作任务，超越传统强化学习方法。",
+      "conclusion_cn": "为从人类示范中学习机器人双手技能提供了新框架，有助于开发通用操作能力。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot learning from human videos"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-uphlqbzfzb",
+      "score": 7.0,
+      "evidence_en": "transforming large video generation models into robotic VLA manipulators for web-scale learning",
+      "evidence_cn": "将大规模视频生成模型转化为机器人VLA操作器以利用网络规模数据",
+      "canonical_evidence": "将大规模视频生成模型转化为机器人VLA操作器以利用网络规模数据",
+      "tldr_en": "VideoVLA leverages pre-trained video generation models as backbone for robot manipulation, jointly modeling video, language, and action modalities to improve generalization by learning from large-scale video data.",
+      "tldr_cn": "VideoVLA探索将预训练视频生成模型转化为机器人操作模型，通过联合建模视频、语言和动作序列，从大规模视频数据中学习可泛化的操作技能。实验表明该方法在未知任务和物体上具有更强的泛化能力，为利用网络视频扩展机器人学习提供了新范式。",
+      "title_zh": "VideoVLA：视频生成器可作为通用机器人操作器",
+      "motivation_cn": "现有VLA模型泛化能力有限，难以利用大规模视频数据。",
+      "method_cn": "以多模态扩散Transformer为基础，联合训练视频、语言和动作，将视频生成模型转化为操作策略。",
+      "result_cn": "在泛化到新任务、新物体和新环境方面表现出色。",
+      "conclusion_cn": "VideoVLA证明视频生成模型可作为通用操作模型，受益于网络规模视频数据。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "web-scale robot learning data"
+    },
+    {
+      "paper_id": "cvpr-2025-chen-graphmimic-graph-to-graphs-generative-modeling-from-videos-for-policy-learning-cvpr-2025-paper",
+      "score": 7.0,
+      "evidence_en": "uses graph generative modeling on video data to pre-train policies for robot learning from human videos",
+      "evidence_cn": "利用视频数据的图生成建模预训练策略，用于从人类视频中学习机器人操作",
+      "canonical_evidence": "利用视频数据的图生成建模预训练策略，用于从人类视频中学习机器人操作",
+      "tldr_en": "GraphMimic abstracts video frames into object-action graphs and uses graph generative modeling to pre-train by predicting future graphs, enabling robot policy learning from large-scale video data without action labels.",
+      "tldr_cn": "GraphMimic将视频帧抽象为物体和视觉动作图，通过图生成模型预测未来图状态，从而从无动作标签的视频数据中预训练策略模型。该方法有效利用了大规模视频数据中的物理和行为知识，为机器人从人类视频中学习操作技能提供了可扩展的途径。",
+      "title_zh": "GraphMimic：基于图到图生成建模的视频策略学习",
+      "motivation_cn": "标注动作的机器人演示数据昂贵，视频数据丰富但难以直接用于策略学习。",
+      "method_cn": "将视频抽象为图表示，用图到图生成模型预测未来图，预训练策略网络。",
+      "result_cn": "在多种操作任务上，用视频预训练的模型表现优于从头训练。",
+      "conclusion_cn": "GraphMimic展示了利用无标注视频预训练提升机器人策略学习的有效性。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot learning from human videos"
+    },
+    {
+      "paper_id": "openreview-iclr-2025-pislzg7ktl",
+      "score": 7.0,
+      "evidence_en": "empirical study on data scaling laws in imitation learning for robotic manipulation",
+      "evidence_cn": "机器人操作模仿学习中数据缩放规律的实证研究",
+      "canonical_evidence": "机器人操作模仿学习中数据缩放规律的实证研究",
+      "tldr_en": "Investigates data scaling laws in imitation learning for manipulation, showing that zero-shot generalization improves with more environments, objects, and demos.",
+      "tldr_cn": "该工作系统研究了机器人操作模仿学习中的数据缩放规律，发现策略的零样本泛化性能随训练环境数量、物体种类和演示数量的增加而提升，并量化了缩放关系。通过在大量环境和物体上收集数据，实验揭示了数据多样性的最关键维度。该研究为可复现的机器人学习缩放规律提供了实证基础，指导未来如何有效扩大数据集以实现泛化。",
+      "title_zh": "机器人操作中模仿学习的数据缩放规律",
+      "motivation_cn": "借鉴NLP和CV的成功，探究机器人操作是否同样存在数据缩放规律。",
+      "method_cn": "收集大规模数据，系统改变环境、物体和演示数量，评估策略泛化性能。",
+      "result_cn": "揭示了零样本泛化随这些变量增长的幂律关系，并确定了关键缩放维度。",
+      "conclusion_cn": "为机器人模仿学习的数据收集和缩放提供了可操作的指导。",
+      "matched_requirement_id": "req-10",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "scaling laws for robot learning from large scale internet video data"
+    },
+    {
+      "paper_id": "cvpr-2025-ren-videoworld-exploring-knowledge-learning-from-unlabeled-videos-cvpr-2025-paper",
+      "score": 7.0,
+      "evidence_en": "uses a video generation model trained on unlabeled videos to learn knowledge for robotic control",
+      "evidence_cn": "使用从未标记视频训练的视频生成模型，学习用于机器人控制的知识",
+      "canonical_evidence": "使用从未标记视频训练的视频生成模型，学习用于机器人控制的知识",
+      "tldr_en": "Develops VideoWorld, an autoregressive video model trained on unlabeled video, showing that video-only training suffices for learning rules, reasoning, and planning for robotic control.",
+      "tldr_cn": "探索仅从视觉输入学习复杂知识的可能性，开发了自回归视频生成模型VideoWorld，实验表明仅靠未标记视频训练即可获得围棋和机器人控制所需的规则、推理和规划能力，关键在于视觉变化表示。该工作表明大规模未标记视频数据是机器人学习的丰富知识源，视觉变化表示至关重要。",
+      "title_zh": "VideoWorld：探索从未标记视频中学习知识",
+      "motivation_cn": "当前模型主要依赖文本，但视觉信息是否足以学习复杂知识尚待探索。",
+      "method_cn": "提出VideoWorld，基于自回归视频生成，引入潜在动力学模型（LDM）以高效编码视觉变化。",
+      "result_cn": "在视频围棋和机器人控制任务中，VideoWorld成功学习到规则和规划能力，验证了纯视觉学习的可行性。",
+      "conclusion_cn": "该工作表明大规模未标记视频数据是机器人学习的丰富知识源，视觉变化表示至关重要。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "web-scale robot learning data"
+    },
+    {
+      "paper_id": "cvpr-2025-wang-mobileh2r-learning-generalizable-human-to-mobile-robot-handover-exclusively-from-cvpr-2025-paper",
+      "score": 7.0,
+      "evidence_en": "scalable pipeline for generating diverse synthetic full-body human motion data for robot handover learning",
+      "evidence_cn": "可扩展的合成全身人体运动数据生成管线，用于机器人交接学习",
+      "canonical_evidence": "可扩展的合成全身人体运动数据生成管线，用于机器人交接学习",
+      "tldr_en": "MobileH2R proposes a scalable synthetic data generation pipeline to train generalizable human-to-mobile-robot handover policies without real-world demonstrations, providing a way to build scalable manipulation datasets.",
+      "tldr_cn": "MobileH2R 提出一种可扩展的合成数据生成管线，无需真实世界演示即可训练泛化的人-移动机器人交接策略，为构建可扩展操作数据集提供了途径。该方法通过生成多样化的全身人体运动数据，使机器人能够在仿真中学习稳健的交接技能。实验结果验证了合成数据训练的策略在真实世界中具有良好的泛化能力。",
+      "title_zh": "MobileH2R：完全基于可扩展多样化合成数据学习泛化的人-移动机器人交接",
+      "motivation_cn": "传统人机交接数据收集成本高，缺乏可扩展的生成方法。",
+      "method_cn": "提出可扩展合成数据生成管线，自动创建安全且适合模仿的演示，并结合4D模仿学习。",
+      "result_cn": "在真实移动机器人上验证了多距离、多对象的泛化交接能力。",
+      "conclusion_cn": "合成数据可有效替代真实演示，实现泛化的移动机器人交接训练。",
+      "matched_requirement_id": "req-3",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "scalable manipulation dataset"
+    },
+    {
+      "paper_id": "aaai-2026-37533",
+      "score": 7.0,
+      "evidence_en": "interaction-centric video generation framework that can produce diverse human/robot-object interaction videos for robot learning",
+      "evidence_cn": "以交互为中心的视频生成框架，可生成多样化的人/机器人-物体交互视频用于机器人学习",
+      "canonical_evidence": "以交互为中心的视频生成框架，可生成多样化的人/机器人-物体交互视频用于机器人学习",
+      "tldr_en": "Mask2IV proposes a decoupled two-stage pipeline for interaction-centric video generation using mask trajectories, enabling creation of diverse and controllable interaction videos that serve as visual priors for robot learning.",
+      "tldr_cn": "Mask2IV 提出一种解耦的两阶段机器人交互视频生成框架，通过预测掩码轨迹并动画化来实现可控生成。该方法能够产生丰富多样的交互视频，为机器人学习和操作策略训练提供视觉先验。实验显示其在交互生成质量上优于现有方法，尤其是在复杂动态场景下，有望成为构建机器人演示数据的有效工具。",
+      "title_zh": "Mask2IV：基于掩码轨迹的交互中心视频生成",
+      "motivation_cn": "现有视频生成方法难以建模复杂交互，掩码标注获取困难。",
+      "method_cn": "提出解耦流水线，先预测合理的物体运动掩码轨迹，再基于轨迹生成交互视频。",
+      "result_cn": "在质量和多样性上优于基线，特别是复杂交互场景生成效果提升显著。",
+      "conclusion_cn": "Mask2IV为生成高质量交互演示视频提供了新思路，辅助机器人学习。",
+      "matched_requirement_id": "req-composite-data",
+      "matched_query_tag": "query:data:composite",
+      "matched_query_text": "Papers central to 将人类视频转化为机器人可用的操作数据，让机器人可以利用大规模互联网数据以及人类示教去学习，特别是重构手物交互、对齐人体运动与机器人形态、可复现的机器人学习缩放规律、生成可执行动作/演示数据的方法。, especially work that connects or combines: r; robot manipulation data engine; scalable manipulation dataset; web-scale robot learning data; robot learning from human videos; transferring human skills to robots; methods for converting human video demonstrations into robot executable action data; reconstructing hand object interactions from human videos for robot manipulation learning; aligning human body motion with different robot morphologies for robot learning from human demonstrations; scaling laws for robot learning from large scale internet video data."
+    },
+    {
+      "paper_id": "aaai-2026-38313",
+      "score": 7.0,
+      "evidence_en": "pre-trains on human hand motions to instill natural movement priors, then adapts to robotic dexterous grasping",
+      "evidence_cn": "在大规模人类手部运动数据上预训练以注入自然运动先验，再适配到机器人灵巧抓取",
+      "canonical_evidence": "在大规模人类手部运动数据上预训练以注入自然运动先验，再适配到机器人灵巧抓取",
+      "tldr_en": "Proposes AffordDex, a two-stage framework that first learns general grasping policies from a large corpus of human hand motions, then fine-tunes for robotic dexterous grasping with affordance awareness, effectively transferring human-like dexterity.",
+      "tldr_cn": "提出AffordDex框架，第一阶段在人类手部运动数据上预训练轨迹模仿器以获得自然运动先验，第二阶段训练残差模块进行机器人灵巧抓取，同时考虑物体可供性。解决了传统抓取忽视人类姿态和可供性定位的问题。实验表明该方法能实现更符合人类先验和可供性的通用抓取策略。",
+      "title_zh": "面向可供性感知的机器人灵巧抓取与类人先验",
+      "motivation_cn": "现有灵巧抓取方法侧重低级稳定性，忽略可供性定位和类人姿态。",
+      "method_cn": "两阶段训练：在人类手部运动上预训练模仿器，再训练残差模块适配机器人抓取。",
+      "result_cn": "实现了具备运动先验和可供性理解的通用抓取策略。",
+      "conclusion_cn": "人类运动先验能有效提升机器人灵巧抓取的泛化能力。",
+      "matched_requirement_id": "req-6",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "transferring human skills to robots"
+    },
+    {
+      "paper_id": "openreview-iclr-2025-afjf6izlvj",
+      "score": 6.0,
+      "evidence_en": "translates knowledge from large-scale internet data into robotic systems using visuomotor language guidance",
+      "evidence_cn": "利用视觉运动语言指导，将大规模互联网数据知识转化为机器人系统",
+      "canonical_evidence": "利用视觉运动语言指导，将大规模互联网数据知识转化为机器人系统",
+      "tldr_en": "Proposes a method to leverage large-scale internet data for grounding robot policies via visuomotor language, addressing the scarcity of real-world robot data.",
+      "tldr_cn": "针对真实世界机器人数据稀缺问题，提出一种利用大规模互联网数据通过视觉运动语言指导来接地机器人策略的方法，提升泛化性和鲁棒性。在多个操作任务上提高了策略的泛化能力和对环境的适应性。通过融入互联网规模的语义知识，该方法为构建通用机器人策略提供了有效途径。",
+      "title_zh": "利用视觉运动语言指导接地机器人策略",
+      "motivation_cn": "NLP和CV从互联网数据中理解世界动态的潜力巨大，但迁移到机器人系统仍面临数据稀缺的挑战。",
+      "method_cn": "结合行为克隆和强化学习，设计视觉运动语言指导机制，使机器人策略利用互联网知识的语义信息。",
+      "result_cn": "实验表明，该方法在多个操作任务上提高了策略的泛化能力和对环境的适应性。",
+      "conclusion_cn": "通过融入互联网规模的语义知识，该方法为构建通用机器人策略提供了有效途径。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "web-scale robot learning data"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-kxmiivub9u",
+      "score": 6.0,
+      "evidence_en": "uses web-scale pretrained foundation models for robotics and proposes a two-stage post-training with RL for autonomous improvement",
+      "evidence_cn": "利用网络规模预训练的基础模型进行机器人学习，并通过两阶段后训练与强化学习实现自主改进",
+      "canonical_evidence": "利用网络规模预训练的基础模型进行机器人学习，并通过两阶段后训练与强化学习实现自主改进",
+      "tldr_en": "Proposes a two-stage post-training for embodied foundation models: first fine-tune with BC and steps-to-go prediction, then use steps-to-go for RL reward, enabling autonomous practice with minimal supervision.",
+      "tldr_cn": "提出一种两阶段后训练方法：先通过行为克隆和步骤目标预测进行微调，再利用步骤目标预测生成奖励函数，使机器人能在最小人工监督下自主练习改进。在多种真实机器人操作任务中，该方法使机器人能够自主练习并显著提高任务成功率。该后训练框架为具身基础模型提供了一种有效的自我改进机制，减少了人工干预需求。",
+      "title_zh": "自改进的具身基础模型",
+      "motivation_cn": "基础模型在机器人底层控制中仍主要依赖行为克隆，缺乏自主改进能力。",
+      "method_cn": "通过步骤目标预测目标同时实现行为克隆和监督微调，并从中提取奖励函数和成功检测器，以支持强化学习阶段的自我改进。",
+      "result_cn": "在多种真实机器人操作任务中，该方法使机器人能够自主练习并显著提高任务成功率。",
+      "conclusion_cn": "该后训练框架为具身基础模型提供了一种有效的自我改进机制，减少了人工干预需求。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "web-scale robot learning data"
+    },
+    {
+      "paper_id": "aaai-2026-39677",
+      "score": 5.0,
+      "evidence_en": "Addresses compounding errors in behavioral cloning from human demonstrations through semantic-physical alignment.",
+      "evidence_cn": "通过语义-物理对齐解决从人类示教进行行为克隆时的复合误差。",
+      "canonical_evidence": "通过语义-物理对齐解决从人类示教进行行为克隆时的复合误差。",
+      "tldr_en": "Proposes CCoL, a BC framework with continuous vision-language-action co-learning and semantic-physical alignment to reduce compounding errors in language-conditioned manipulation.",
+      "tldr_cn": "针对语言条件操作行为克隆中顺序动作决策的复合误差问题，本文提出CCoL框架，通过连续跨模态协同学习和语义-物理对齐来提升动作一致性。实验表明该方法有效缓解了执行中断，在多种操作任务上提升了成功率。",
+      "title_zh": "连续视觉-语言-动作协同学习与语义-物理对齐用于行为克隆",
+      "motivation_cn": "行为克隆存在语义-物理失配导致动作不连续和错误累积的问题。",
+      "method_cn": "CCoL框架实现视觉、语言和动作的连续协同学习，并对齐语义与物理特性。",
+      "result_cn": "在多项语言条件操作任务上显著降低错误，提升克隆性能。",
+      "conclusion_cn": "连续协同学习与对齐机制能有效提升从人类示教中学习的鲁棒性。",
+      "matched_requirement_id": "req-6",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "transferring human skills to robots"
+    },
+    {
+      "paper_id": "openreview-icml-2025-p9gwpjdo8i",
+      "score": 5.0,
+      "evidence_en": "object-centric video prediction from unlabeled video, inferring latent actions for control",
+      "evidence_cn": "从无标签视频中进行对象中心视频预测，推断潜在动作用于控制",
+      "canonical_evidence": "从无标签视频中进行对象中心视频预测，推断潜在动作用于控制",
+      "tldr_en": "PlaySlot learns inverse latent dynamics from unlabeled videos to enable controllable object-centric video prediction, facilitating robot planning and leveraging large video data without action annotations.",
+      "tldr_cn": "PlaySlot 从无标签视频中学习逆潜在动力学，实现可控的对象中心视频预测，能够在没有动作标注的情况下利用大量视频数据进行机器人规划。该方法推断对象表示和潜在动作，支持生成多种未来状态。实验表明其预测和规划能力优于基线，为从大规模无标签视频数据中学习提供了通用方案。",
+      "title_zh": "PlaySlot：为可控对象中心视频预测与规划学习逆潜在动力学",
+      "motivation_cn": "现有方法依赖精确动作标注的视频，无法利用海量无标签视频数据。",
+      "method_cn": "提出对象中心视频预测模型，从无标签视频中推断对象表示和潜在动作进行预测。",
+      "result_cn": "在多种环境中实现了优于基线的视频预测和规划效果。",
+      "conclusion_cn": "PlaySlot为无监督学习动力学提供了可行路径，可释放大规模视频数据的价值。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot learning from human videos"
+    },
+    {
+      "paper_id": "openreview-iclr-2025-mqkve6f3up",
+      "score": 4.0,
+      "evidence_en": "learning reward function from video demonstrations",
+      "evidence_cn": "从视频演示中学习奖励函数",
+      "canonical_evidence": "从视频演示中学习奖励函数",
+      "tldr_en": "Proposes REDS, a reward learning framework from segmented video demonstrations for RL, reducing manual reward engineering.",
+      "tldr_cn": "提出REDS框架，从分段视频演示中学习稠密奖励函数，用于机器人强化学习。该方法利用视频片段作为真实奖励信号，免去人工奖励设计，实现了跨任务的奖励对齐。实验验证了其有效性，为机器人从人类视频中学习提供了奖励层面的可扩展方法。",
+      "title_zh": "基于分段演示的子任务感知视觉奖励学习",
+      "motivation_cn": "机器人强化学习依赖人工设计的奖励函数，本工作旨在从视频演示中自动学习奖励。",
+      "method_cn": "REDS框架，利用分段视频演示的子任务结构，将视频段作为真实奖励，训练条件奖励函数。",
+      "result_cn": "在多种任务上验证了REDS的奖励学习效果，提升策略性能。",
+      "conclusion_cn": "REDS减少了奖励工程负担，为利用大规模视频数据学习机器人策略铺平道路。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "robot learning from human videos"
+    },
+    {
+      "paper_id": "openreview-iclr-2025-i0to0g5j7g",
+      "score": 4.0,
+      "evidence_en": "uses web-scale pre-trained foundation models for robotics and proposes online self-improvement via RL fine-tuning",
+      "evidence_cn": "使用基于网络规模数据预训练的基础模型，提出通过强化学习微调进行在线自我改进",
+      "canonical_evidence": "使用基于网络规模数据预训练的基础模型，提出通过强化学习微调进行在线自我改进",
+      "tldr_en": "Proposes a two-stage approach: SFT on goal-conditioned behavioral cloning, then RL fine-tuning using reward extracted from the foundation model, showing efficacy of online self-improvement for embodied models.",
+      "tldr_cn": "提出两阶段方法：先在有目标的行为克隆和步数预测上进行监督微调，然后利用基础模型提取奖励和成功检测器进行强化学习微调，实现具身模型在线自我改进。研究表明该策略无需人工设计奖励，可有效提升低层控制性能。",
+      "title_zh": "具身多模态基础模型在线自我改进的惊人有效性",
+      "motivation_cn": "基础模型在机器人低层控制中仍局限于行为克隆，需要更高效的微调方法。",
+      "method_cn": "两阶段：监督微调目标条件行为克隆，然后利用模型提取奖励进行强化学习微调。",
+      "result_cn": "在线自我改进显著提升了具身基础模型的效率。",
+      "conclusion_cn": "该策略为实现机器人自主改进提供了实用框架。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:data",
+      "matched_query_text": "web-scale robot learning data"
+    }
+  ],
+  "llm_ranked_at": "2026-07-07T00:06:27.563232+00:00",
+  "display_min_score": 4.0,
+  "pruned_at": "2026-07-07T00:06:27.609186+00:00"
+}
