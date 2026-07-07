@@ -1,0 +1,359 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-07T20:45:33.194965+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2607.03828v1",
+      "source": "arxiv",
+      "title": "ObjRetarget: An Object-Aware Motion Retargeting Framework with Anthropomorphic Arm Constraints and Polyhedral Hand Modeling",
+      "abstract": "Learning robot dexterous manipulation from human manipulation videos requires reliably retargeting human intent to executable robot actions while maintaining stable hand-object contact, which remains a key challenge in embodied intelligence. Existing retargeting methods often ignore explicit contact modeling or rely on reinforcement learning, resulting in limited accuracy and generalization. To address this, we propose ObjRetarget, a human-to-robot motion retargeting framework for learning robot dexterous manipulation from human videos, which integrates anthropomorphic arm trajectory constraints with structured hand-object geometric modeling. For arm motion, reference trajectories extracted from human videos are used for initialization, followed by anthropomorphic constraints and redundancy-aware optimization to generate natural and accurate movements. For hand manipulation, ObjRetarget represents multi-finger contacts using polytope clusters and preserves contact structure through geometric invariants to improve stability. Experiments on real robots show that ObjRetarget improves manipulation success rates and contact stability across multiple dexterous tasks, and generalizes well to different demonstrations, object poses, and task settings.",
+      "authors": [
+        "Yuanchuan Lai",
+        "Qing Gao",
+        "Ziyan Liang",
+        "Junjie Hu",
+        "Zhaojie Ju"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-04T11:31:23+00:00",
+      "link": "https://arxiv.org/pdf/2607.03828v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "human-to-robot motion retargeting framework for converting human manipulation videos to robot actions",
+      "llm_evidence_cn": "将人类操作视频转换为机器人动作的人机运动重定向框架",
+      "llm_evidence": "将人类操作视频转换为机器人动作的人机运动重定向框架",
+      "canonical_evidence": "将人类操作视频转换为机器人动作的人机运动重定向框架",
+      "llm_tldr_en": "ObjRetarget proposes a human-to-robot motion retargeting framework that integrates anthropomorphic arm constraints and polyhedral hand modeling to convert human manipulation videos into executable robot actions with stable hand-object contact.",
+      "llm_tldr_cn": "ObjRetarget针对从人类视频学习机器人灵巧操作中，需要可靠重定向人类意图至可执行机器人动作的挑战，提出一种物体感知的运动重定向框架。该框架结合拟人手臂轨迹约束与结构化手部几何建模，在保持稳定手-物接触的同时，将人类视频中的意图准确重定向为机器人动作，为利用大规模人类视频进行机器人技能学习提供了有效技术路径。",
+      "llm_tldr": "ObjRetarget针对从人类视频学习机器人灵巧操作中，需要可靠重定向人类意图至可执行机器人动作的挑战，提出一种物体感知的运动重定向框架。该框架结合拟人手臂轨迹约束与结构化手部几何建模，在保持稳定手-物接触的同时，将人类视频中的意图准确重定向为机器人动作，为利用大规模人类视频进行机器人技能学习提供了有效技术路径。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "methods for converting human video demonstrations into robot executable action data",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.04554v1",
+      "source": "arxiv",
+      "title": "HUGS: Guiding Unified Dexterous Grasp Synthesis Across Modes and Scales via Learned Human Priors",
+      "abstract": "Dexterous grasping across diverse object scales requires contact modes ranging from two-finger pinches to bimanual grasps. Existing dexterous grasp synthesis methods reduce the high-dimensional optimization space with manually designed expected contacts and initialization heuristics, which struggle to balance synthesis success rate and diversity. We present HUGS (Human-prior-guided Unified Dexterous Grasp Synthesis), a human-prior-guided framework for unified dexterous grasp synthesis across modes and scales. Instead of directly retargeting human demonstrations, HUGS learns an object-conditioned human prior that captures human grasp preferences and guides downstream force-closure-aware optimization. The prior is trained on a compact self-collected human grasp dataset with 1.8K grasps over 304 objects, providing broad coverage of object scales and contact modes. During synthesis, HUGS adaptively proposes contact modes and wrist initializations, substantially improving the balance between contact-mode coverage and synthesis success rate over heuristic-based methods. With HUGS, we synthesize 3.2M robotic grasps over 157K scenes, spanning object half-diagonal lengths from 2 cm to 30 cm and modes from two-finger to bimanual grasps. Models trained on the synthesized dataset autonomously select appropriate contact modes in the real world, enabling grasping from screws to large boxes.",
+      "authors": [
+        "Mingrui Yu",
+        "Yongpeng Jiang",
+        "Yongyi Jia",
+        "Kangchen Lv",
+        "Li Huang",
+        "Yi Ren",
+        "Xiang Li"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-06T00:01:19+00:00",
+      "link": "https://arxiv.org/pdf/2607.04554v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "learns human grasp priors from data to guide robot dexterous grasp synthesis, directly transferring human skills to robots",
+      "llm_evidence_cn": "从数据中学习人类抓取先验以指导机器人灵巧抓取综合，直接将人类技能迁移到机器人",
+      "llm_evidence": "从数据中学习人类抓取先验以指导机器人灵巧抓取综合，直接将人类技能迁移到机器人",
+      "canonical_evidence": "从数据中学习人类抓取先验以指导机器人灵巧抓取综合，直接将人类技能迁移到机器人",
+      "llm_tldr_en": "HUGS learns an object-conditioned human prior from human grasp data to guide optimization for robot grasping, unifying grasp synthesis across modes and scales.",
+      "llm_tldr_cn": "针对现有灵巧抓取综合方法依赖手工设计接触和初始化启发式，难以平衡成功率和多样性，提出从人类抓取数据中学习物体条件先验，以此引导力封闭优化，实现了跨模式和尺度的统一抓取综合，为将人类抓取技能转化为机器人抓取动作提供了有效途径，无需直接重定向人类示教。",
+      "llm_tldr": "针对现有灵巧抓取综合方法依赖手工设计接触和初始化启发式，难以平衡成功率和多样性，提出从人类抓取数据中学习物体条件先验，以此引导力封闭优化，实现了跨模式和尺度的统一抓取综合，为将人类抓取技能转化为机器人抓取动作提供了有效途径，无需直接重定向人类示教。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "transferring human skills to robots",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.03570v1",
+      "source": "arxiv",
+      "title": "Cross-Embodiment Robot Manipulation via a Unified Hand Action Space",
+      "abstract": "Robot manipulation policies are typically tied to specific robotic hand embodiments, limiting the transfer of learned behaviors across platforms with different kinematic structures. In this work, we propose the Unified Hand Action Space (UHAS), a sphere-based unified action representation for cross-embodiment dexterous manipulation. UHAS represents robotic hand actions as geometric deformations of a canonical sphere and uses a Cascade Inverse Kinematics (CIK) algorithm to map the shared representation to embodiment-specific joint configurations. Using reinforcement learning, we train dexterous manipulation policies directly in the proposed action space for in-hand cube reorientation tasks. We evaluate our method in both simulation and real-world experiments across multiple robotic hands, including the Allegro Hand, LEAP Hand, Shadow Hand, and MANO Human Hand. Experimental results demonstrate effective dexterous manipulation, zero-shot transfer to unseen hands, rapid finetuning across embodiments, and successful real-world deployment. Our experiments show that the proposed UHAS representation enables stable dexterous control and cross-embodiment policy transfer across robotic hands.",
+      "authors": [
+        "Luis Felipe Casas",
+        "Robert Teal",
+        "Keval Shah",
+        "Abhijit Tadepalli",
+        "Wanxin Jin",
+        "Yu Xiang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-03T19:19:20+00:00",
+      "link": "https://arxiv.org/pdf/2607.03570v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "proposes a unified hand action space for cross-embodiment dexterous manipulation, enabling alignment of different robotic hand morphologies",
+      "llm_evidence_cn": "提出统一的手部动作空间用于跨形态灵巧操作，实现对不同机器人手部形态的对齐",
+      "llm_evidence": "提出统一的手部动作空间用于跨形态灵巧操作，实现对不同机器人手部形态的对齐",
+      "canonical_evidence": "提出统一的手部动作空间用于跨形态灵巧操作，实现对不同机器人手部形态的对齐",
+      "llm_tldr_en": "UHAS introduces a sphere-based canonical action representation and cascade inverse kinematics to unify actions across different robotic hands, enabling cross-embodiment dexterous manipulation policies.",
+      "llm_tldr_cn": "针对机器人操作策略受限于特定手部形态的问题，提出统一手部动作空间UHAS，将不同机器人手动作表示为球面变形，通过级联逆运动学映射到具体关节，在立方体旋转任务上训练和评估跨形态操作策略，为机器人从人类示教中学习提供了形态对齐的基础方法。",
+      "llm_tldr": "针对机器人操作策略受限于特定手部形态的问题，提出统一手部动作空间UHAS，将不同机器人手动作表示为球面变形，通过级联逆运动学映射到具体关节，在立方体旋转任务上训练和评估跨形态操作策略，为机器人从人类示教中学习提供了形态对齐的基础方法。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "aligning human body motion with different robot morphologies for robot learning from human demonstrations",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.30552v1",
+      "source": "arxiv",
+      "title": "Training Vision-Language-Action Models with Dense Embodied Chain-of-Thought Supervision",
+      "abstract": "Cross-embodiment transfer in vision-language-action (VLA) models remains challenging because low-level state and action spaces differ fundamentally across robot platforms. We observe that the high-level cognitive process underlying manipulation, including scene perception, object identification, task planning, and sub-task decomposition, is largely shared across embodiments. Based on this observation, we present ZR-0, a 2.6 billion parameter end-to-end VLA model that uses dense Embodied Chain-of-Thought (ECoT) supervision to align cross-embodiment representations within the vision-language model (VLM). ZR-0 adopts a dual-stream architecture: a pre-trained VLM (System 2) generates structured ECoT reasoning during training, while a Diffusion Transformer-based action expert (System 1) produces continuous action chunks via flow matching. The two components are coupled through cross-attention, with an attention mask that restricts the action expert to input prompt features only, enabling ECoT generation to be entirely skipped at inference without any performance loss. ZR-0 is pre-trained on ProcCorpus-60M, a large-scale dataset comprising approximately 60 million frames (approximately 1,000 hours) from over 400K trajectories, with dense ECoT annotations covering 96.8% of all frames. We evaluate ZR-0 on three simulation benchmarks spanning single-arm (LIBERO), bimanual (RoboTwin 2.0), and humanoid (RoboCasa GR-1 Tabletop) embodiments, as well as real-world experiments on the xArm platform, demonstrating strong performance across all settings. Code and model checkpoints are available at https://github.com/RUCKBReasoning/ZR-0.",
+      "authors": [
+        "Haoyang Li",
+        "Guanlin Li",
+        "Youhe Feng",
+        "Chen Zhao",
+        "Zhuoran Wang",
+        "Yang Li",
+        "Qizhe Wei",
+        "Shifeng Bao",
+        "Haitao Shen",
+        "Yihan Zhao",
+        "Tong Yang",
+        "Jing Zhang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV"
+      ],
+      "published": "2026-06-29T16:48:48+00:00",
+      "link": "https://arxiv.org/pdf/2606.30552v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "uses embodied chain-of-thought to align cross-embodiment representations for VLA transfer",
+      "llm_evidence_cn": "利用具身思维链对齐跨体态表示以实现VLA迁移",
+      "llm_evidence": "利用具身思维链对齐跨体态表示以实现VLA迁移",
+      "canonical_evidence": "利用具身思维链对齐跨体态表示以实现VLA迁移",
+      "llm_tldr_en": "Introduces ZR-0, a VLA model using dense embodied chain-of-thought supervision to align representations across different robot embodiments, enabling cross-embodiment policy transfer.",
+      "llm_tldr_cn": "针对视觉-语言-动作模型在跨机器人体态迁移时面临动作空间异构的挑战，提出ZR-0模型，通过密集具身思维链监督在视觉-语言模型中同步对齐高层推理与低层动作表示。模型采用双流架构，训练时利用预训练VLM生成结构化推理，微调扩散策略生成动作，有效实现了不同机器人平台间的策略共享。实验证明该方法能显著提升跨体态操作成功率，为将人类运动迁移至异形机器人提供了可行方案。",
+      "llm_tldr": "针对视觉-语言-动作模型在跨机器人体态迁移时面临动作空间异构的挑战，提出ZR-0模型，通过密集具身思维链监督在视觉-语言模型中同步对齐高层推理与低层动作表示。模型采用双流架构，训练时利用预训练VLM生成结构化推理，微调扩散策略生成动作，有效实现了不同机器人平台间的策略共享。实验证明该方法能显著提升跨体态操作成功率，为将人类运动迁移至异形机器人提供了可行方案。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "aligning human body motion with different robot morphologies for robot learning from human demonstrations",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.03283v1",
+      "source": "arxiv",
+      "title": "Embodied Operators and Benchmarking: Toward Reusable and Deployable Embodied Intelligence Systems",
+      "abstract": "Embodied intelligence systems require not only end-to-end policy models, but also reusable functional modules that transform multimodal observations, robot states, human demonstrations, and task contexts into structured representations, decisions, trajectories, control references, and system services. This work defines these modules as embodied operators and studies them as independent yet composable units in embodied intelligence pipelines. We clarify their definition boundary, emphasizing task semantics, standardized input-output contracts, deployability, reusability, and multi-layer optimizability. We further construct a taxonomy covering five categories: detection and segmentation, spatial localization and 3D understanding, hand motion recovery, embodied foundation models and task-decision operators, and planning, control, and system support operators. For each category, we summarize representative functions, technical paradigms, application roles, and practical limitations. Beyond taxonomy, we propose a multi-dimensional benchmark framework that evaluates embodied operators in terms of correctness, end-to-end efficiency, resource usage, temporal stability, portability, interface compatibility, deployment reliability, and downstream task utility. We also discuss workflow-level operator acceleration and open challenges in operator composition, data standardization, world models, VLA safety, edge deployment, and real-world application value. Overall, this work argues that embodied operators should be optimized and evaluated as holistic deployable components, providing a foundation for reusable, scalable, and verifiable embodied intelligence systems.",
+      "authors": [
+        "Junwu Xiong",
+        "Jiaxuan Gao",
+        "Wei Chai",
+        "Renxing Chen",
+        "Yuzhen Li",
+        "Yu Guo",
+        "Yucheng Guo",
+        "Mingxi Luo",
+        "Wenyang Ma",
+        "Yiyun Mou",
+        "Yifei Zhang",
+        "Chen Zhou",
+        "Yongjian Guo"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-03T12:51:55+00:00",
+      "link": "https://arxiv.org/pdf/2607.03283v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "defines reusable embodied operators that transform human demonstrations into structured representations, a step toward converting human videos to robot actions",
+      "llm_evidence_cn": "定义可复用的具身算子，将人类演示转化为结构化表示，朝着将人类视频转化为机器人动作迈进一步",
+      "llm_evidence": "定义可复用的具身算子，将人类演示转化为结构化表示，朝着将人类视频转化为机器人动作迈进一步",
+      "canonical_evidence": "定义可复用的具身算子，将人类演示转化为结构化表示，朝着将人类视频转化为机器人动作迈进一步",
+      "llm_tldr_en": "The paper proposes Embodied Operators as composable modules processing human demonstrations and other inputs, providing a framework for building pipelines converting human video demos to robot actions.",
+      "llm_tldr_cn": "针对具身智能系统需要可复用功能模块的问题，提出具身算子概念，标准化处理多模态观测、人类演示等输入，构建五大类算子分类，为构建从人类视频到机器人执行动作的转化流水线提供了模块化基础。",
+      "llm_tldr": "针对具身智能系统需要可复用功能模块的问题，提出具身算子概念，标准化处理多模态观测、人类演示等输入，构建五大类算子分类，为构建从人类视频到机器人执行动作的转化流水线提供了模块化基础。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "methods for converting human video demonstrations into robot executable action data",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.00836v3",
+      "source": "arxiv",
+      "title": "From World Models to World Action Models: A Concise Tutorial for Robotics",
+      "abstract": "World models are increasingly used in embodied intelligence and generative simulation, yet their scope remains ambiguous across communities. This tutorial presents a design-space view of world models as action-conditioned predictive models that estimate the future evolution of task-relevant observations or states. We categorize existing methods into observation-space and state-space world models, comparing their trade-offs in visual fidelity, spatial structure, physical interpretability, and control usability. We further introduce world action models, which connect predicted futures with executable robot actions, and summarize four representative paradigms: imagine-then-execute, video-feature-conditioned action prediction, joint video-action modeling, and auxiliary video prediction for policy learning. The goal of this tutorial is to clarify the conceptual scope of world (action) models and provide a structured taxonomy for embodied prediction and control.",
+      "authors": [
+        "Xiaoxiong Zhang",
+        "Xiong Zeng",
+        "Wei Zhang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "eess.SY"
+      ],
+      "published": "2026-07-01T11:56:54+00:00",
+      "link": "https://arxiv.org/pdf/2607.00836v3",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "tutorial categorizing world action models that connect predicted futures with executable robot actions, including video-to-action paradigms",
+      "llm_evidence_cn": "教程分类了连接预测未来与可执行机器人动作的世界动作模型，涵盖视频到动作范式",
+      "llm_evidence": "教程分类了连接预测未来与可执行机器人动作的世界动作模型，涵盖视频到动作范式",
+      "canonical_evidence": "教程分类了连接预测未来与可执行机器人动作的世界动作模型，涵盖视频到动作范式",
+      "llm_tldr_en": "A tutorial outlining world action models for robotics, summarizing paradigms like video-feature-conditioned action prediction and joint video-action modeling to convert visual observations into actions.",
+      "llm_tldr_cn": "针对世界模型在机器人领域定义模糊的问题，本教程将其设计为动作条件预测模型，并进一步提出世界动作模型连接预测未来与可执行动作。它归纳了四种代表性范式，包括视频特征条件动作预测、联合视频-动作建模等，为从视频生成动作提供了系统化的技术路径，有助于发展将人类视频转化为机器人操作数据的方法。",
+      "llm_tldr": "针对世界模型在机器人领域定义模糊的问题，本教程将其设计为动作条件预测模型，并进一步提出世界动作模型连接预测未来与可执行动作。它归纳了四种代表性范式，包括视频特征条件动作预测、联合视频-动作建模等，为从视频生成动作提供了系统化的技术路径，有助于发展将人类视频转化为机器人操作数据的方法。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "methods for converting human video demonstrations into robot executable action data",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.03964v1",
+      "source": "arxiv",
+      "title": "Worldscape-MoE: A Unified Mixture-of-Experts World Model for Scalable Heterogeneous Action Control",
+      "abstract": "World models are rapidly becoming a core infrastructure for embodied intelligence and interactive agents: they provide controllable simulators in which agents can perceive, act, forecast, and acquire scalable experience. Yet current video generation world models are still organized around isolated control interfaces, such as camera trajectories, robot actions, or hand-joint signals. This fragmentation is increasingly a scaling bottleneck. The central challenge is not the absence of controllable generators, but the lack of a unified and extensible learning framework that can absorb heterogeneous action supervision while preserving a shared model of world dynamics. In this work, we introduce Worldscape-MoE, a Mixture-of-Experts world model built on Diffusion Transformers for scalable heterogeneous action control. Our key observation is that different controls specify different interfaces to the same underlying world: although their representations differ, they constrain shared physical regularities, scene dynamics, and interaction semantics. Worldscape-MoE operationalizes this observation through modality-aware control injection, shared and control-specific experts, and a progressive MoE tuning strategy that supports continual extension to new action modalities. Experiments across locomotion, robotic manipulation, and egocentric hand control show that heterogeneous supervision improves rather than interferes with individual control capabilities. Worldscape-MoE achieves strong results on WorldArena, improves locomotion and hand-control metrics, exhibits robust out-of-distribution generalization, and demonstrates scaling behavior as additional control data and experts are integrated.",
+      "authors": [
+        "Jianjie Fang",
+        "Yongyan Xu",
+        "Ziyou Wang",
+        "Chen Gao",
+        "Yuchao Huang",
+        "Zhaolu Wang",
+        "Rongze Tang",
+        "Mingyuan Jia",
+        "Baining Zhao",
+        "Weichen Zhang",
+        "Xin Zhang",
+        "Haisheng Su",
+        "Yu Shang",
+        "Wei Wu",
+        "Xinlei Chen",
+        "Yong Li"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-07-04T17:45:38+00:00",
+      "link": "https://arxiv.org/pdf/2607.03964v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "unified framework absorbing hand-joint signals alongside other actions for scalable control",
+      "llm_evidence_cn": "统一框架吸收手部关节信号及其他动作以实现可扩展控制",
+      "llm_evidence": "统一框架吸收手部关节信号及其他动作以实现可扩展控制",
+      "canonical_evidence": "统一框架吸收手部关节信号及其他动作以实现可扩展控制",
+      "llm_tldr_en": "Introduces a MoE world model that integrates heterogeneous action modalities including hand-joint control, potentially enabling alignment of human hand motions with robot learning.",
+      "llm_tldr_cn": "提出Worldscape-MoE，一种混合专家世界模型，能统一吸收相机轨迹、机器人动作和手部关节信号等多种异的动作控制，为将人类手部运动与机器人动作对齐提供基础框架。",
+      "llm_tldr": "提出Worldscape-MoE，一种混合专家世界模型，能统一吸收相机轨迹、机器人动作和手部关节信号等多种异的动作控制，为将人类手部运动与机器人动作对齐提供基础框架。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "aligning human body motion with different robot morphologies for robot learning from human demonstrations",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.04652v1",
+      "source": "arxiv",
+      "title": "KAM-WM: Kinematic Affordance Maps from Latent World Models for Robot Manipulation",
+      "abstract": "Learning manipulation from few demonstrations requires visual priors that capture not only where to interact, but also how the interaction should begin; static priors such as segmentation masks encode only the former. We present KAM-WM, a framework that extracts a coarse directional interaction cue from a frozen latent video world model without rollout or world-model fine-tuning. KAM-WM queries a Flow Matching image-to-video backbone once and interprets its single-step latent velocity as a Kinematic Affordance Map (KAM), which provides task-conditioned interaction regions and coarse motion structure. A lightweight Perceiver compresses KAM into tokens that condition a diffusion policy together with RGB observations and proprioception. Across LIBERO and RoboTwin2.0, KAM-WM reaches 90.6% average success on LIBERO and achieves 65.7% and 22.4% success rates in the Easy and Hard settings on RoboTwin2.0, respectively. Controlled comparisons against a zero-order mask prior suggest that part of the gains comes from directional information beyond spatial localization alone. These results indicate that, in the evaluated settings, a frozen video model can provide a useful first-order visual prior for control without the test-time cost of future rollout.",
+      "authors": [
+        "Xinyu Shao",
+        "Keru Zhou",
+        "Guowei Huang",
+        "Yajun Gao",
+        "Tongtong Cao",
+        "Xiu Li"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-06T04:17:15+00:00",
+      "link": "https://arxiv.org/pdf/2607.04652v1",
+      "tags": [
+        "keyword:Data",
+        "query:Data"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "extracts kinematic affordance maps from a frozen video world model to guide manipulation policy, enabling action generation from few demonstrations",
+      "llm_evidence_cn": "从冻结的视频世界模型提取运动可供性地图指导操作策略，从少量演示生成动作",
+      "llm_evidence": "从冻结的视频世界模型提取运动可供性地图指导操作策略，从少量演示生成动作",
+      "canonical_evidence": "从冻结的视频世界模型提取运动可供性地图指导操作策略，从少量演示生成动作",
+      "llm_tldr_en": "Proposes KAM-WM, which leverages a pre-trained video world model to derive kinematic affordance maps that serve as interaction priors for a diffusion policy in robot manipulation.",
+      "llm_tldr_cn": "针对从少量演示学习操作时缺乏起始交互方向先验的问题，提出KAM-WM框架：从冻结的潜在视频世界模型中提取运动可供性地图，为扩散策略提供任务条件化的交互区域与运动结构。实验证明该方法可提升小样本操作任务的性能，展示了利用视频预测模型生成可执行动作的潜力，为从人类视频转化操作数据提供了新思路。",
+      "llm_tldr": "针对从少量演示学习操作时缺乏起始交互方向先验的问题，提出KAM-WM框架：从冻结的潜在视频世界模型中提取运动可供性地图，为扩散策略提供任务条件化的交互区域与运动结构。实验证明该方法可提升小样本操作任务的性能，展示了利用视频预测模型生成可执行动作的潜力，为从人类视频转化操作数据提供了新思路。",
+      "llm_tags": [
+        "query:data"
+      ],
+      "matched_query_tag": "query:data",
+      "matched_query_text": "methods for converting human video demonstrations into robot executable action data",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

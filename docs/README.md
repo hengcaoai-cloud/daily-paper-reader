@@ -6,41 +6,46 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-06
-- 运行时间：2026-07-06 21:42:19 UTC
+- 最新运行日期：2026-07-07
+- 运行时间：2026-07-07 20:52:28 UTC
 - 运行状态：成功
-- 本次总论文数：7
-- 精读区：1
-- 速读区：6
+- 本次总论文数：8
+- 精读区：3
+- 速读区：5
 
 ### 今日简报（AI）
-今日聚焦机器人触觉与灵巧操作：精读了一个由机器人自主采集的触觉-视觉-语言数据集，速读则覆盖了从大模型预训练到动力学先验的迁移学习。值得深入的方向是触觉泛化如何结合视觉语言模型，以及大规模抓取预训练如何提升灵巧手控制。建议关注多模态本体感知，特别是触觉数据在实际操控任务中的闭环验证。
-- 详情：[/202607/06/README](/202607/06/README)
+今日精选8篇前沿论文，聚焦机器人的拟人动作重定向与灵巧抓取生成。  
+最值得看的高分工作是用物体感知和手臂约束实现精准运动迁移的 ObjRetarget（满分），以及用人类先验统一多模式抓取的 HUGS。  
+建议关注这些方法如何让机器人双手操作更自然、更通用，并可先从 ObjRetarget 复现入手。
+- 详情：[/202607/07/README](/202607/07/README)
 
 ### 精读区论文标签
-1. [RCT: A Robot-Collected Touch-Vision-Language Dataset for Tactile Generalization](/202607/06/2606.31694v1-rct-a-robot-collected-touch-vision-language-dataset-for-tactile-generalization)  
+1. [ObjRetarget: An Object-Aware Motion Retargeting Framework with Anthropomorphic Arm Constraints and Polyhedral Hand Modeling](/202607/07/2607.03828v1-objretarget-an-object-aware-motion-retargeting-framework-with-anthropomorphic-arm-constraints-and-polyhedral-hand-modeling)  
+   标签：评分：10.0/10、query:data
+   evidence：将人类操作视频转换为机器人动作的人机运动重定向框架
+2. [HUGS: Guiding Unified Dexterous Grasp Synthesis Across Modes and Scales via Learned Human Priors](/202607/07/2607.04554v1-hugs-guiding-unified-dexterous-grasp-synthesis-across-modes-and-scales-via-learned-human-priors)  
+   标签：评分：9.0/10、query:data
+   evidence：从数据中学习人类抓取先验以指导机器人灵巧抓取综合，直接将人类技能迁移到机器人
+3. [Cross-Embodiment Robot Manipulation via a Unified Hand Action Space](/202607/07/2607.03570v1-cross-embodiment-robot-manipulation-via-a-unified-hand-action-space)  
    标签：评分：8.0/10、query:data
-   evidence：提供一个机器人采集的触觉-视觉-语言操作数据集
+   evidence：提出统一的手部动作空间用于跨形态灵巧操作，实现对不同机器人手部形态的对齐
 
 ### 速读区论文标签
-1. [From Grasps to Dexterity: Large-Scale Grasp Pretraining for Dexterous Manipulation](/202607/06/2606.30749v1-from-grasps-to-dexterity-large-scale-grasp-pretraining-for-dexterous-manipulation)  
+1. [Training Vision-Language-Action Models with Dense Embodied Chain-of-Thought Supervision](/202607/07/2606.30552v1-training-vision-language-action-models-with-dense-embodied-chain-of-thought-supervision)  
    标签：评分：7.0/10、query:data
-   evidence：构建了35.5万条抓取预训练轨迹数据集用于灵巧操作
-2. [Learning to Move Before Learning to Do: Task-Agnostic pretraining for VLAs](/202607/06/2607.02466v1-learning-to-move-before-learning-to-do-task-agnostic-pretraining-for-vlas)  
+   evidence：利用具身思维链对齐跨体态表示以实现VLA迁移
+2. [From World Models to World Action Models: A Concise Tutorial for Robotics](/202607/07/2607.00836v3-from-world-models-to-world-action-models-a-concise-tutorial-for-robotics)  
    标签：评分：7.0/10、query:data
-   evidence：利用廉价无标註机器人交互数据进行可扩展的运动先验预训练
-3. [Learning Transferable Dynamics Priors from Action to World Modeling](/202607/06/2606.29501v1-learning-transferable-dynamics-priors-from-action-to-world-modeling)  
+   evidence：教程分类了连接预测未来与可执行机器人动作的世界动作模型，涵盖视频到动作范式
+3. [KAM-WM: Kinematic Affordance Maps from Latent World Models for Robot Manipulation](/202607/07/2607.04652v1-kam-wm-kinematic-affordance-maps-from-latent-world-models-for-robot-manipulation)  
+   标签：评分：7.0/10、query:data
+   evidence：从冻结的视频世界模型提取运动可供性地图指导操作策略，从少量演示生成动作
+4. [Embodied Operators and Benchmarking: Toward Reusable and Deployable Embodied Intelligence Systems](/202607/07/2607.03283v1-embodied-operators-and-benchmarking-toward-reusable-and-deployable-embodied-intelligence-systems)  
    标签：评分：6.0/10、query:data
-   evidence：在大规模机器人操作数据上预训练世界模型，学习动作条件动力学
-4. [STEAM: Self-Supervised Temporal Ensemble Advantage Modeling for Real-World Robot Learning](/202607/06/2606.29834v1-steam-self-supervised-temporal-ensemble-advantage-modeling-for-real-world-robot-learning)  
+   evidence：定义可复用的具身算子，将人类演示转化为结构化表示，朝着将人类视频转化为机器人动作迈进一步
+5. [Worldscape-MoE: A Unified Mixture-of-Experts World Model for Scalable Heterogeneous Action Control](/202607/07/2607.03964v1-worldscape-moe-a-unified-mixture-of-experts-world-model-for-scalable-heterogeneous-action-control)  
    标签：评分：6.0/10、query:data
-   evidence：自监督时序集成优势建模，从专家示范中学习机器人策略
-5. [Training Vision-Language-Action Models with Dense Embodied Chain-of-Thought Supervision](/202607/06/2606.30552v2-training-vision-language-action-models-with-dense-embodied-chain-of-thought-supervision)  
-   标签：评分：6.0/10、query:data
-   evidence：使用具身思维链监督对齐跨形态的VLA表示，实现跨机器人平台迁移
-6. [Efficient Sim-to-Real Transfer of World-Action Models from Synthetic Priors](/202607/06/2606.31101v1-efficient-sim-to-real-transfer-of-world-action-models-from-synthetic-priors)  
-   标签：评分：6.0/10、query:data
-   evidence：使用仿真与域随机化生成可扩展的操作演示，用于训练世界行动模型
+   evidence：统一框架吸收手部关节信号及其他动作以实现可扩展控制
 
 
 <div class="dpr-home-promo-card">
