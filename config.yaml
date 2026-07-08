@@ -212,7 +212,7 @@ subscriptions:
           source: manual
           note: ''
       updated_at: '2026-07-08T01:05:38.638Z'
-    - tag: representati
+    - tag: Analysis
       description: VLA和WAM模型的可解释性、诊断、因果归因，及机器人动作表征学习与表征错配
       enabled: true
       paper_sources:
@@ -257,7 +257,7 @@ subscriptions:
           enabled: true
           source: manual
           note: ''
-      updated_at: '2026-07-08T01:57:10.343Z'
+      updated_at: '2026-07-08T01:59:28.890Z'
 source_backends:
   arxiv:
     papers_table: arxiv_papers
