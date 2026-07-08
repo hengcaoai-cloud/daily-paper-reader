@@ -258,6 +258,52 @@ subscriptions:
           source: manual
           note: ''
       updated_at: '2026-07-08T01:59:28.890Z'
+    - tag: robot
+      description: 关于机器人灵巧操作、视觉-触觉跨模态表征学习、大规模第一视角人类数据到机器人灵巧操作的迁移、专门用于灵巧操作的模型以及灵巧操作和触觉的dataset和benchmark
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: dexterous manipulation
+          keyword_cn: 灵巧操作
+          query: robot dexterous manipulation with multi-fingered hands
+        - keyword: visual-tactile learning
+          keyword_cn: 视觉-触觉学习
+          query: visual-tactile cross-modal representation learning for manipulation
+        - keyword: robot imitation learning
+          keyword_cn: 机器人模仿学习
+          query: robot learning from human demonstrations for dexterous tasks
+        - keyword: tactile dataset and benchmark
+          keyword_cn: 触觉数据集和基准测试
+          query: datasets for robot dexterous manipulation and grasping
+        - keyword: tactile sensing
+          keyword_cn: 触觉感知
+          query: tactile sensors and tactile-based manipulation
+        - keyword: dexterous manipulation dataset and benchmark
+          keyword_cn: 灵巧操作数据集和基准测试
+          query: benchmarks for evaluating dexterous manipulation policies
+      intent_queries:
+        - query: approaches for visual tactile cross modal representation learning in dexterous manipulation
+          query_cn: 灵巧操作中视觉 触觉跨模态表征学习方法
+          enabled: true
+          source: manual
+          note: ''
+        - query: how to use large scale first person human videos for robot dexterous manipulation
+          query_cn: 如何利用大规模第一视角人类视频进行机器人灵巧操作
+          enabled: true
+          source: manual
+          note: ''
+        - query: datasets and benchmarks containing tactile feedback for dexterous manipulation
+          query_cn: 包含触觉反馈的灵巧操作数据集和基准测试
+          enabled: true
+          source: manual
+          note: ''
+        - query: embodied foundation models for multi fingered dexterous manipulation tasks
+          query_cn: 用于多指灵巧操作任务的具身基础模型
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-07-08T03:05:47.330Z'
 source_backends:
   arxiv:
     papers_table: arxiv_papers
