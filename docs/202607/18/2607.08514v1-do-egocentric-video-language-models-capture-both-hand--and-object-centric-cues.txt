@@ -1,0 +1,675 @@
+Title: Do Egocentric Video-Language Models Capture Both Hand- and Object-Centric Cues?
+
+URL Source: https://arxiv.org/pdf/2607.08514v1
+
+Published Time: Fri, 10 Jul 2026 01:16:27 GMT
+
+Number of Pages: 26
+
+Markdown Content:
+# Do Egocentric Video-Language Models Capture Both Hand- and Object-Centric Cues? 
+
+Masatoshi Tateno 1 , Alexandros Stergiou 2 , Risa Shinoda 1 ,Yoichi Sato 1† , and Dima Damen 3†
+
+> 1
+
+The University of Tokyo 2University of Twente 3University of Bristol 
+
+Abstract. Hand–object interaction (HOI) recognition requires captur-ing both hand manipulations and object transformations. However, ex-isting video-language models often fall into shortcuts by relying on spuri-ous correlations among hands, objects, or environmental context, rather than reasoning from the appearance and dynamics of hands and ob-jects themselves. To address this limitation, we propose a new learning paradigm that combines (i) hand–object masked training, which enables robust reasoning from partial hand or object observations, and (ii) an HOI-dynamics-aware decoder that explicitly learns hand- and object-centric embeddings through auxiliary predictions of their locations and semantics, enhancing sensitivity to both cues. To systematically evalu-ate such cue-specific reasoning, we introduce Cue-Isolated HOI (CI-HOI ), a new evaluation that assesses models’ ability to predict actions from hand- and object-related cues independently. To enable CI-HOI, we curate the DEHOI testbed, which separates hand- and object-related observations for disentangled HOI evaluation through inpainting. Us-ing DEHOI, we demonstrate both quantitatively and qualitatively that our training strategy exploits hand- and object-centric information more effectively than existing models. Our approach improves over existing models on DEHOI, standard action recognition, object state recogni-tion, and even robot manipulation action recognition, leading to more robust HOI understanding. 
+
+Keywords: Hand-Object Interaction · Action Recognition · Masked Pre-training 
+
+## 1 Introduction 
+
+Hand-Object Interaction (HOI) recognition is essential for understanding hu-man actions and their effects on the environment. It enables applications such as AR/VR assistance and skill transfer for robotic manipulation. HOI inherently couples hand manipulations with object transformations, and accurate HOI un-derstanding requires capturing both complementary aspects. However, existing video-language models often confuse visually similar ac-tions [34] that share hand postures and object categories but differ in their  
+
+> †
+
+Equal Supervision. arXiv:2607.08514v1 [cs.CV] 9 Jul 2026 2 M. Tateno et al. Original Video   
+
+> 👋 Hand -Centric Video
+> 🍎 Object -Centric Video
+
+Cue-Isolated HOI (CI-HOI )
+
+Standard HOI Evaluation Prediction      
+
+> Model Model Model
+> take dough ❌
+> knead dough ✅
+> sprinkle dough ❌
+> 🤔 Does model fail to capture hand dynamics or object dynamics?
+> 💡 Model fails to capture object transformation (dough deformation)
+
+Fig. 1: C ue-Isolated HOI . CI-HOI requires verb prediction representing HOI dynamics from isolated hand- or object-related observations. In this example, recognition failure can be attributed to the incorrect recognition of dough transformation. 
+
+underlying interactions (e.g., in Fig. 1 top, the model recognizes knead as take ). This suggests that current models tend to rely on spurious correlations among hands, objects, and environmental context, rather than reasoning from the ap-pearance and dynamics of the hands and objects themselves. To address this limitation, we propose a robust representation learning frame-work comprising two key components. First, a hand–object masked training strategy that masks patches corresponding to hands or objects, enabling the model to independently reconstruct patches by exploiting the remaining visible cues. Second, we introduce an HOI-dynamics-aware (HDA) decoder that explic-itly learns hand- and object-centric embeddings, in addition to a video-level em-bedding, through a multi-task objective. The objective supervises hand–object locations and object/action categories, and aligns the video-level embedding with narrations describing the entire interaction. To systematically evaluate cue-specific reasoning ability, we introduce a new 
+
+Cue-Isolated HOI (CI-HOI ) evaluation that assesses action recognition mod-els’ reasoning ability from hand- and object-related cues independently. We task models with predicting action verbs that capture the underlying dynamics of HOI from isolated hand- and object-related visual cues. To support this task, we curate our DEHOI testbed of videos with inpainted target objects or hands, shown in Fig. 1, that explicitly separates hand- and object-centric parts of videos. To the best of our knowledge, DEHOI testbed is the first to enable a controlled and independent assessment of reasoning from hand- and object-related cues. Using this setup, our training strategy improves performance on DEHOI, without fine-tuning on cue-isolated settings. Importantly, these improvements Do Egocentric VLMs Capture Both Hand- and Object-Centric Cues? 3
+
+also transfer to the original video inputs, yielding consistent gains under standard evaluation. Qualitative results further reveal that our model more effectively captures hand- and object-specific dynamics, while existing models often rely on spurious correlations. We show that our method’s improvements extend beyond DEHOI to object-state classification and state-change identification benchmarks, and even to robot manipulation action recognition. The consistent gains suggest that our strategy strengthens object transformation modeling, which has been relatively underdeveloped in existing approaches, and also leads to better gen-eralization across different embodiments. In summary, our contributions are: 1. We propose a hand–object-aware learning paradigm, consisting of (i) hand-object masked training and (ii) HOI-dynamics-aware decoder. Together, they effectively and explicitly capture hand- and object-related cues. 2. We introduce a novel CI-HOI evaluation that isolates hand- and object-related HOI understanding, and construct DEHOI testbed for disentangled evaluation. 3. Our quantitative and qualitative experiments reveal limitations of exist-ing models and demonstrate that our training approach effectively captures hand- and object-centric cues. 
+
+## 2 Related Work 
+
+2.1 Video-Language Modeling for HOI Understanding 
+
+Contrastive vision–language pretraining [23] has enabled models to learn general-purpose visual attribute representations [25] from large-scale image–text pairs. This learning paradigm supports a wide range of object-based downstream tasks using prior knowledge [40] with zero-shot inference [8, 19]. Extensions to video leverage paired video–text data. In the HOI domain, the Ego4D dataset [10] provided large-scale first-person video–text pairs, facilitating the development of video-language models such as EgoVLP [16] and EgoVLPv2 [22]. Subsequent works enhanced textual supervision by leveraging large language models to en-rich captions and generate harder positive and negative samples for contrastive learning [18, 20, 34, 38]. Helping Hands [37] introduced architectural modifica-tions on the visual side with an object-aware decoder that jointly predicted hand/object locations and object categories. This enabled learning more robust representations for HOI spatial grounding. Despite these advances, existing ego-centric video-language models do not explicitly model hand- and object-centric dynamics as complementary yet separate cues. As a result, the learned video-level representation may entangle hand and object information, overlooking the most informative object-level or hand-level cues. 
+
+2.2 Masked Video Pre-training 
+
+Video Masked Autoencoders (VideoMAE) [7, 31, 33] have been introduced as an efficient self-supervised pre-text task for video encoders. Given a video, space-time patches are randomly masked and then reconstructed by a decoder using 4 M. Tateno et al. 
+
+the remaining encoded patches as context. Subsequent works explored more informed masking strategies, using motion cues [6, 13, 29] or textual supervision such as captions [5]. In contrast, we propose a hand–object masking strategy that explicitly accounts for the semantic roles of hands and objects, encouraging the video encoder to utilize all available cues rather than rely on either alone. 
+
+2.3 Hand-Object Interaction Understanding Benchmarks 
+
+Egocentric action recognition video benchmarks [2, 3, 9, 15, 21] are widely used to evaluate HOI understanding. They typically represent actions as verb-noun pairs, with corresponding verb, noun, or joint classification. EgoMCQ [16] and EPIC-KITCHENS 100 [3] introduced video retrieval and grounding tasks to as-sess high-level video semantics. From the perspective of object state changes, Ego4D [10] introduced temporal (point-of-no-return localization), spatial (state-change object detection), and semantic (state-change classification) tasks. ChangeIt [28] and HowToChange [35] used triplets of temporal segments corresponding to initial, transition (action), and end states of objects. Works further expanded on multi-state [30], multi-view [11, 26], and multi-object [36] settings. Although these benchmarks provide explicit labels for human actions or object states, they do not allow us to quantify how well a model understands hand- and object-centric cues independently, since these cues typically co-occur within the same video. Our CI-HOI is the first to disentangle the evaluation of hand- and object-centric factors that contribute to semantic HOI understanding. 
+
+## 3 Hand-Object-Aware Robust Representation Learning 
+
+We propose a new training paradigm that explicitly encourages models to ex-ploit hand- and object-related cues. The models are trained to produce robust representations from unedited egocentric videos. We propose two model contributions: (i) Masked Training (Sec. 3.1) explic-itly masks and reconstructs hand- or object-related regions to learn distinct HOI-relevant representations from the remaining visible cues; and (ii) an HOI-Dynamics-Aware (HDA) Decoder (Sec. 3.2) that learns hand- and object-centric embeddings aligned with target regions and text semantics. We describe each component next. 
+
+3.1 Hand-Object Masked Training Preliminary: Masked Autoencoder. Video Masked Autoencoders (Video-MAE) are self-supervised pretext tasks that learn video representations by recon-structing masked spatiotemporal patches [31]. Given a video x ∈ RT ×H×W ×C ,we partition it into N non-overlapping space-time patches {pi}Ni=1 of size (pt, p h, p w).Each patch is vectorized as Pi = vec( pi) ∈ Rdp , where dp = ptphpwC, and pro-jected via a learnable projection (e.g., linear layer or convolution) to obtain Do Egocentric VLMs Capture Both Hand- and Object-Centric Cues? 5To HDA Decoder...  
+
+> Hand-Object Detector
+> ViT Encoder Decoder
+> Hand-Centric Mask
+> Hand-Object Aware Masking
+> Video Frames Masks Unmasked Patches Encoded Patches Mask Tokens
+> Full Training from Scratch Training with LoRA
+> Background Mask Object-Centric Mask
+
+Fig. 2: Hand-object masked training. Similar to MAE, input visual patches are masked and reconstructed, while masking strategy explicitly targets hand- and object-centric regions or background regions. 
+
+token embeddings zi = proj (Pi) ∈ RD . Tokens are dropped given a set of in-dixes M ⊂ { 1, . . . , N } randomly sampled with mask ratio r = |M| /N resulting in V = {1, . . . , N } \ M visible tokens. The encoder f embeds only visible tokens 
+
+Z = {zi}∀ i ∈ V with corresponding position encodings pos f :
+
+V = f (Z + pos f ) ∈ R|V|× De ,
+
+Using embeddings V as context alongside learnable mask tokens tmask at masked positions, a decoder g reconstructs the pixel values of the masked patches. The encoder and decoder are trained end-to-end with a mean-square error loss be-tween the reconstructed patches and the original masked patches from x. In our case, instead of reconstructing pixels, we reconstruct masked tokens at the embedding level, i.e. zi, using the decoder inputs Y = V ∪ tmask that combine encoded visible latents S and learnable mask tokens tmask :
+
+ˆZ = g(Y + pos g ) ∈ RN ×D
+
+The objective minimizes the reconstruction error on masked tokens: 
+
+LRec = 1
+
+|M| 
+
+X
+
+> i∈M
+
+∥zi − ˆzi∥22
+
+which encourages the encoder to learn representations that predict missing spa-tiotemporal tokens from the visible context. 
+
+Hand-Object Masking. To learn from hand- and object-specific cues in isola-tion, we use a masking strategy for M that explicitly drops hand, manipulated-object, or background regions. We run an off-the-shelf HOI detector [27] on the video to obtain bounding boxes for hands and manipulated objects. 
+
+Tubelet sets. Following the tubelet tokenization described above, each token corresponds to a spatiotemporal patch p(t,s ) of size (pt, p h, p w), where s indexes 6 M. Tateno et al. Hand-Object Detection   
+
+> Hand-Centric Masking Object-Centric Masking Background Masking
+> Select Hand Tubelets Add Background Tubelets Select Object Tubelets Add Background Tubelets Add Background Tubelets
+> Detected Hand BBox Detected Object BBox
+> Selected Hand / Object Tubelet Selected Background Tubelet Masked Tubelet
+
+Fig. 3: Hand-object masking strategy. H and O denote sets of hand and object tubelet indices, respectively. R denotes set of randomly selected tubelet indices. M denotes final set of tubelets to mask. 
+
+the spatial location and t indexes the temporal segment. We group tokens that share the same spatial location across time into a spatial tubelet Ts, i.e., Ts =
+
+{p(t,s ) | t = 1 , . . . , T /p t}. Let R(t) 
+
+> s
+
+denote the spatial region of tubelet Ts at frame 
+
+t, and let Ht and Ot be the hand and object bounding boxes at frame t. We assign 
+
+Ts as a hand-related tubelet if the hand–tubelet overlap exceeds 50% in at least one frame, max t |Ht∩R(t)   
+
+> s||R(t)
+> s|
+
+> 0.5, and as object-related if max t |Ot∩R(t)   
+
+> s||R(t)
+> s|
+
+> 0.5.We denote the resulting index sets as H and O, and define background tubelets as B = {1, . . . , N s}\ (H∪O ), where Ns = Hph 
+
+> Wpw
+
+is the number of spatial tubelets. Note that a tubelet may satisfy both conditions, i.e., s ∈ H ∩ O .
+
+Hand-centric masking. We define the masked set as M = H ∪ B h, where 
+
+Bh ⊆ B is randomly sampled until |M| = τ N s. Since all hand tubelets are already masked, additional masking is performed only over background tubelets, ensuring that object cues remain visible. 
+
+Object-centric masking. We define M = ( O \ H ) ∪ B o, where Bo ⊆ B is ran-domly sampled until |M| = τ N s. We exclude hand tubelets since detected hands typically appear in front of the manipulated objects, and additional masking is restricted to background tubelets to preserve hand cues. 
+
+Background masking. We define M = Bb, where Bb ⊆ B is randomly sampled until |M| = τ N s.The encoder processes only the unmasked tubelets {1, . . . , N s} \ M , whose out-puts are fed to the HOI-dynamics-aware decoder described next. 
+
+3.2 HOI-Dynamics-Aware Decoder 
+
+We overview our HDA decoder in Fig. 4, implemented as a DETR-like Trans-former [1] with learnable queries [qh; qo; qv ]. The decoder employs three types Do Egocentric VLMs Capture Both Hand- and Object-Centric Cues? 7HOI Dynamics Aware Decoder Object-centric Embeddings Hand-centric Embeddings Video-level Embedding 
+
+> BBoxHead SemHead
+> C opens the tool box open tool box
+> Verb Noun Narration
+> Text Encoder
+> BBoxHead SemHead
+> SemHead
+
+TEXT  
+
+> Projection
+> Encoded
+> Patches Training with LoRA
+> extract extract
+
+Fig. 4: Training HOI-dynamics-aware (HDA) decoder. Hand- and object-centric queries cross-attend to encoded visual patches to produce cue-specific embeddings, supervised by hand/object locations and semantics. The video-level embedding inter-acts with these embeddings and visual patches to encode hand-object dynamics, and is aligned with narration summarizing the overall interaction. 
+
+of queries: one video-level query qv ∈ R1×512 , two hand-centric queries qh ∈
+
+R2×512 , and K object-centric queries qo ∈ RK×512 . Learnable queries cross-attend to the encoded visual patches V, followed by self-attention to produce video-level ev ∈ R1×512 , hand-centric eh ∈ R2×512 , and object-centric embed-dings eo ∈ RK×512 ; [ev ; eh; eo] = HDA ([ qh; qo; qv ], V). While structurally re-lated to prior object-aware decoders [37], our design explicitly models the dy-namics associated with hand- and object-related cues. Learnable queries and their resulting embeddings are optimized based on the corresponding task, en-couraging complementary representations. Since actions arise from hand-object interactions, hand- and object-centric embeddings are optimized using hand- and object-level spatial locations (bounding boxes) and are aligned with verb text encodings extracted from narrations. Additionally, object-centric embeddings are supervised with text encodings of object names. Video-level embeddings are semantically aligned with video narration. By explicitly learning hand- and object-centric embeddings, our model captures complementary information from both cues, which is subsequently aggregated into the video-level embedding to form a unified, hand–object-rich representation. In the following, we detail the prediction heads and supervision strategies applied to the decoder outputs. 
+
+Bounding Box Head . The hand- and object-centric embeddings, eh and eo,are trained to localize hands and interacting objects at each frame. As eh and 
+
+eo are condensed representations over space and time, we concatenate them with learnable frame embeddings et, yielding beh = [ eh; et] and beo = [ eo; et],which are fed into corresponding MLP head Hbbox to regress bounding boxes 
+
+ˆbh = Hbbox (beh) ∈ R4 and ˆbo = Hbbox (beo) ∈ R4. We apply Hungarian matching at each frame and optimize an ℓ1 loss with Generalized IoU (GIoU) loss: 
+
+LBBox = λℓ1 ∥ˆb − b∥1 + λgiou Lgiou (ˆb, b) (1) 
+
+Semantic Head Hsem maps eh and eo to semantic representations sh = Hsem (eh)
+
+and so = Hsem (eo), where sh, so ∈ R216 . For supervision, textual embeddings for nouns and verbs are obtained from a text encoder as tnoun and tverb , respectively. 8 M. Tateno et al. 
+
+Object Semantics (Noun). Given object-centric semantic embeddings {soj }Kj=1 
+
+and noun text embeddings {t(m)
+
+> noun
+
+}Mm=1 , where K > M , we perform Hungarian matching based on representation similarity to assign each ground-truth noun to a unique object query, following Helping Hands [37]. Noun supervision is applied only to the matched queries. The noun loss is computed using a noun-level NCE loss and averaged over the matched pairs: 
+
+LNoun = 1
+
+K
+
+> K
+
+X
+
+> j=1
+
+NCE( soj , t(σ(j))  
+
+> noun
+
+), (2) where σ denotes the Hungarian matching that maps each object embedding to the corresponding noun embedding. 
+
+Dynamics Semantics (Verb). To capture hand and object dynamics, we pre-dict action verbs from both hand- and object-centric embeddings. For each em-bedding, we independently compute a verb-level NCE loss with multiple posi-tive and negative verb texts. The losses are averaged separately over hand- and object-centric embeddings: 
+
+LVerb = 1
+
+NhNhX
+
+> i=1
+
+NCE( shi , tverb ) + 1
+
+K
+
+> K
+
+X
+
+> j=1
+
+NCE( soj , tverb ), (3) where Nh denotes the number of hand queries and tverb represents the text em-beddings of the ground-truth verb(s). When multiple verbs are valid positives, the NCE loss is computed against all corresponding positive verb embeddings together with the negative verbs. This query-wise and role-aware supervision ex-plicitly aligns hand- and object-centered representations with dynamics-related semantics, encouraging the decoder to encode HOI-relevant information at the level of individual entities. 
+
+Video-Text Alignment. To encourage structured understanding of hand-object interactions, we align video representations with sentence-level narrations, which describe interactions in a structured linguistic form. Following EgoVLP [16] and LaViLa [38], we adopt the EgoNCE loss for video–text alignment. Given a batch B, let svi and tnar ,i denote the video and narration embeddings of sample b,respectively. For each sample i, EgoNCE defines a positive set that includes not only its paired narration but also other samples in the batch that share semantic content with i, i.e., samples that overlap in at least one noun and one verb. In addition, for each sample i, a hard negative sample b− is sampled from the same video but associated with a different narration. The original batch and the hard negatives together form an extended batch Be = B ∪ { b−}.The video-to-text EgoNCE loss is defined as: 
+
+Lv→t 
+
+> EgoNCE
+
+= − 1
+
+|B| 
+
+X
+
+> i∈B
+
+log 
+
+P
+
+> j∈P i
+
+exp (cos( vi, tnar ,j )/τ )
+
+P
+
+> k∈B e
+
+exp (cos( vi, tnar ,k )/τ ) , (4) Do Egocentric VLMs Capture Both Hand- and Object-Centric Cues? 9
+
+where cos( ·, ·) is the cosine similarity and τ is a temperature parameter. The final EgoNCE loss is obtained by symmetrizing the video-to-text and text-to-video objectives. 
+
+3.3 Aggregated Objective 
+
+The overall training objective is a weighted sum of video–text alignment, seman-tic supervision, spatial localization, and reconstruction losses: 
+
+LTotal = λvt (Lv→t 
+
+> EgoNCE
+
++ Lt→v
+
+> EgoNCE
+
+) + λNoun LNoun + λVerb LVerb 
+
++ LBBox + LRec , (5) where λx are weighting coefficients. 
+
+3.4 Inference 
+
+During inference, we do not apply any masking to visual patches and encode the entire video. In the HDA decoder, the video-level embedding projected into the joint visual-textual space through the semantics head is used for downstream tasks, while the hand- and object-centric embeddings are not utilized. 
+
+## 4 CI-HOI: Cue-Isolated HOI Recognition 
+
+CI-HOI evaluates the disentangled hand- and object-centric reasoning. We utilize videos depicting HOIs in which only hand-related or object-related cues are selectively visible. In turn, models are tasked with predicting the corresponding verb using partial visual cues as shown in Fig. 1. By isolating cues, CI-HOI highlights potential shortcut behaviors arising from spurious correlations and imbalances associated with specific visual signals. Note that the target object name is provided, as CI-HOI focuses on cue-specific appearance and dynamics reasoning, rather than on hand–object contact estimation or object detection. To enable CI-HOI, we curate a disentangled evaluation testbed, DEHOI . It includes cue-specific videos in which hand- or object-related cues are removed by inpainting the hands or target objects. Only this isolated object- and hand-related information is used for predictions. We source HOI videos from EPIC-KITCHENS-100 (EK-100) [3] and obtain hand and target object annotations from VISOR [4] for inpainting. For frames where hand or target object annota-tions are missing, we use SAM2 [24] to propagate masks from annotated frames and obtain consistent mask trajectories. Using these mask annotations, we apply ProPainter [39], a video inpainting method, to generate cue-isolated videos. Since a video inpainting model leverages temporal context across frames, it produces more consistent and visually coherent results than image-based inpainting. This process yields 2,652 hand-centric and object-centric videos, each paired with the corresponding target object name and verb describing the interaction dynamics. 10 M. Tateno et al. 
+
+## 5 Experiments 
+
+We overview model and training details in Sec. 5.1 alongside benchmark datasets used in Sec. 5.2. We present DEHOI results in Sec. 5.4 and performance com-parisons across object state benchmarks in Sec. 5.5. 
+
+5.1 Implementation Details Architecture. We adopt LaViLa [38] pre-trained on EgoClip [16] as our video encoder and text encoder. For hand-object masked training, we employ a lightweight Transformer decoder g(·) with one layer and four attention heads. For HDA, we build upon the object-aware decoder of [37], initializing it from their released checkpoint. We fine-tune both video encoder f (·) and HDA (·, ·) decoder with Low-Rank Adapters (LoRA) [12]. In the backbone, LoRA is applied to the spa-tial and temporal self-attention modules, specifically to the query, key, value, and output projection layers. In the HDA decoder, LoRA is inserted into the multi-head attention and feed-forward blocks, including their projection layers. We set the LoRA rank to 8 and the scaling factor α to 4. 
+
+Training. For each clip, we uniformly sample 4 × 244 × 244 RGB frames. We train the backbone and the HDA decoder jointly for two epochs with a batch size of 256. We use AdamW [17] with a learning rate of 1e −5. In masked training, the masking ratio τ is set to 0.5. For each sample, the masking strategy is selected probabilistically: with 80% probability, we apply a hand- or object-centric mask-ing strategy, and with 20% probability, a background masking strategy. Under the hand–object-centric strategy, the masking ratio between hand and object regions is set to 1:9. Loss weights are set to λvt = 0 .2, λNoun = 0 .5, λVerb = 0 .3.
+
+Inference. We adjust the number of input frames to follow the original protocol of each benchmark: 16 frames for DEHOI, 1 frame for static state classification, and 2 frames for state change identification in STATUS Bench. We adopt 16 frames for DROID video data. For benchmarks with 1- or 2-frame inputs, we replicate each frame 4 and 2 times, respectively, to introduce a temporal dimen-sion and match the input format expected by the pretrained model. 
+
+5.2 Datasets and Metrics 
+
+For training, we use only EgoClip dataset, an egocentric video-text dataset built on Ego4D [10] containing 3.8M video-text pairs, following prior work [16, 37, 38] to ensure a fair comparison. For evaluation, we use DEHOI to assess hand–object reasoning under cue-isolated settings. Our analysis reveals that models trained only on egocentric videos tend to rely more on hand cues, underutilizing object information. To further validate this observation, we evaluate object state (change) recognition on STATUS Bench [32], showing that our training paradigm more effectively captures object-centric cues than existing models. Finally, we evaluate whether improved object-centric understanding learned from egocentric human interac-tions generalizes to robot manipulation using the DROID [14] dataset. We Do Egocentric VLMs Capture Both Hand- and Object-Centric Cues? 11 
+
+hypothesize that leveraging object-centric dynamics enables action recognition even when the acting agent shifts from human hands to robot manipulators. 
+
+STATUS Bench [32] contains 404 image pairs sourced from Ego4D [10] cap-turing object states before and after a change. Each image is annotated with an object-state description, while image pairs are associated with ground-truth state-change descriptions and semantically similar four distractors. The bench-mark defines three tasks: (i) Object State Identification , retrieving the correct state description for each image; (ii) Image Retrieval , retrieving the correct im-age for a given state description; and (iii) State Change Identification , selecting the correct state-change description from candidates given an image pair. Per-formance is measured using accuracy. 
+
+DROID [14] is a robot manipulation dataset containing 76k demonstration tra-jectories with RGB observations from left, right, and wrist views. Each demon-stration is annotated with a language instruction, such as “Put the marker in the bowl.” We filter demonstrations whose instructions contain a single verb and select the top 20 most frequent verbs, resulting in 47k demonstrations. The task is verb classification as in DEHOI and performance is evaluated using accuracy. 
+
+5.3 Evaluation Protocol 
+
+We evaluate all models in a zero-shot manner without task-specific fine-tuning. Since the trained models learn a shared video–text embedding space, predictions for classification and retrieval tasks are performed by computing cosine similarity between the video (text) embedding and text (video) embeddings, selecting the most similar label for classification or ranking candidates for retrieval. 
+
+5.4 Results on DEHOI Comparison with Baselines. Table 1 compares existing egocentric video– language models (VLMs) with our model on the proposed DEHOI benchmark. Most existing models suffer significant performance drops when evaluated on hand- or object-centric videos compared to the original videos without cue oc-clusions. Even EgoVideo, trained on large-scale egocentric and exocentric data, fails to reliably infer actions from isolated hand or object cues. Similarly, LaViLa and Helping Hands, trained on EgoClip as in our setting, exhibit pronounced degradation in the object-centric setting. In contrast to prior works, our model consistently outperforms all baselines across all video types, including the orig-inal videos, despite being trained solely on EgoClip. Relative to its overall per-formance, our model shows the smallest gap between original and cue-isolated videos and the smallest discrepancy between hand- and object-centric settings. These results suggest that the generality of data and architecture changes are less effective methods for learning disentangled hand- or object-centric repre-sentations. Instead, defining training algorithms that encourage learning from partial information enables robust HOI understanding models. 
+
+Per-category Analysis and Qualitative Results. Fig. 5 shows the perfor-mance difference between our approach and Helping Hands. We visualize verbs 12 M. Tateno et al. 
+
+Table 1: Zero-shot evaluation on original and inpainted videos. Numbers in paren-theses indicate absolute performance drops compared to the original video. We report EgoVideo [20] ’s performance in gray since it is trained on much larger data. Model Training Video Data Backbone Hand-Centric Video Object-Centric Video Original Video (Object Inpainted) (Hand Inpainted) Top1 Top5 Top1 Top5 Top1 Top5 LaViLa [38] EgoClip TimeSformer 12.7 (-5.8) 30.3 (-12.5) 10.3 (-8.2) 22.9 (-19.9) 18.5 42.8 Helping Hands [37] EgoClip w/ BBox TimeSformer 15.7 (-8.1) 33.5 (-14.9) 14.2 (-9.6) 28.3 (-20.1) 23.8 48.4                   
+
+> Ours EgoClip w/ BBox TimeSformer 19.2 (-7.7) 42.4 (-12.9) 19.5 (-7.4) 38.8 (-16.5) 26.9 55.3
+> EgoVideo [20] KMash, WebVid10M, InternVid1&2 EgoClip w/ more text InternVideo2 14.1 (-8.8) 31.0 (-15.1) 16.4 (-6.5) 35.1 (-11.0) 22.9 46.1
+
+with more than 10 samples and absolute differences greater than 1% for read-ability. Our model improves performance across many verbs. In particular, verbs involving distinctive hand motions and clear object transformations, such as 
+
+wash , pour-in , and stir , show pronounced gains. As shown by the qualitative re-sults in Fig. 6 (bottom), our model can correctly infer stir from the appearance changes of meat and yogurt in the object-centric video. In contrast, inferring 
+
+bake suggests reliance on contexts rather than interaction dynamics. A similar trend is observed in the original video. Additionally, at Fig. 6 (top), our model captures hand-centric information, enabling correct action prediction in both the hand-centric and original videos. In the comparisons shown, our explicit seman-tic modeling of interaction dynamics enables the model to better discriminate between visually similar actions, rather than relying on spurious correlations from the static appearance of hands, objects, or the surrounding environment. For verbs with less distinctive hand motion, such as wipe-off , mix , and rinse ,larger improvements are observed in the object-centric setting, with only marginal changes in the hand-centric setting. Performance drops occur in both settings for relatively static actions, such as drain , and for actions primarily characterized by hand-object contact rather than dynamic changes, such as take . Nevertheless, the overall accuracy gain suggests that our approach more effectively captures cue-specific characteristics and promotes balanced hand-object reasoning. 
+
+Ablation. We ablate over settings in Tab. 2. We evaluate the benefits of our method’s hand–object masked training and HDA’s explicit learning of hand-and object-centric embeddings via dynamics prediction in 2a. We observe the largest improvement from our masked encoder pre-training and complementary improvements from the dynamic HDA heads. Our combined approach consis-tently improves performance across cue-specific and original videos. We investi-gate the effect of different masking ratios in 2b. For hand–object masking, a 50% masking ratio outperforms 75%, suggesting that our strategy effectively removes semantically important regions. Excessive masking makes it more difficult for the model to capture meaningful relationships among the remaining visible patches, Do Egocentric VLMs Capture Both Hand- and Object-Centric Cues? 13 
+
+Fig. 5: Verb-wise performance improvement (degradation) of our model compared to Help-ing Hands [37] under hand-centric (left) and object-centric (right) settings. Verb classes with more than 10 samples and absolute dif-ference greater than 1% are shown. Prediction                 
+
+> Helping Hands:
+> Ours:
+> ❌bake
+> ✅stir t
+> 🍎 Object-Centric Video of Stir Meat with Yogurt
+> Helping Hands:
+> Ours:
+> ❌prepare
+> ✅stir t
+> Helping Hands:
+> Ours:
+> ❌drink
+> ✅place t
+> Helping Hands:
+> Ours:
+> ❌divide
+> ✅place t
+> 👋 Hand-Centric Video of Place Pan
+> 🎥 Original Video of Place Pan
+> 🎥 Original Video of Stir Meat with Yogurt
+
+Fig. 6: Qualitative results on cue-specific videos from DEHOI with re-sults on original videos. Our model cor-rectly recognizes underlying dynamics from either hand or object observa-tions, whereas existing models rely on spurious hand/object presence. 
+
+thereby degrading performance. Supplementary, we analyze the impact of vary-ing the hand–object masking probability balance in 2c. As our masked training explicitly depends on hand and object locations, we examine their relative im-portance by adjusting the masking probabilities. Increasing the probability of masking hand regions consistently degrades performance, indicating that hand-related cues play a crucial role in modeling interaction dynamics. We analyze the effect of varying the probability balance between hand/object-centric mask-ing and background masking in 2d. We find that leaving the hand and object regions unmasked with a 20% probability helps the model retain reasoning over hand–object relationships while still learning from partial observations for the remaining training samples. We compare our masking strategy with a random masking baseline in 2e. Hand–object masking consistently outperforms random masking across different video types, demonstrating the effectiveness of entity-aware masking for learning interaction-aware robust representations. 
+
+5.5 Results on Object State Recognition 
+
+STATUS Bench evaluates recognition of both object states and their changes. As shown in Tab. 3 left, our model consistently outperforms baselines. A notable gain is observed on the State Change Identification task, which explicitly requires identifying dynamic transitions between object states, rather than recognizing static states in isolation. The improvement on this dynamic-state-change task further affirms the effectiveness of our explicit modeling of object dynamics. 14 M. Tateno et al. 
+
+Table 2: Ablation study with different modules under three video settings. 
+
+(a) Impact of core components.                       
+
+> Method Hand-Centric Object-Centric Original Top1 Top5 Top1 Top5 Top1 Top5 w/o masked training 18.0 40.7 16.9 33.6 26.0 54.2 w/o dynamics semantics 16.3 34.1 16.8 32.1 24.6 48.1 Ours 19.2 42.4 19.5 38.8 26.9 55.3
+
+(b) Ablation on masking ratio. 
+
+Masking Ratio Hand-Centric Object-Centric Original Top1 Top5 Top1 Top5 Top1 Top5 75% 19.0 41.6 18.6 36.2 26.0 53.3 50% 19.2 42.4 19.5 38.8 26.9 55.3 
+
+(c) Ablation on hand-object masking balance. 
+
+Hand:Object Hand-Centric Object-Centric Original Top1 Top5 Top1 Top5 Top1 Top5 0.7:0.3 18.1 40.9 18.4 37.8 25.7 54.8 0.5:0.5 18.1 41.5 19.0 38.9 25.8 54.7 0.3:0.7 18.7 42.3 19.4 39.6 26.3 55.1 0.1:0.9 19.2 42.4 19.5 38.8 26.9 55.3 
+
+(d) Ablation on entity-background masking balance.                               
+
+> Background Hand-Centric Object-Centric Original Masking Balance Top1 Top5 Top1 Top5 Top1 Top5 0.6 18.8 41.6 18.7 38.0 26.4 55.3 0.4 18.6 41.6 18.9 37.9 26.2 55.6
+> 0.2 19.2 42.4 19.5 38.8 26.9 55.3 0.0 (entity-only) 18.7 40.7 18.8 38.1 26.1 54.4
+
+(e) Ablation on masking strategy.                  
+
+> Masking method Hand-Centric Object-Centric Original Top1 Top5 Top1 Top5 Top1 Top5 Random 18.4 41.6 18.4 37.2 26.0 55.0 Hand-object aware (Ours) 19.2 42.4 19.5 38.8 26.9 55.3
+
+Table 3: Results on STATUS Bench and DROID benchmarks. 
+
+STATUS Bench [32] DROID [14] 
+
+Method Object State Identification Image Retrieval State Change Identification Left View Right View Wrist View Top1 Top5 Top1 Top5 Top1 Top5 
+
+LaViLa [38] 49.1 50.5 24.7 2.9 20.1 2.9 20.3 2.6 17.3 Helping Hands [37] 48.4 50.7 26.5 4.0 25.8 4.3 25.6 3.2 18.9 
+
+Ours 49.4 50.7 30.0 4.7 26.0 4.7 26.1 3.4 20.6 
+
+5.6 Results on Robot Manipulation Recognition 
+
+Tab. 3 right shows the zero-shot performance of verb classification on robot ma-nipulation videos from the DROID dataset [14]. Due to the substantial domain shift caused by differences in viewpoint and agent embodiment, all baselines show limited performance. Nevertheless, our model achieves the best perfor-mance across all viewpoints, suggesting that improved reasoning from object-centric cues, enabled by our training approach, leads to better generalization to manipulation videos performed by non-human agents. 
+
+## 6 Conclusion 
+
+We proposed a new training paradigm that encourages models to exploit hand-and object-related cues through hand–object masked training, together with a decoder that facilitates capturing the intrinsic dynamics of each cue via cue-specific objectives. Our proposed Cue-Isolated HOI evaluation and existing object-state-related benchmarks demonstrate that this training strategy effectively cap-tures cue-specific dynamics, whereas existing models, even when trained on larger Do Egocentric VLMs Capture Both Hand- and Object-Centric Cues? 15 
+
+datasets, often rely on superficial observations. We hope these findings provide a useful direction toward a more holistic semantic understanding of HOI. 
+
+## Acknowledgements 
+
+This work was supported by JST K Program Grant Number JPMJKP25V1 and JST ASPIRE Grant Number JPMJAP2303. Research at the University of Twente was supported by the SURF EINF-15225 grant. Research at the Univer-sity of Bristol is supported by EPSRC UMPIRE EP/T004991/1, EPSRC PG Visual AI EP/T028572/1. 16 M. Tateno et al. 
+
+## References 
+
+1. Carion, N., Massa, F., Synnaeve, G., Usunier, N., Kirillov, A., Zagoruyko, S.: End-to-end object detection with transformers. In: European conference on computer vision. pp. 213–229. Springer (2020) 2. Damen, D., Doughty, H., Farinella, G.M., Fidler, S., Furnari, A., Kazakos, E., Moltisanti, D., Munro, J., Perrett, T., Price, W., et al.: Scaling egocentric vision: The epic-kitchens dataset. In: ECCV. pp. 720–736 (2018) 3. Damen, D., Doughty, H., Farinella, G.M., Furnari, A., Kazakos, E., Ma, J., Molti-santi, D., Munro, J., Perrett, T., Price, W., et al.: Rescaling egocentric vision: Collection, pipeline and challenges for epic-kitchens-100. International Journal of Computer Vision 130 (1), 33–55 (2022) 4. Darkhalil, A., Shan, D., Zhu, B., Ma, J., Kar, A., Higgins, R., Fidler, S., Fouhey, D., Damen, D.: Epic-kitchens visor benchmark: Video segmentations and object relations. NeurIPS 35 , 13745–13758 (2022) 5. Fan, D., Wang, J., Liao, S., Zhang, Z., Bhat, V., Li, X.: Text-guided video masked autoencoder. In: European Conference on Computer Vision. pp. 282–298. Springer (2024) 6. Fan, D., Wang, J., Liao, S., Zhu, Y., Bhat, V., Santos-Villalobos, H., MV, R., Li, X.: Motion-guided masking for spatiotemporal representation learning. In: ICCV. pp. 5619–5629 (2023) 7. Feichtenhofer, C., Li, Y., He, K., et al.: Masked autoencoders as spatiotemporal learners. NeurIPS 35 , 35946–35958 (2022) 8. Gouidis, F., Patkos, T., Argyros, A., Plexousakis, D.: Leveraging knowledge graphs for zero-shot object-agnostic state classification. In: WACV. pp. 8637–8648 (2025) 9. Goyal, R., Ebrahimi Kahou, S., Michalski, V., Materzynska, J., Westphal, S., Kim, H., Haenel, V., Fruend, I., Yianilos, P., Mueller-Freitag, M., et al.: The" something something" video database for learning and evaluating visual common sense. In: ICCV. pp. 5842–5850 (2017) 10. Grauman, K., Westbury, A., Byrne, E., Chavis, Z., Furnari, A., Girdhar, R., Ham-burger, J., Jiang, H., Liu, M., Liu, X., et al.: Ego4d: Around the world in 3,000 hours of egocentric video. In: CVPR. pp. 18995–19012 (2022) 11. Hong, X., Lan, Y., Pang, L., Guo, J., Cheng, X.: Transformation driven visual reasoning. In: CVPR. pp. 6903–6912 (2021) 12. Hu, E.J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., Chen, W., et al.: Lora: Low-rank adaptation of large language models. ICLR 1(2), 3 (2022) 13. Huang, B., Zhao, Z., Zhang, G., Qiao, Y., Wang, L.: Mgmae: Motion guided mask-ing for video masked autoencoding. In: ICCV. pp. 13493–13504 (2023) 14. Khazatsky, A., Pertsch, K., Nair, S., Balakrishna, A., Dasari, S., Karamcheti, S., Nasiriany, S., Srirama, M.K., Chen, L.Y., Ellis, K., et al.: Droid: A large-scale in-the-wild robot manipulation dataset. arXiv preprint arXiv:2403.12945 (2024) 15. Li, Y., Liu, M., Rehg, J.M.: In the eye of beholder: Joint learning of gaze and actions in first person video. In: ECCV. pp. 619–635 (2018) 16. Lin, K.Q., Wang, J., Soldan, M., Wray, M., Yan, R., Xu, E.Z., Gao, D., Tu, R.C., Zhao, W., Kong, W., et al.: Egocentric video-language pretraining. NeurIPS 35 ,7575–7586 (2022) 17. Loshchilov, I., Hutter, F.: Decoupled weight decay regularization. arXiv preprint arXiv:1711.05101 (2017) 18. Mandikal, P., Nagarajan, T., Stoken, A., Xue, Z., Grauman, K.: Spoc: Spatially-progressing object state change segmentation in video. In: WACV. pp. 3504–3513 (2026) Do Egocentric VLMs Capture Both Hand- and Object-Centric Cues? 17 19. Nagarajan, T., Grauman, K.: Attributes as operators: factorizing unseen attribute-object compositions. In: ECCV (2018) 20. Pei, B., Huang, Y., Xu, J., Chen, G., He, Y., Yang, L., Wang, Y., Xie, W., Qiao, Y., Wu, F., et al.: Modeling fine-grained hand-object dynamics for egocentric video representation learning. arXiv preprint arXiv:2503.00986 (2025) 21. Perrett, T., Darkhalil, A., Sinha, S., Emara, O., Pollard, S., Parida, K.K., Liu, K., Gatti, P., Bansal, S., Flanagan, K., et al.: Hd-epic: A highly-detailed egocentric video dataset. In: CVPR. pp. 23901–23913 (2025) 22. Pramanick, S., Song, Y., Nag, S., Lin, K.Q., Shah, H., Shou, M.Z., Chellappa, R., Zhang, P.: Egovlpv2: Egocentric video-language pre-training with fusion in the backbone. In: ICCV. pp. 5285–5297 (2023) 23. Radford, A., Kim, J.W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., Sastry, G., Askell, A., Mishkin, P., Clark, J., et al.: Learning transferable visual models from natural language supervision. In: International conference on machine learning. pp. 8748–8763. PmLR (2021) 24. Ravi, N., Gabeur, V., Hu, Y.T., Hu, R., Ryali, C., Ma, T., Khedr, H., Rädle, R., Rolland, C., Gustafson, L., et al.: Sam 2: Segment anything in images and videos. arXiv preprint arXiv:2408.00714 (2024) 25. Saini, N., Pham, K., Shrivastava, A.: Disentangling visual embeddings for at-tributes and objects. In: CVPR. pp. 13658–13667 (2022) 26. Saini, N., Wang, H., Swaminathan, A., Jayasundara, V., He, B., Gupta, K., Shri-vastava, A.: Chop & learn: Recognizing and generating object-state compositions. In: CVPR. pp. 20247–20258 (2023) 27. Shan, D., Geng, J., Shu, M., Fouhey, D.F.: Understanding human hands in contact at internet scale. In: CVPR. pp. 9869–9878 (2020) 28. Souček, T., Alayrac, J.B., Miech, A., Laptev, I., Sivic, J.: Look for the change: Learning object states and state-modifying actions from untrimmed web videos. In: CVPR. pp. 13956–13966 (2022) 29. Sun, X., Chen, P., Chen, L., Li, C., Li, T.H., Tan, M., Gan, C.: Masked motion encoding for self-supervised video representation learning. In: CVPR (2023) 30. Tateno, M., Yagi, T., Furuta, R., Sato, Y.: Learning multiple object states from actions via large language models. In: WACV. pp. 9555–9565. IEEE (2025) 31. Tong, Z., Song, Y., Wang, J., Wang, L.: Videomae: Masked autoencoders are data-efficient learners for self-supervised video pre-training. NeurIPS 35 , 10078–10093 (2022) 32. Ukai, M., Kurita, S., Inoue, N.: Status bench: A rigorous benchmark for evaluating object state understanding in vision-language models. In: Proceedings of the 33rd ACM International Conference on Multimedia. pp. 4718–4727 (2025) 33. Wang, L., Huang, B., Zhao, Z., Tong, Z., He, Y., Wang, Y., Wang, Y., Qiao, Y.: Videomae v2: Scaling video masked autoencoders with dual masking. In: CVPR. pp. 14549–14560 (2023) 34. Xu, B., Wang, Z., Du, Y., Song, Z., Zheng, S., Jin, Q.: Do egocentric video-language models truly understand hand-object interactions? arXiv preprint arXiv:2405.17719 (2024) 35. Xue, Z., Ashutosh, K., Grauman, K.: Learning object state changes in videos: An open-world perspective. In: CVPR. pp. 18493–18503 (2024) 36. Zameni, P., Shen, Y., Elhamifar, E.: Moscato: Predicting multiple object state change through actions. In: ICCV. pp. 11600–11611 (2025) 37. Zhang, C., Gupta, A., Zisserman, A.: Helping hands: An object-aware ego-centric video recognition model. In: ICCV. pp. 13901–13912 (2023) 18 M. Tateno et al. 38. Zhao, Y., Misra, I., Krähenbühl, P., Girdhar, R.: Learning video representations from large language models. In: CVPR. pp. 6586–6597 (2023) 39. Zhou, S., Li, C., Chan, K.C., Loy, C.C.: Propainter: Improving propagation and transformer for video inpainting. In: ICCV. pp. 10477–10486 (2023) 40. Zhuo, T., Cheng, Z., Zhang, P., Wong, Y., Kankanhalli, M.: Explainable video action reasoning via prior knowledge and state transitions. In: Proceedings of the 27th acm international conference on multimedia. pp. 521–529 (2019) Do Egocentric VLMs Capture Both Hand- and Object-Centric Cues? 19 
+
+## A Training Data Preparation 
+
+Hand-Object Bounding Box. Our proposed training strategy assumes local-ized bounding boxes for hands and manipulated objects, which are used both for hand–object masked training (Sec. 3.1) and for training the HDA decoder (Sec. 3.2). In our experiments, we used precomputed detection results from the 100DOH hand–object detector [27] provided by [37]. Following [37], we use the top two hands and top four manipulated objects detected in EgoClip [16] videos. 
+
+Noun and Verb. Extracted noun and verb annotations for each narration are provided in EgoClip [16]. Each narration may contain multiple nouns and verbs. The loss computation for cases involving multiple nouns or verbs is described in the following objectives section. 
+
+## B Objectives 
+
+B.1 Bounding Box Loss 
+
+As described in Sec. 3.2, we apply ℓ1 loss and GIoU loss to the Hungarian-matched predictions. However, some unmatched predictions may arise from the object-centric embeddings. Following [37], we do not penalize these unmatched predictions, unlike in traditional detection tasks, since the prepared object bound-ing boxes may be missing. 
+
+B.2 Noun- and Verb-Level NCE Loss 
+
+We use the text embeddings of the extracted nouns and verbs from the narra-tion as positive supervision signals. For each semantic embedding s (Sec. 3.2), we compute an InfoNCE loss for nouns and verbs against the corresponding tax-onomy dictionary provided by Ego4D. For noun supervision, each object-centric embedding is aligned with its corresponding noun in the narration. Since each object-centric embedding corresponds to a single noun label, we use a standard single-positive InfoNCE objective: 
+
+LNoun = − 1
+
+K
+
+> K
+
+X
+
+> j=1
+
+log exp( soj ⊤t(σ(j))  
+
+> noun
+
+/τ )
+
+P 
+
+> k∈D noun
+
+exp( soj ⊤tnoun  
+
+> k
+
+/τ ) . (6) In contrast, verb supervision is inherently multi-label. A narration may contain multiple verbs, and each semantic embedding should be compatible with all verbs appearing in the narration. Therefore, we adopt a multi-positive InfoNCE formulation where all ground-truth verbs contribute as positives: 
+
+LVerb = − 1
+
+NhNhX
+
+> i=1
+
+log 
+
+P 
+
+> p∈P
+
+exp( sh⊤ 
+
+> i
+
+tverb  
+
+> p
+
+/τ )
+
+P 
+
+> k∈D verb
+
+exp( sh⊤ 
+
+> i
+
+tverb  
+
+> k
+
+/τ )
+
+− 1
+
+K
+
+> K
+
+X
+
+> j=1
+
+log 
+
+P 
+
+> p∈P
+
+exp( so⊤ 
+
+> j
+
+tverb  
+
+> p
+
+/τ )
+
+P 
+
+> k∈D verb
+
+exp( so⊤ 
+
+> j
+
+tverb  
+
+> k
+
+/τ ) .
+
+(7) 20 M. Tateno et al. 
+
+Here, shi and soj denote the i-th hand-centric and j-th object-centric embed-ding, respectively. Nh and K represent the numbers of hand- and object-centric embeddings. tnoun  
+
+> k
+
+and tverb  
+
+> k
+
+denote noun and verb embeddings from the Ego4D taxonomy dictionaries Dnoun and Dverb . σ(j) maps the j-th object-centric embed-ding to its corresponding noun label. P denotes the set of verb indices appearing in the narration, and τ is a temperature parameter. 
+
+## C DEHOI 
+
+C.1 Construction Data Source. We source HOI videos from EPIC-KITCHENS-100 (EK-100) [3], which contains around 100 hours of unscripted egocentric cooking videos recorded in 45 kitchen environments. EK-100 provides temporally localized action seg-ments with annotated start/end times and narrations, where narrations are mapped to verb–noun pairs (97 verb classes and 300 noun classes). We use the validation split for our benchmark since the test split is not publicly available. We use the pixel-level segmentation masks and hand–object contact relations from EPIC-KITCHENS VISOR [4], which provides hand and active-object regions required for inpainting. VISOR includes both manually-annotated temporally sparse masks and dense masks obtained by interpolating the sparse annotations for additional frames. 
+
+Prepare Masks. Since VISOR does not provide segmentation masks aligned with every action annotation in EK-100, we retrieve the available hand and object masks in three steps: 
+
+– Active object retrieval. We treat the annotated noun of each action in EK-100 as the active object. For each frame within the action segment, we retrieve segmentation masks corresponding to the annotated noun as well as the left hand and right hand from VISOR. 
+
+– Fallback via contact annotations. If no segmentation mask is available in VISOR for the active object, we inspect the temporally sparse hand– object contact annotations in VISOR within the action segment. When an object is annotated as being in contact with either hand, we retrieve the corresponding sparse object mask. 
+
+– Filtering. If neither dense nor sparse annotations are available for the active object, we discard the action segment from further analysis. After retrieving the available masks, we propagate them to unannotated video frames using SAM2 [24] for the following inpainting process. 
+
+C.2 Statistics 
+
+DEHOI consists of 2,652 videos for each of the hand- and object-centric settings. Fig. 7 and Fig. 8 show the distributions of the top-50 most frequent annotated nouns and verbs in the DEHOI videos. Do Egocentric VLMs Capture Both Hand- and Object-Centric Cues? 21 
+
+Fig. 7: Top-50 noun distribution in DEHOI. 
+
+C.3 Impact of Artifacts 
+
+We evaluate the effect of artifacts on CI-HOI evaluation since the inpainting process might create artifacts on videos. We test multiple settings, including background inpainting and additional blur/warping artifacts in the inpainted hand/object regions (Sec. C.3). As shown in Tab. 4, performance remains simi-lar across settings, suggesting that the degradation mainly comes from missing hand/object cues, not inpainting artifacts. Below, we respond to each comment individually. 
+
+Table 4: Effect of artifacts on our model’s performance in CI-HOI. Method Hand-Centric Object-Centric Original Top1 Top5 Top1 Top5 Top1 Top5 DEHOI (our testbed) 19.2 42.4 19.5 38.8 26.9 55.3                   
+
+> Inpainting background ––––26.1 54.9 Blur inpainted area 18.7 41.2 19.6 38.9 ––Warp inpainted area 19.4 42.4 19.5 38.8 ––
+
+## D Details on Experiments 
+
+D.1 Evaluation Protocol 
+
+When evaluating on DEHOI and DROID , the task is verb classification given the target object category and the video. Since all baselines are trained using video–language contrastive learning, which produces a joint embedding space for 22 M. Tateno et al.     
+
+> Fig. 8: Top-50 verb distribution in DEHOI. Original Inpainted Blur Inpaint BG Warping
+
+videos and language, predictions are made by computing the cosine similarity between the video embedding and the text embeddings of all possible inter-action descriptions for the target object, and selecting the most similar label. We construct negative textual descriptions by replacing the verb in the posi-tive description with other verb classes taken from the EPIC-KITCHENS verb taxonomy [3]. When evaluating on STATUS Bench , we use state description or state-change description provided in the benchmark to conduct image/text retrieval and multiple-choice question task. 
+
+D.2 Ablation 
+
+Tab. 6a and Tab. 6b present the ablation study on the loss weights of the EgoNCE loss ( λvt ) and the verb loss ( λverb ), respectively. By default, we set the loss weights to λvt = 0 .2, λverb = 0 .3, and λnoun = 0 .5. In this ablation, we fix the noun loss weight and vary the other two loss weights. As shown in Tab. 6a, λvt = 0 .2 provides the best overall performance across the three evaluation settings. For the verb loss, increasing the weight to 0.5
+
+slightly improves performance in the hand- and object-centric settings. However, since our primary goal is to improve performance in the original setting, we select 
+
+λverb = 0 .3 in the main texts, which achieves the best Top-1 accuracy on the original videos. Do Egocentric VLMs Capture Both Hand- and Object-Centric Cues? 23 
+
+D.3 Impact of HOI-detection Quality 
+
+To analyze the impact of HOI detection, we perturbed the hand–object bounding boxes by (1) shifting them with a mean magnitude of 14 / 28 px (1–2 patches) and (2) randomly dropping detections ( p = 0 .5), rather than increasing the number of boxes, since our setting assumes up to two hands and two objects. The results in Tab. 5 show that the method clearly reflects detection quality, indicating that accurate hand–object localization is important for modeling HOI dynamics. We will include these analyses in the final version. 
+
+Table 5: Impact of HOI-detection quality on model’s performance. Method Hand-Centric Object-Centric Original Top1 Top5 Top1 Top5 Top1 Top5 Ours 19.2 42.4 19.5 38.8 26.9 55.3                      
+
+> + Shift bbox (mean magnitude = 14 px) 19.0 41.8 19.1 37.8 26.4 55.2 + Shift bbox (mean magnitude = 28 px) 19.0 40.8 18.8 37.3 25.9 54.0 + Drop bbox ( p= 0 .5)19.2 41.8 18.9 38.1 26.3 55.0
+
+D.4 More Qualitative Results STATUS Bench. As shown in Sec. 5.5, the model trained with our approach demonstrates clear improvements on the State Change Identification (SCI) task in STATUS Bench [32]. We present qualitative results of the SCI task in Fig. 9. The SCI task requires recognizing subtle differences in object state changes de-scribed in text and selecting the description that best matches a given pair of images depicting a state change. The results show that our model captures object state changes in image pairs and correctly selects the appropriate description in both cases where the target object is large (top) and small (bottom). 
+
+DROID. Fig. 10 shows the results of verb classification on robot manipulation videos from the DROID dataset [14]. The dataset contains videos captured from three viewpoints: left side, right side, and wrist view. As shown in Sec. 5.6, our ap-proach achieves the best performance among the baselines across all viewpoints. The qualitative results further demonstrate that our model correctly captures the underlying interaction dynamics, whereas existing models often fail and may even predict the opposite action (e.g., remove vs. cover in the top example). 
+
+## E Additional Experiments 
+
+We assess action recognition performance on EgoMCQ [16] and EPIC-KITCHENS-MIR (EK-MIR) [3] to verify that models trained to reason from partial obser-vations achieve comparable performance on standard action recognition bench-marks. We also report EK-MIR results on the split containing unseen manipulation-object combinations to highlight the improved generalization enabled by our cue-aware training strategy. 24 M. Tateno et al. Prediction 
+
+Helping Hands: 
+
+Ours: 
+
+✅ Open one side of the refregerator door completely 
+
+❌ Open one side of the refregerator door halfway 
+
+t
+
+Helping Hands: 
+
+Ours: 
+
+✅ remove the root of the spring onion 
+
+❌ cut the spring onion into two pieces 
+
+t
+
+Fig. 9: Qualitative results of State Change Identification task in STATUS Bench [32]. Prediction 
+
+Helping Hands: 
+
+Ours: 
+
+✅ remove the lid from black pot on the right side of the stove 
+
+❌ cover the lid from black pot on the right side of the stove 
+
+Helping Hands: 
+
+Ours: 
+
+✅ hang the objects on the slat wall 
+
+❌ Open the objects on the slat wall 
+
+tt
+
+Left View Wrist View Right View 
+
+Helping Hands: 
+
+Ours: 
+
+✅ remove the red sauce bottle from the silver pan 
+
+❌ arrange the red sauce bottle from the silver pan 
+
+t
+
+Fig. 10: Qualitative results of action recognition from DROID [14] videos. Do Egocentric VLMs Capture Both Hand- and Object-Centric Cues? 25 
+
+Table 6: Ablation study on loss weights.   
+
+> (a) Ablation on λvt .
+
+λvt Hand-Centric Object-Centric Original Top1 Top5 Top1 Top5 Top1 Top5 0.0 19.1 43.2 18.6 38.6 25.6 54.8 0.2 19.2 42.4 19.5 38.8 26.9 55.3 
+
+0.4 18.9 40.8 18.9 37.7 26.5 54.8                           
+
+> (b) Ablation on λVerb .
+> λVerb Hand-Centric Object-Centric Original Top1 Top5 Top1 Top5 Top1 Top5 0.1 18.3 40.1 18.2 35.2 26.0 54.2 0.3 19.2 42.4 19.5 38.8 26.9 55.3 0.5 19.3 43.1 19.5 39.5 26.7 55.7
+
+Table 7: Performance comparison on EgoMCQ, EK-MIR, and EK-MIR-Unseen. Method EgoMCQ EK-MIR EK-MIR-Unseen Inter Intra mAP nDCG mAP nDCG V-T T-V Avg V-T T-V Avg V-T T-V Avg V-T T-V Avg LaViLa [38] 94.2 63.2 39.7 31.7 35.7 36.1 33.2 34.6 33.8 41.6 37.7 30.6 23.7 27.2 Helping Hands [37] 94.5 63.0 42.3 32.7 37.5 39.3 36.2 37.8 33.4 41.5 37.4 31.9 25.7 28.8 Ours 93.9 62.5 40.4 32.6 36.5 40.1 37.5 38.8 33.7 41.0 37.4 33.2 27.2 30.2 
+
+E.1 Datasets and Metrics EgoMCQ [16] is a multiple-choice benchmark built on Ego4D, where given a text query for the action being performed, models select the most relevant video from five candidates. It consists of approximately 39K questions, with two settings: inter-video, where candidates are sampled from different videos, and intra-video, where candidates are temporally adjacent clips from the same video, posing a more challenging scenario. Performance is evaluated using top-1 accuracy. 
+
+EPIC-KITCHENS-MIR [3]. is a multi-instance text-video retrieval bench-mark built on the EPIC-KITCHENS-100 dataset [3]. It consists of 9,881 pairs of videos alongside their corresponding descriptions. Models are evaluated on both video-to-text and text-to-video retrieval, with the final score averaged between the two tasks. Evaluation metrics include mean Average Precision (mAP) and normalized Discounted Cumulative Gain (nDCG). 
+
+E.2 Results 
+
+For action recognition (Tab. 7), our training strategy, which mitigates overfit-ting to dominant observations in Ego4D, such as hand-centric cues, leads to improved performance in unseen settings, as reflected by the nDCG gains on EK-MIR-Unseen. However, compared to baselines that more strongly exploit Ego4D-specific biases, our model yields slightly lower accuracy by ≃ 0.5% on EgoMCQ, which is also constructed from Ego4D videos. On EK-MIR, we ob-serve a slight decrease in mAP alongside an improvement in nDCG. While mAP evaluates retrieval performance under a binary relevance assumption, nDCG captures graded relevance by emphasizing whether semantically closer captions 26 M. Tateno et al. 
+
+are ranked higher. This divergence suggests that, although the model retrieves fewer exact verb–noun matches at the top ranks, it more consistently prioritizes captions that are semantically closer to the query. Overall, these results indicate a shift from strict label-level matching toward finer-grained semantic ranking of hand–object interaction cues, aligning with the goal of learning more robust and less shortcut-driven representations.
