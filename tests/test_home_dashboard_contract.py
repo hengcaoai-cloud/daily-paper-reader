@@ -123,6 +123,13 @@ def test_home_dashboard_layout_keeps_wrapped_tags_and_truncated_non_link_titles(
 
     assert "flex: 1 1 auto" in body_rule
     assert "min-width: 0" in body_rule
+    assert "font-size: 0.88rem !important" in body_rule
+    assert "line-height: 1.6 !important" in body_rule
+    body_paragraph_rule = _rule_body(
+        section, ".markdown-section .dpr-home-dashboard-body p"
+    )
+    assert "font-size: inherit !important" in body_paragraph_rule
+    assert "line-height: inherit !important" in body_paragraph_rule
     assert "display: flex" in tags_rule
     assert "flex-wrap: wrap" in tags_rule
     assert "overflow: hidden" in title_rule
