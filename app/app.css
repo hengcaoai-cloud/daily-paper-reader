@@ -129,6 +129,79 @@ html {
   font-weight: 700;
 }
 
+.markdown-section .dpr-home-notice-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.markdown-section .dpr-home-notice-header .dpr-home-notice-title {
+  margin: 0 !important;
+}
+
+.markdown-section a.dpr-home-notice-tutorial,
+.markdown-section a.dpr-home-notice-tutorial:link,
+.markdown-section a.dpr-home-notice-tutorial:visited {
+  flex: 0 0 auto;
+  color: #1d78c1 !important;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.markdown-section a.dpr-home-notice-tutorial:hover,
+.markdown-section a.dpr-home-notice-tutorial:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.markdown-section .dpr-home-site-stats {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 9px;
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid rgba(87, 160, 219, 0.2);
+  color: #38566f;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.markdown-section .dpr-home-site-stats[hidden] {
+  display: none !important;
+}
+
+.markdown-section .dpr-home-site-stat-value {
+  display: inline-block;
+  min-width: 2ch;
+  color: #16803d;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.markdown-section .dpr-home-site-stat-separator {
+  color: #83a1b8;
+}
+
+@media (max-width: 600px) {
+  .markdown-section .dpr-home-notice-header {
+    gap: 10px;
+  }
+
+  .markdown-section .dpr-home-site-stats {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .markdown-section .dpr-home-site-stat-separator {
+    display: none;
+  }
+}
+
 .markdown-section .dpr-home-notice-list {
   margin: 0;
   padding-left: 18px;
