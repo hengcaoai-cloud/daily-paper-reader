@@ -3249,7 +3249,7 @@ article.markdown-section {
   border-right: none !important; /* 移除 Docsify 主题默认的右侧彩色竖线 */
 }
 
-/* 首页 / 使用教程 这类顶层入口保持同级排版；其中“使用教程”不显示选中态 */
+/* 首页 / 教程这类顶层入口保持同级排版；其中“教程”不显示选中态 */
 .sidebar-nav a.dpr-sidebar-root-link,
 .sidebar-nav a.dpr-sidebar-root-link:link,
 .sidebar-nav a.dpr-sidebar-root-link:visited {
