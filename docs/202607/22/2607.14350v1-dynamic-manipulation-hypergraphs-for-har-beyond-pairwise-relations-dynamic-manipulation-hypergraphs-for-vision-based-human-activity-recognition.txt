@@ -1,0 +1,1125 @@
+Title: Dynamic Manipulation Hypergraphs for HAR: Beyond Pairwise Relations: Dynamic Manipulation Hypergraphs for Vision-Based Human Activity Recognition
+
+URL Source: https://arxiv.org/pdf/2607.14350v1
+
+Published Time: Fri, 17 Jul 2026 00:34:52 GMT
+
+Number of Pages: 32
+
+Markdown Content:
+# Beyond Pairwise Relations: Dynamic Manipulation Hypergraphs for Vision-Based Human Activity Recognition 
+
+## Fatemeh Ziaeetabar 1* 
+
+1Department of Computer Science, School of Mathematics, Statistics and Computer Science, College of Science, University of Tehran, Tehran, Tehran, Iran. Corresponding author(s). E-mail(s): fziaeetabar@ut.ac.ir; 
+
+Abstract 
+
+Fine-grained recognition of manipulation activities requires explicit modeling of the evolving relations among hands, objects, tools, and supporting sur-faces. Conventional graph-based methods represent these dependencies through pairwise edges, which may decompose a coordinated manipulation event into disconnected binary relations. We propose a dynamic manipulation hypergraph framework that represents multi-entity interaction configurations directly as higher-order relational units. At each temporal step, manipulation-relevant enti-ties are encoded using appearance, spatial, motion, and semantic-role features. Manipulation-aware hyperedge candidates are then instantiated and ranked using proximity, contact, and motion-coupling predicates. A hypergraph reasoning network performs node-to-hyperedge and hyperedge-to-node message passing, followed by temporal attention over the evolving interaction structure. The framework additionally provides class-agnostic hyperedge-importance scores that identify the entity configurations and temporal intervals emphasized by the model, without interpreting them as causal explanations. Quantitative evalu-ation is conducted on EPIC-KITCHENS-100/VISOR and Assembly101 under an annotation-assisted entity-localization protocol. Video-only and entity-based methods provide contextual comparisons, whereas a matched pairwise graph and a static hypergraph constitute the principal controlled baselines because they use identical entity inputs and comparable relational settings. The proposed method improves HO-F1 over the matched pairwise graph by 6.9 percentage points on EPIC-KITCHENS-100/VISOR and 9.5 points on Assembly101, and exceeds the static hypergraph by 4.4 and 5.8 points, respectively. Complementary qualita-tive analysis on ARCTIC further illustrates the correspondence between highly 
+
+1arXiv:2607.14350v1 [cs.CV] 15 Jul 2026 ranked hyperedges and contact-rich manipulation intervals. These results demon-strate the value of time-varying higher-order relational modeling for fine-grained manipulation activity recognition.  
+
+> Keywords: Human activity recognition, dynamic hypergraph, human–object interaction, egocentric vision, manipulation understanding, higher-order relational reasoning
+
+# 1 Introduction 
+
+Vision-based human activity recognition in manipulation-heavy video is often deter-mined not by clip-level appearance or motion alone, but by who interacts with what, how, and when. In egocentric kitchens, assembly, and contact-rich bimanual scenes, actions such as cutting, placing, fastening, or opening differ through coordinated rela-tions among hands, manipulated objects, tools, and supporting surfaces. Although modern video foundation models learn strong global spatiotemporal representations [1, 2], and graph-based methods model hand–object dependencies [3–6], most existing formulations still encode manipulation either implicitly in clip features or as collections of pairwise links. This can fragment a single manipulation event into local relations and obscure the joint configuration that determines the activity label. Recent egocentric and manipulation-centered benchmarks have made this limi-tation increasingly visible. EPIC-KITCHENS-100 and VISOR pair long-form daily activities with fine-grained action labels, pixel-level masks, and hand–object relations [7, 8]; H2O, Assembly101, and ARCTIC further emphasize two-hand interaction, pro-cedural activity, and dexterous contact-rich manipulation [3, 9, 10]. Contact-centric and hand–object-centric approaches likewise show that explicit interaction cues mat-ter for first-person understanding [11, 12]. Hypergraphs provide a natural language for such higher-order structure because they can represent multi-entity configura-tions directly rather than decomposing them into binary edges [13]. Yet time-varying higher-order reasoning remains underexplored for fine-grained HAR. We address this gap with a dynamic manipulation hypergraph framework that models a video as a sequence of higher-order hyperedges among hands, manipulated objects, tools, and supporting surfaces. Candidate hyperedges are instantiated from manipulation templates, ranked using proximity, contact, and motion-coupling pred-icates, processed by the hypergraph reasoning network, and summarized through temporal attention; the resulting class-agnostic hyperedge-importance scores indicate the relational patterns emphasized by the model. We evaluate on EPIC-KITCHENS-100/VISOR and Assembly101 for quantitative recognition, and use ARCTIC for supporting qualitative contact analysis. The experimental protocol includes contex-tual comparisons with video-only baselines and controlled comparisons with a matched pairwise graph and a static hypergraph. Performance is evaluated using accuracy, macro-F1, and higher-order action F1 (HO-F1), while controlled ablations examine the respective contributions of higher-order structure and time-varying hypergraph construction. 2Our main contributions are: 
+
+• We introduce a dynamic manipulation hypergraph representation for vision-based human activity recognition, in which time-varying higher-order hyperedges explic-itly model coordinated interactions among hands, manipulated objects, tools, and supporting surfaces. 
+
+• We develop a manipulation-aware hypergraph construction strategy that integrates appearance, spatial, motion, and semantic-role features with proximity, contact, and motion-coupling predicates to rank candidate hyperedges and generate class-agnostic hyperedge-importance scores. 
+
+• We conduct controlled comparisons with a matched pairwise graph and a static hypergraph using identical entity inputs, temporal sampling, and comparable reasoning settings, thereby isolating the respective contributions of higher-order relational modeling and dynamic hypergraph construction. Video-only baselines are included as contextual comparisons. 
+
+• We validate the proposed framework on EPIC-KITCHENS-100/VISOR and Assem-bly101 using accuracy, macro-F1, and HO-F1. The method improves HO-F1 over the matched pairwise graph by 6.9 and 9.5 percentage points, respectively, while complementary qualitative analysis on ARCTIC illustrates the temporal alignment between highly ranked hyperedges and contact-rich manipulation intervals. The current formulation still depends on reliable entity localization and a prede-fined template set. This suggests natural future directions in data-driven hyperedge discovery, richer object-state modeling, and more open-vocabulary manipulation reasoning. 
+
+# 2 Related Work 
+
+Fine-grained manipulation activities are often difficult to recognize from appearance and motion alone, because their meaning depends on the evolving relations among hands, objects, tools, and surrounding surfaces. This section reviews the most relevant work on vision-based human activity recognition, graph and hypergraph learning for action modeling, and manipulation-centered human–object interaction understanding. 
+
+## 2.1 Vision-Based Human Activity Recognition 
+
+Vision-based human activity recognition has recently benefited from large-scale video pretraining and Transformer-based architectures. Models such as VideoMAE V2 [1] and InternVideo2 [2] have shown that strong video representations can be transferred to a wide range of recognition and video-language tasks. These models are effective in capturing global appearance and temporal patterns, but fine-grained manipulation activities often require more explicit reasoning about hands, objects, tools, and their evolving relations. Egocentric video datasets have been especially important for this problem. EPIC-KITCHENS-100 provides large-scale first-person recordings of daily activities [7], while VISOR adds pixel-level annotations of hands, active objects, and object relations [8]. More recent datasets such as HD-EPIC further increase the semantic and temporal 3detail of egocentric annotations [14]. These developments indicate that modern HAR is moving beyond coarse clip-level labels toward more structured descriptions of activ-ity. However, many recognition models still represent the video mainly as a sequence of visual features, leaving the relational structure of manipulation only implicitly encoded. 
+
+## 2.2 Graph and Hypergraph Learning for Action Recognition 
+
+Graph neural networks provide a natural way to represent structured action data. In skeleton-based recognition, ST-GCN introduced a widely adopted formulation in which body joints are modeled as nodes and anatomical connections as spatial-temporal edges [15]. Later graph-based models improved this idea using adaptive topologies and more expressive relational aggregation. Recent methods such as 3Mformer [16] and BlockGCN [17] show that explicit structural modeling remains useful even in the era of Transformer-based action recognition. A limitation of ordinary graphs is that they encode relations as pairwise edges. This can be restrictive when an action is defined by a group of entities rather than by isolated pairwise relations. Hypergraph models address this issue by allowing one hyperedge to connect multiple nodes. Hyperformer [18] and Autoregressive Adaptive Hypergraph Transformer [19] have explored this idea mainly for skeleton-based activity recognition. More recently, HyperGLM used hypergraph structures for video scene graph generation and anticipation [20]. These works support the value of higher-order modeling, but most of them remain focused on skeleton joints or generic scene entities. In contrast, our work studies higher-order relations specifically in manipulation scenes, where meaningful units often involve hands, objects, tools, surfaces, and contact-state transitions. 
+
+## 2.3 Manipulation and Human–Object Interaction Understanding 
+
+Manipulation understanding is closely related to human–object interaction recogni-tion, but it requires more detailed temporal and relational modeling. H2O introduced a first-person setting for two-hand object manipulation [3]. Assembly101 provides large-scale procedural videos of assembly and disassembly activities [9], while HOI4D and ARCTIC offer richer egocentric, 3D, and bimanual hand–object interaction annota-tions [10, 21]. These datasets show that manipulation activities are increasingly studied as structured interactions rather than simple action labels. Recent methods have also emphasized contact, object state, and temporal scene structure. Shiota et al. [22] showed that hand–object contact and object-state changes are useful cues for egocentric action recognition. Action Scene Graphs represent long-form egocentric videos using evolving graphs of actions, objects, and relations [4]. These works are highly relevant to our motivation, but they mainly rely on pairwise graph structures or action-object relations. Our earlier work progressively developed structured representations for manipula-tion understanding. Complex manipulation videos were first decomposed into seman-tically coherent multi-sentence descriptions [23]. Hierarchical graph modeling was 4subsequently introduced for the recognition and description of bimanual actions [5], followed by adaptive multimodal graph reasoning incorporating foundation-model fea-tures for fine-grained action recognition [6]. Complementary work on spatial-semantic Graph-Transformer architectures and structural pruning further demonstrated the utility of structured graph representations in dense visual reasoning [24]. Building on these graph-based developments, the present work advances from pairwise relational modeling to dynamic manipulation hypergraphs, representing configurations such as 
+
+hand–cup–table , hand–knife–food–board , and left hand–right hand–object directly as higher-order interaction units. 
+
+# 3 Proposed Method 
+
+The proposed method represents a manipulation video as a sequence of dynamic hypergraphs. Each hypergraph contains manipulation-relevant entities selected from five canon-ical roles: left hand, right hand, manipulated object, tool, and supporting surface. Its hyperedges encode higher-order interaction configurations among these entities. This section first defines the recognition problem and the overall pipeline, then describes visual entity representation, hypergraph construction, hypergraph reasoning, and the final activity prediction with class-agnostic hyperedge-importance scores. 
+
+## 3.1 Overview and Problem Formulation 
+
+Given an input video clip X = {xt}Tt=1 , where xt denotes the t-th frame or short temporal segment, the objective is to predict an activity label y ∈ Y . In manipulation-centered HAR, the label is often determined not only by the appearance or motion of individual entities, but also by how several entities jointly participate in an interaction. For example, placing involves a hand, an object, and a supporting surface, while 
+
+cutting may involve a hand, a tool, a target object, and a board. This motivates a representation that can preserve the structure of such multi-entity configurations. Our previous graph-based studies modeled manipulation videos through structured relational representations for bimanual action recognition, description generation, and fine-grained action understanding [5, 6]. Those formulations showed the benefit of explicit graph reasoning, but they still represented interactions mainly through pair-wise edges. In the present work, we extend this idea by representing each video as a sequence of dynamic manipulation hypergraphs, 
+
+G(X) = {H t}Tt=1 , (1) where each hypergraph is defined as 
+
+Ht = ( Vt, Et). (2) Here, Vt = {vt
+
+> 1
+
+, . . . , v tNt } denotes the set of manipulation-relevant entities at time t,selected from five canonical entity roles: left hand, right hand, manipulated object, tool, and supporting surface. The set Et = {et
+
+> 1
+
+, . . . , e tMt } contains hyperedges, where 5each hyperedge etj ⊆ V t connects two or more entities that jointly form a meaningful manipulation configuration. The recognition problem is therefore formulated as learning a mapping from a sequence of dynamic manipulation hypergraphs to a video-level representation: 
+
+fθ : {H t}Tt=1 → Rd, (3) where fθ denotes the hypergraph reasoning model and d is the dimensionality of the learned representation. The output of this mapping is the final video-level feature vector z ∈ Rd, which is subsequently used by the classification head described in Section 3.5. The model first performs higher-order reasoning within each temporal step and then aggregates the resulting representations over time. Unlike a standard graph, which decomposes an interaction into several pairwise relations, the proposed hyper-graph can encode configurations such as hand–object–surface or hand–tool–object– surface as single relational units. This allows the model to represent manipulation patterns whose meaning depends on the joint participation of multiple entities, rather than on isolated pairwise connections alone. Figure 1 illustrates the overall pipeline of the proposed framework. The input video is first converted into manipulation-relevant entity representations. These entities are then used to construct a sequence of dynamic hypergraphs, which are processed by a hypergraph reasoning network. The resulting video-level representation is used for activity classification, while the top-ranked hyperedges indicate the relational patterns emphasized by the model. 
+
+## 3.2 Entity Extraction, Role Assignment, and Visual Representation 
+
+At each temporal step t, the input frame is represented by a variable-size set of manipulation-relevant entities drawn from five canonical functional roles: left hand, right hand, manipulated object, tool, and supporting surface. The available entities form the node set Vt = {vti }Nt
+
+> i=1
+
+, where Nt ≤ 5. Because some roles may be absent or temporarily occluded, the number of nodes can vary across temporal steps. For each sampled frame, a fixed entity-extraction pipeline produces a set of candidate instance masks, 
+
+Ct = (M tk, l tk, p tk) Kt 
+
+> k=1
+
+, (4) where M tk, ltk, and ptk denote the mask, semantic category, and confidence of candi-date k, respectively. Dataset annotations are used when specified by the experimental protocol; otherwise, the masks are generated using the pretrained detection and instance-segmentation pipeline described in Section 4.2. The extraction models are fixed and are not updated during activity-recognition training. Entity identities are preserved across sampled frames using dataset-provided track identifiers when available. Otherwise, detections in consecutive frames are associ-ated using mask intersection-over-union, appearance similarity, and normalized centre displacement. This temporal association prevents the motion descriptor from being calculated between unrelated instances. 6Fig. 1 Overview of the proposed dynamic manipulation hypergraph framework. Manipulation-relevant entities are organized into time-varying hyperedges and processed by the hypergraph reasoning network for activity prediction. The displayed hyperedge-importance score is normalized within the clip for visualization. 
+
+The candidate entities are assigned to functional roles independently of the ground-truth or predicted activity label. Left and right hands are determined from the corresponding annotation or detector labels. Among the remaining object candi-dates, the manipulated object is selected using label-independent interaction evidence, including hand–object contact, spatial proximity, motion coupling, detection confi-dence, and temporal persistence. Tool candidates are identified using a predefined semantic category vocabulary established from the training data before test evalua-tion. When multiple tool candidates are present, the candidate exhibiting the strongest interaction with a hand and the selected manipulated object is retained. Support-ing surfaces are selected from predefined planar-region categories using object–surface proximity, relative vertical position, and spatial overlap. For two candidate instances indexed by i and j in Ct, we define the interaction score 
+
+Itij = 13
+
+ qtij + πtij + κtij 
+
+ , (5) where the contact, proximity, and motion-coupling scores are defined in Section 3.3. Let Chand  
+
+> t
+
+denote the candidate instances identified as hands. For candidate object track o observed at temporal step t, define 
+
+Jto =
+
+
+
+max 
+
+> h∈C hand
+> t
+
+Itho , Chand 
+
+> t
+
+̸ = ∅,
+
+0, Chand  
+
+> t
+
+= ∅.
+
+(6) 7The frame-level object-role score is 
+
+Sobj (o, t ) = 13
+
+ pto + Jto + uo
+
+ , (7) where pto is the candidate confidence and 
+
+uo = |T o|
+
+T , To = {t ∈ { 1, . . . , T } | o is observed at t},
+
+is the temporal-persistence score of track o. For annotation-provided masks without a detector confidence, pto is set to 1. The temporally averaged object-role score is ¯Sobj (o) = 1
+
+|T o|
+
+X
+
+> t∈T o
+
+Sobj (o, t ), (8) and the manipulated-object track is selected as 
+
+o∗ = arg max 
+
+> o
+
+¯Sobj (o). (9) When several tracks are eligible for the same functional role, the track with the highest temporally averaged label-independent role-assignment score is retained. At temporal steps where the selected track is not observed, the corresponding node is omitted. When multiple candidates satisfy the same functional role, the highest-scoring tem-porally persistent candidate is retained. If a required entity cannot be detected at a particular temporal step, the corresponding node is omitted and hyperedge templates requiring that role are not instantiated. The video clip itself is not removed from train-ing or evaluation. Therefore, failures of the entity-extraction pipeline remain reflected in the reported recognition results. Most importantly, ground-truth activity labels, predicted class probabilities, and test-set class statistics are never used for entity-role assignment. Each selected mask is converted into a tight bounding box and used to crop the corresponding image region. The crop is passed through a pretrained visual backbone to obtain an appearance descriptor ati. The spatial descriptor is calculated from the normalized bounding-box coordinates, centre position, and mask area: 
+
+bti =
+
+ xt
+
+> 1,i
+
+W , yt
+
+> 1,i
+
+H , xt
+
+> 2,i
+
+W , yt
+
+> 2,i
+
+H , ctx,i 
+
+W , cty,i 
+
+H , Ati
+
+W H 
+
+
+
+, (10) where W and H are the frame width and height, ( ctx,i , c ty,i ) is the centre of entity i,and Ati is its mask area. 8For entities associated across consecutive temporal steps, the motion descriptor is calculated as the normalized displacement of the entity centre: 
+
+mti =
+
+" ctx,i − ct−1
+
+> x,i
+
+W , cty,i − ct−1
+
+> y,i
+
+H
+
+#
+
+. (11) Let rti ∈ { 0, 1} indicate whether entity i has a valid correspondence in the preceding sampled frame. The motion vector is set to zero when rti = 0, including at the first temporal step. This zero vector is used only as a placeholder for unavailable motion. A learnable semantic embedding sti represents the assigned functional role rather than the ground-truth activity class. The initial node representation is obtained by concatenating the appearance, spatial, motion, and role descriptors: 
+
+ht, 0 
+
+> i
+
+= ϕent 
+
+  ati; bti; mti; sti
+
+ , (12) where ϕent is a multilayer perceptron and [ ·; ·] denotes feature concatenation. For example, a frame may contain a right hand, knife, tomato, and cutting board. Based exclusively on their semantic categories and observed interaction evidence, these entities may respectively be assigned the roles of right hand, tool, manipulated object, and supporting surface. The right-hand node may subsequently be selected as the active hand h∗ 
+
+> t
+
+for the tool-mediated template. Their representations encode what entities are present, where they are located, how they move, and which functional roles they currently fulfil before the manipulation hyperedges are constructed. 
+
+## 3.3 Dynamic Manipulation Hypergraph Construction 
+
+After obtaining the node representations, we construct a dynamic manipulation hypergraph at each temporal step. The purpose of this stage is to convert isolated entity nodes into higher-order interaction units that are meaningful for manipulation-centered HAR. Instead of connecting entities only through pairwise edges, we form hyperedges that represent complete manipulation configurations, such as a hand acting on an object over a surface, or a hand using a tool on an object. For each temporal step t, we first compute geometric, contact, and motion-based predicates between entity pairs. Let cti = ( ctx,i , c ty,i ) denote the center of entity vti ,obtained from its mask or bounding box. The normalized center distance between two entities is defined as 
+
+dtij = ∥cti − ctj ∥2
+
+√W 2 + H2 , (13) where W and H are the frame width and height. The corresponding proximity score is defined as 
+
+πtij = exp 
+
+
+
+− dtij 
+
+τd
+
+
+
+, (14) where τd > 0 is a proximity scale controlling sensitivity to center distance. Conse-quently, πtij ∈ (0 , 1], with larger values indicating greater spatial proximity. 9Contact evidence is computed from the minimum distance between the two entity masks. Let P(M ti ) denote the set of pixel coordinates belonging to mask M ti . The normalized mask distance is defined as 
+
+δtij =min     
+
+> p∈P (Mti),q∈P (Mtj)
+
+∥p − q∥2
+
+√W 2 + H2 . (15) The continuous contact score is then calculated as 
+
+qtij = exp 
+
+
+
+− δtij 
+
+τc
+
+
+
+, (16) where τc > 0 is the contact-distance scale. Thus, qtij ∈ (0 , 1]. Overlapping or directly touching masks have δtij = 0 and qtij = 1, whereas the contact score decreases exponentially as the separation between the masks increases. Motion coupling is measured as 
+
+κtij = rti rtj exp 
+
+
+
+− mti − mtj 2
+
+
+
+, (17) where rti rtj ensures that motion coupling is evaluated only when both entities have valid temporal correspondences. A larger value indicates more similar motion, while unavailable motion contributes zero coupling. Based on these predicates, we construct hyperedges using a fixed set of manipula-tion templates. Four templates are used: 
+
+τ1 : {left hand , manipulated object , supporting surface },τ2 : {right hand , manipulated object , supporting surface },τ3 : {left hand , right hand , manipulated object },τ4 : {active hand , tool , manipulated object , supporting surface }.
+
+(18) When at least one hand and the manipulated-object node are available, the active-hand score is 
+
+Shand (h, t ) = 
+
+
+
+Ith, tool + Ith, obj 
+
+2 , if a tool is available ,Ith, obj , otherwise .
+
+(19) The active hand is selected as 
+
+h∗ 
+
+> t
+
+= arg max 
+
+> h∈V hand
+> t
+
+Shand (h, t ). (20) When no hand is detected, the corresponding hand-dependent template is not instantiated. No ground-truth or predicted activity label is used in this selection. 10 For candidate hyperedge etj , the predicate vector rtj is constructed from the average pairwise contact, proximity, and motion-coupling values among its member nodes. Let 
+
+Ctj =
+
+|etj |
+
+2
+
+
+
+(21) denote the number of unordered entity pairs within the hyperedge. The predicate vector is defined as 
+
+rtj =
+
+
+
+1
+
+Ctj
+
+X
+
+> a<b vta,v tb∈etj
+
+qtab ; 1
+
+Ctj
+
+X
+
+> a<b vta,v tb∈etj
+
+πtab ; 1
+
+Ctj
+
+X
+
+> a<b vta,v tb∈etj
+
+κtab 
+
+ . (22) The relevance score of the candidate hyperedge is then computed as 
+
+αtj = σ
+
+
+
+ϕscore 
+
+
+
+[rtj ; μτ (j)]
+
+ 
+
+, (23) where μτ (j) is a learnable embedding of the corresponding hyperedge template, ϕscore 
+
+is a small multilayer perceptron, and σ(·) is the sigmoid function. At each temporal step, up to the top K valid candidate hyperedges are retained according to αtj . We use K = 3, which limits the number of retained hyperedges. When fewer than K valid candidates are available, all valid candidates are retained. The selected hyperedges define the incidence matrix 
+
+At ∈ { 0, 1}Nt×Mt , (24) where 
+
+Atij =
+
+(
+
+1, if vti ∈ etj ,
+
+0, otherwise . (25) Here, Nt is the number of entity nodes and Mt is the number of selected hyperedges at time t. We define the set of valid temporal steps as 
+
+Tvalid = {t ∈ { 1, . . . , T } | Nt > 0}. (26) If Nt = 0, temporal step t is excluded from the subsequent temporal-attention nor-malization. If Nt > 0 but no valid candidate hyperedge can be instantiated, then 
+
+Mt = 0. In this case, no artificial hyperedge is introduced; hypergraph message pass-ing is skipped and the temporal representation is constructed using the available node features together with a zero hyperedge representation. The initial representation of each hyperedge is obtained by aggregating the ini-tial node features of its members together with its predicate vector and template embedding: 
+
+gt, 0 
+
+> j
+
+= ϕedge 
+
+h 
+
+Pool 
+
+
+
+{ht, 0 
+
+> i
+
+| vti ∈ etj }
+
+
+
+; rtj ; μτ (j)
+
+i 
+
+, (27) 11 Fig. 2 Dynamic manipulation hypergraph construction. Entity masks are converted into node repre-sentations, and proximity πtij , contact qtij , and motion-coupling κtij predicates are computed between entity pairs. Candidate hyperedges are instantiated from the manipulation templates, and up to the top K candidates are retained. 
+
+where Pool( ·) denotes mean pooling and ϕedge is a projection module. As an example, in a cutting action, the detected entities may include the right hand, knife, tomato, and cutting board. The tool-based template forms a hyperedge connecting these four entities. If the right hand moves together with the knife and the knife remains close to the tomato over the supporting board, this hyperedge receives a high relevance score. In contrast, a pairwise graph would represent the same situa-tion through separate relations, such as hand–knife, knife–tomato, and tomato–board, without directly encoding the complete manipulation unit. 12 3.4 Hypergraph Reasoning Network 
+
+Given the dynamic hypergraph Ht = ( Vt, Et), the reasoning network updates entity and hyperedge representations through higher-order message passing. Let ht, 0 
+
+> i
+
+denote the initial representation of node vti , obtained from the entity-representation stage, and let gt, 0 
+
+> j
+
+denote the initial representation of hyperedge etj , obtained from the hypergraph-construction stage. The model applies L reasoning layers, indexed by 
+
+ℓ = 0 , . . . , L − 1, at each temporal step containing at least one valid hyperedge. We define the set of valid temporal steps as 
+
+Tvalid = {t ∈ { 1, . . . , T } | Nt > 0} . (28) A temporal step with Nt = 0 is excluded from temporal-attention normalization. If 
+
+Nt > 0 but no valid manipulation template can be instantiated, then Mt = 0. In this case, hypergraph message passing is skipped, and the temporal representation is constructed from the available node features and a zero hyperedge representation. For a temporal step with Mt > 0, each reasoning layer consists of node-to-hyperedge aggregation followed by a hyperedge-to-node update. First, every hyperedge receives information from the nodes participating in the corresponding manipulation configuration. For hyperedge etj at layer ℓ, the aggregated node-to-hyperedge message is ˜gt,ℓ j = X 
+
+> i:Atij =1
+
+βt,ℓ ij Wℓeht,ℓ i , (29) where Atij is the incidence matrix and βt,ℓ ij is an attention weight over the nodes belonging to hyperedge etj . It is defined as 
+
+βt,ℓ ij =exp 
+
+
+
+u⊤ 
+
+> e
+
+tanh 
+
+
+
+Wℓhht,ℓ i + Wℓg gt,ℓ j
+
+ X 
+
+> k:Atkj =1
+
+exp 
+
+
+
+u⊤ 
+
+> e
+
+tanh 
+
+
+
+Wℓhht,ℓ k + Wℓg gt,ℓ j
+
+ . (30) The hyperedge representation is then updated using a residual connection: 
+
+gt,ℓ +1  
+
+> j
+
+= LN 
+
+
+
+gt,ℓ j + ϕℓe
+
+
+
+[gt,ℓ j ; ˜ gt,ℓ j ]
+
+ 
+
+, (31) where ϕℓe is a multilayer perceptron and LN( ·) denotes layer normalization. After the hyperedges are updated, each node receives information from the retained hyperedges in which it participates. Let 
+
+Iti = j ∈ { 1, . . . , M t} | Atij = 1 (32) 13 denote the set of retained hyperedges incident on node vti . The incoming hyperedge-to-node message is defined as ˜ht,ℓ i =
+
+X
+
+> j∈I ti
+
+γt,ℓ ij Wℓv gt,ℓ +1  
+
+> j
+
+, Iti̸ = ∅,
+
+0, Iti = ∅.
+
+(33) For j ∈ I ti , the incident-hyperedge attention weight is 
+
+γt,ℓ ij =exp 
+
+
+
+u⊤ 
+
+> v
+
+tanh 
+
+
+
+Wℓv,h ht,ℓ i + Wℓv,g gt,ℓ +1 
+
+> j
+
+
+
++ λα tj
+
+X
+
+> r∈I ti
+
+exp 
+
+
+
+u⊤ 
+
+> v
+
+tanh 
+
+
+
+Wℓv,h ht,ℓ i + Wℓv,g gt,ℓ +1 
+
+> r
+
+
+
++ λα tr
+
+ . (34) Here, αtj is the relevance score of hyperedge etj , computed during hypergraph construc-tion, and λ controls its contribution to the attention score. The weight γt,ℓ ij is evaluated only when Iti̸ = ∅; otherwise, the incoming message is set to the zero vector. The node representation is updated using 
+
+ht,ℓ +1  
+
+> i
+
+= LN 
+
+
+
+ht,ℓ i + ϕℓv
+
+
+
+[ht,ℓ i ; ˜ht,ℓ i ]
+
+ 
+
+, (35) where ϕℓv is a multilayer perceptron. This update allows a node to incorporate infor-mation from the complete manipulation configurations in which it participates rather than only from independent pairwise neighbors. After L reasoning layers, the node representations are mean-pooled for each t ∈Tvalid :¯ht = 1
+
+NtNtX
+
+> i=1
+
+ht,L i . (36) When Mt = 0, no reasoning layer is applied and we set ht,L i = ht, 0 
+
+> i
+
+.For Mt > 0, the normalized relevance weight of hyperedge etj is 
+
+ηtj = exp( αtj )
+
+> Mt
+
+X
+
+> r=1
+
+exp( αtr)
+
+. (37) The pooled hyperedge representation is defined as ¯gt =
+
+
+
+> Mt
+
+X
+
+> j=1
+
+ηtj gt,L j , Mt > 0,
+
+0, Mt = 0 ,
+
+(38) 14 where 0 has the same dimensionality as a hyperedge representation. Thus, temporal steps containing available entities but no valid hyperedge remain part of the video representation without requiring an artificial hyperedge. The representation of valid temporal step t is 
+
+zt = ϕz
+
+ [¯ht; ¯ gt] , t ∈ T valid . (39) Finally, the valid temporal representations are aggregated using temporal atten-tion. For t ∈ T valid , the temporal attention weight is 
+
+ρt = exp  u⊤ 
+
+> ρ
+
+tanh ( Wρzt)X
+
+> k∈T valid
+
+exp  u⊤ 
+
+> ρ
+
+tanh  Wρzk . (40) For invalid temporal steps, t / ∈ T valid , we set ρt = 0. The final video-level representation is 
+
+z = X
+
+> t∈T valid
+
+ρtzt. (41) If Tvalid = ∅, the final representation is set to z = 0. The classification head can then produce a prediction from its learned bias parameters, while no ranked hyperedge is returned. This reasoning process enables information exchange through explicit multi-entity manipulation units. In a cutting action, for example, the representation of the knife is updated not only from the hand or manipulated object separately, but from the com-plete hyperedge connecting the hand, knife, manipulated object, and cutting board. An ordinary pairwise graph would decompose the same configuration into several independent relations and would not directly represent the complete manipulation unit. 
+
+## 3.5 Activity Prediction and Class-Agnostic Hyperedge Importance 
+
+The final video-level representation z, obtained after temporal aggregation, is used for activity classification. A linear prediction head followed by a softmax function maps 
+
+z to a probability distribution over the activity label set Y:
+
+p = softmax ( Wcz + bc) , (42) where Wc and bc are learnable classification parameters. The predicted activity label is then given by ˆy = arg max  
+
+> c∈Y
+
+pc. (43) During training, the model is optimized using the standard cross-entropy loss, 
+
+Lcls = −
+
+> |Y|
+
+X
+
+> c=1
+
+yc log pc, (44) 15 where yc is the one-hot ground-truth label for class c.In addition to the activity prediction, the model provides a class-agnostic hyperedge-importance score. For retained hyperedge etj , the score is defined as 
+
+ωtj = ρtηtj , (45) where ρt is the temporal-attention weight and ηtj is the normalized within-step rele-vance weight of hyperedge etj . The score ranks the relational patterns emphasized by the model but is not a causal attribution to the predicted class. Let the total number of retained hyperedges in the clip be 
+
+Mtot = X
+
+> t∈T valid
+
+Mt. (46) The ranked hyperedge indices are defined as 
+
+Iexp =
+
+
+
+TopIndex min( R,M tot )
+
+  (ωtj , t, j ) | t ∈ T valid , j = 1 , . . . , M t
+
+ , Mtot > 0,
+
+∅, Mtot = 0 .
+
+(47) The reported hyperedge set is 
+
+Eexp = etj | (t, j ) ∈ I exp . (48) Here, TopIndex returns the temporal-step and hyperedge indices associated with the largest importance scores. For visualization only, the displayed scores are divided by the maximum hyperedge-importance score within each clip. This normalization does not affect hyperedge ranking. In failure cases, the ranked hyperedges may suggest missing entities, weak relational evidence, or incorrect temporal focus, but they do not establish the cause of the error. 
+
+## Algorithmic Summary 
+
+The complete flow of the proposed method is summarized in Algorithm 1. The algo-rithm shows how candidate entities are assigned to functional roles, represented as nodes, organized into dynamic manipulation hyperedges, and processed to obtain the predicted activity and top-ranked hyperedges. 16 Algorithm 1 Dynamic Manipulation Hypergraph Inference 
+
+Require: Video clip X = {xt}Tt=1 , limits K, L, R 
+
+Ensure: Predicted activity ˆ y and ranked hyperedges Eexp 
+
+Track-level entity processing  
+
+> 1:
+
+for t = 1 , . . . , T do  
+
+> 2:
+
+Extract candidate masks Ct and compute their appearance and spatial descriptors.  
+
+> 3:
+
+end for  
+
+> 4:
+
+Associate candidates across sampled frames to form entity tracks.  
+
+> 5:
+
+for t = 1 , . . . , T do  
+
+> 6:
+
+Compute motion descriptors and validity indicators rti . 
+
+> 7:
+
+Compute dtij , δ tij , π tij , q tij , κ tij , and Itij for observed candidate pairs.  
+
+> 8:
+
+end for  
+
+> 9:
+
+Compute track persistence and temporally averaged role scores.  
+
+> 10:
+
+Assign selected tracks to the left-hand, right-hand, manipulated-object, tool, and supporting-surface roles.  
+
+> 11:
+
+Tvalid ← ∅
+
+Dynamic hypergraph construction and reasoning  
+
+> 12:
+
+for t = 1 , . . . , T do  
+
+> 13:
+
+Form Vt = {vti }Nt 
+
+> i=1
+
+from the assigned tracks observed at t. 
+
+> 14:
+
+if Nt = 0 then  
+
+> 15:
+
+continue  
+
+> 16:
+
+end if  
+
+> 17:
+
+Tvalid ← T valid ∪ { t} 
+
+> 18:
+
+Initialize each node as ht, 0 
+
+> i
+
+← ϕent ([ ati; bti; mti; sti]).  
+
+> 19:
+
+if a hand and the manipulated object are available then  
+
+> 20:
+
+Select the active hand h∗ 
+
+> t
+
+← arg max h∈V hand  
+
+> t
+
+Shand (h, t ).  
+
+> 21:
+
+end if  
+
+> 22:
+
+Instantiate eEt = {eetj }fMt 
+
+> j=1
+
+from the available manipulation templates.  
+
+> 23:
+
+for j = 1 , . . . , fMt do  
+
+> 24:
+
+Construct ertj and compute eαtj ← σ(ϕscore ([ ertj ; μτ (j)])).  
+
+> 25:
+
+end for  
+
+> 26:
+
+Set Mt ← min( K, fMt).  
+
+> 27:
+
+if Mt > 0 then  
+
+> 28:
+
+Select (j1, . . . , j Mt ) ← TopIndex Mt ({eαtj }fMt
+
+> j=1
+
+). 
+
+> 29:
+
+Retain and consecutively re-index eetjr , ertjr , and eαtjr as etr , rtr , and αtr . 
+
+> 30:
+
+Form Et = {etr }Mt
+
+> r=1
+
+, construct At, and initialize gt, 0 
+
+> r
+
+. 
+
+> 31:
+
+for ℓ = 0 , . . . , L − 1 do  
+
+> 32:
+
+Compute βt,ℓ ir and apply the node-to-hyperedge update.  
+
+> 33:
+
+Compute relevance-biased γt,ℓ ir and apply the hyperedge-to-node update.  
+
+> 34:
+
+Use a zero incoming message for each node with no incident retained hyperedge.  
+
+> 35:
+
+end for  
+
+> 36:
+
+Compute ηtr ← exp( αtr )/ PMt 
+
+> s=1
+
+exp( αts).  
+
+> 37:
+
+Compute ¯ gt ← PMt 
+
+> r=1
+
+ηtr gt,L r . 
+
+> 38:
+
+else  
+
+> 39:
+
+Set Et ← ∅, ht,L i ← ht, 0 
+
+> i
+
+, and ¯ gt ← 0. 
+
+> 40:
+
+end if  
+
+> 41:
+
+Compute ¯ht ← N −1
+
+> t
+
+PNt 
+
+> i=1
+
+ht,L i . 
+
+> 42:
+
+Compute zt ← ϕz ([ ¯ht; ¯ gt]).  
+
+> 43:
+
+end for 
+
+Prediction and hyperedge ranking  
+
+> 44:
+
+if Tvalid = ∅ then  
+
+> 45:
+
+Set z ← 0. 
+
+> 46:
+
+else  
+
+> 47:
+
+Compute temporal-attention weights {ρt : t ∈ T valid }. 
+
+> 48:
+
+Set z ← P 
+
+> t∈T valid
+
+ρtzt. 
+
+> 49:
+
+end if  
+
+> 50:
+
+Compute p ← softmax( Wcz + bc) and ˆ y ← arg max c∈Y pc. 
+
+> 51:
+
+if P 
+
+> t∈T valid
+
+Mt = 0 then  
+
+> 52:
+
+Set Eexp ← ∅. 
+
+> 53:
+
+else  
+
+> 54:
+
+Compute ωtj ← ρtηtj for every retained hyperedge.  
+
+> 55:
+
+Select 
+
+Iexp ← TopIndex min  
+
+> 
+> R, P
+> t∈T valid Mt
+> 
+
+n 
+
+(ωtj , t, j ) | t ∈ T valid , j = 1 , . . . , M t
+
+o 
+
+. 
+
+> 56:
+
+Set Eexp ← { etj : ( t, j ) ∈ I exp }. 
+
+> 57:
+
+end if  
+
+> 58:
+
+return ˆy and Eexp 
+
+17 4 Experiments and Results 
+
+This section presents the experimental evaluation of the proposed dynamic manipu-lation hypergraph model. We first describe the datasets, selected action categories, and evaluation protocol. We then provide the implementation details, including entity extraction, feature construction, model configuration, and training settings. Next, we introduce the comparison baselines and evaluation metrics. The main quantitative results are followed by ablation studies and a family-wise analysis of higher-order manipulation actions. Finally, qualitative examples illustrate the relational evidence captured by the learned hyperedges and highlight representative failure cases. 
+
+## 4.1 Datasets and Experimental Protocol 
+
+Quantitative experiments are conducted on EPIC-KITCHENS-100/VISOR [7, 8] and Assembly101 [9]. ARCTIC [10] supports the qualitative contact-oriented analysis. 
+
+Class selection. 
+
+Activity classes were selected before training according to whether their definitions involved hand–object–surface, bimanual hand–object, or hand–tool–object–surface interactions. Selection was based on the activity definitions rather than on successful entity detection; therefore, clips with missing entities remained in the evaluation. A predefined subset was organized into surface-dependent, tool-mediated, bimanual, and contact- or state-change families. All classes contribute to accuracy and macro-F1,whereas the predefined subset contributes to HO-F1.
+
+EPIC-KITCHENS-100/VISOR. 
+
+EPIC-KITCHENS-100 provides the temporal action segments and activity labels, while VISOR provides the hand and active-object masks used as annotation-assisted entity inputs. Supporting surfaces are obtained using the procedure described in Section 4.2. A fixed internal split was constructed from the publicly labelled clips with the required VISOR annotations. Partitioning was performed by source video before class selection. The resulting subset contains 8,920 clips from 14 classes: 6,240 for training, 1,320 for validation, and 1,360 for testing. 
+
+Assembly101. 
+
+The egocentric streams and annotated fine-grained action segments of Assembly101 are used. The original data partitions were retained, and class filtering was applied independently within each partition. The resulting subset contains 26,600 clips from 20 classes: 18,600 for training, 3,900 for validation, and 4,100 for testing. Hands, manip-ulated components, tools, and supporting surfaces are obtained using the procedure described in Section 4.2. 
+
+ARCTIC. 
+
+ARCTIC is used to compare normalized hyperedge-importance scores with annotated bimanual-contact intervals. The frozen EPIC-KITCHENS-100/VISOR checkpoint 18 Table 1 Composition and evaluation role of the datasets. Clip counts refer to the final manipulation subsets obtained using the predefined class-selection protocol.                       
+
+> Dataset Train Val. Test Classes Evaluation role
+> EPIC-KITCHENS-100/VISOR 6,240 1,320 1,360 14 Daily ego-centric manipulation recognition Assembly101 18,600 3,900 4,100 20 Procedural bimanual and tool-mediated recognition ARCTIC ––––Contact-oriented temporal anal-ysis only
+
+selected according to validation macro-F1 is applied without adaptation. Contact annotations are accessed only after inference and are not used for training or model selection. No aggregate metric is calculated on ARCTIC. 
+
+Evaluation protocol. 
+
+The validation sets are used for hyperparameter selection, threshold calibration, and checkpoint selection, while the test sets are reserved for final evaluation. Each action segment is uniformly sampled into T = 16 temporal steps. All methods use the same clips, temporal samples, and partitions. The controlled entity-based, graph-based, and hypergraph-based models additionally use identical entity regions, appearance features, and node descriptors. Dataset composition is summarized in Table 1. 
+
+## 4.2 Implementation Details 
+
+Temporal sampling and entity extraction. 
+
+Each action clip is uniformly sampled into T = 16 temporal steps. Entity detection and segmentation are performed using frozen pretrained models. Grounding DINO with the Swin-T checkpoint is used for text-conditioned candidate detection [25], and SAM 2 with the Hiera-Large checkpoint is used to obtain and temporally propagate instance masks [26]. The models are not fine-tuned on the activity-recognition test sets. The candidate vocabulary contains hand, object, tool, component, table, work-bench, board, and supporting-surface categories, together with dataset-specific object categories observed in the training partition. The vocabulary is fixed before valida-tion and test evaluation. In particular, the ground-truth activity label of an evaluated clip is never used as a detection prompt. Grounding DINO detections with a con-fidence below 0 .35 are removed, and non-maximum suppression is applied with an intersection-over-union threshold of 0 .50. 19 Dataset-specific entity inputs. 
+
+For EPIC-KITCHENS-100/VISOR, the available VISOR hand and active-object masks are used as annotation-assisted entity inputs. Tools and supporting surfaces not explicitly included in the VISOR annotations are obtained using the fixed Ground-ing DINO–SAM 2 pipeline. Therefore, the EPIC-KITCHENS-100/VISOR experiment should be interpreted as an annotation-assisted evaluation of relational reasoning rather than as a completely automatic perception setting. For Assembly101, the official three-dimensional hand poses are projected into the selected egocentric view using the provided camera calibration parameters. A tight bounding box is constructed around the visible joints and enlarged by 15% in each spatial direction. These boxes are used as prompts for SAM 2 to obtain left-and right-hand masks. Manipulated components, tools, and supporting work sur-faces are generated using the same Grounding DINO–SAM 2 pipeline employed for non-annotated EPIC-KITCHENS entities. The Assembly101 fine-grained action annotations are used only to define the temporal clip boundaries and classification targets. They are not used to determine the principal component, tool, surface, or active hand. The principal component is selected using the label-independent contact, proximity, motion-coupling, confidence, and temporal- persistence criteria defined in Section 3.2. The tool and supporting sur-face roles are assigned using the corresponding label-independent role-selection rules. Clips with missing entities remain in the evaluation set. For ARCTIC, hand and object masks are generated using the same frozen extrac-tion pipeline. Ground-truth contact annotations are accessed only after inference to qualitatively illustrate the temporal correspondence between annotated contact intervals and the predicted hyperedge-importance scores. They are not used during entity selection, hypergraph construction, training, checkpoint selection, or activity prediction. 
+
+Temporal association and feature extraction. 
+
+SAM 2 propagates each prompted entity mask across the sampled frames. A propa-gated track is retained as a principal entity candidate when it is observed in at least three of the 16 temporal steps. Shorter tracks are treated as transient detections. When several candidates satisfy the same functional role, the candidate with the high-est temporally averaged role-assignment score is selected. Missing roles are omitted at the corresponding temporal steps, but the video clip is not discarded. Each selected mask is converted into a tight bounding box, and its image crop is resized to 224 × 224 pixels. Appearance features are extracted using an ImageNet-pretrained ResNet-50 backbone. The backbone remains frozen during training. The same masks, tracks, entity crops, and appearance features are supplied to all entity-based, pairwise-graph, static-hypergraph, and dynamic-hypergraph models. 
+
+Hypergraph configuration. 
+
+Node and hyperedge representations have a dimensionality of 256. The entity-projection modules contain two fully connected layers with ReLU activation and dropout of 0 .20. The hypergraph reasoning network contains L = 3 layers. At each 20 temporal step, at most K = 3 valid hyperedges are retained. If fewer than three valid candidates are available, all valid candidates are retained; no artificial hyperedge is introduced. Spatial distances are normalized by the frame diagonal. The proximity and contact-distance scales are set to τd = 0 .20 and τc = 0 .01, respectively. The relevance coefficient in the hyperedge-to-node attention was fixed to λ = 1. For qualitative reporting, the highest-ranked hyperedge was retained, corresponding to R = 1. 
+
+Optimization and model selection. 
+
+The model is trained using AdamW with an initial learning rate of 3 × 10 −4, weight decay of 1 × 10 −4, and batch size of 16 for 60 epochs. A cosine-annealing learning-rate schedule is used after a linear warm-up over the first five epochs. The checkpoint with the highest validation macro-F1 is selected independently for each run. All experiments are conducted on one NVIDIA RTX 4090 GPU using random seeds 13, 37, and 73. Test results are reported as the mean ± standard deviation across the three runs. The validation partition is used for checkpoint selection, hyperparameter tuning, and threshold calibration; the held-out test partition is used only for final evaluation. 
+
+## 4.3 Baselines and Evaluation Metrics 
+
+We compare the proposed method with video-level, entity-based, graph-based, and hypergraph-based baselines. All relational methods use the same action segments, dataset splits, temporal sampling, visual backbone, and entity features whenever applicable. 
+
+Video-level baselines. 
+
+VideoMAE V2 [1] and InternVideo2 [2] classify each clip from global spatio-temporal features without explicitly representing manipulation entities or their relations. 
+
+Entity and graph baselines. 
+
+Our contact-aware entity baseline, adapted from Shiota et al. [22], combines pooled entity features with the same proximity, contact, and motion-coupling predicates used by the proposed method, but does not construct a graph or hypergraph. We addition-ally construct a matched pairwise graph baseline using the same nodes, predicates, temporal sampling, and reasoning depth as the proposed method. Each higher-order candidate configuration is replaced by ordinary pairwise connections among its par-ticipating entities. This baseline directly evaluates whether higher-order hyperedges provide an advantage over pairwise relations. We also compare with our hierarchical graph model for bimanual action recogni-tion [5] and a visual-only adaptation of the graph-reasoning model in [6]. Both are adapted to the same evaluated clips and visual backbone. 
+
+Static hypergraph baseline. 
+
+The static hypergraph uses the same entity roles, manipulation templates, node fea-tures, and reasoning layers as the proposed model. Template identities are selected 21 once using clip-level averaged predicates and are not re-ranked over time. At temporal steps where a required role is absent, the corresponding template is masked. Com-parison with this baseline evaluates the contribution of per-step dynamic template selection. Table 2 summarizes the input representation, initialization, training protocol, and random seeds used for each evaluated method. For the entity-based and relational models, the common optimization protocol uses AdamW with an initial learning rate of 3 × 10 −4, weight decay of 1 × 10 −4, batch size 16, and 60 training epochs. Model selection is performed independently for each method and random seed according to validation macro-F1. All entity-based, graph-based, and hypergraph-based methods use the same extracted entity regions and frozen ResNet-50 appearance features. Performance is evaluated using top-1 accuracy, macro-F1, and higher-order action 
+
+F1 (HO-F1). Macro-F1 assigns equal importance to every activity class and there-fore reduces the influence of class imbalance. Let YHO denote the predefined union of surface-dependent, tool-mediated, bimanual, and contact- or state-change activity classes. HO-F1 is defined as HO-F1 = 1
+
+|Y HO |
+
+X
+
+> c∈Y HO
+
+F1,c , (49) where F1,c is the class-wise F1 score for class c. A class belonging to multiple manipu-lation families is counted only once in YHO . The higher-order class set is fixed before test evaluation and is used only for analysis; training uses the original dataset activity labels. Family-wise F1 scores are additionally reported to identify the manipulation categories that benefit most from higher-order reasoning. 22 Table 2 Implementation configuration of the evaluated baselines. All methods use the same dataset partitions and temporal sampling. 
+
+Method Input Backbone Training and adaptation Seeds 
+
+VideoMAE V2 [1] 16 global RGB frames Official pretrained VideoMAE V2 encoder Frozen video encoder; clas-sification head trained on each selected dataset subset 13, 37, 73 InternVideo2 [2] 16 global RGB frames Official pretrained InternVideo2 encoder Frozen video encoder; clas-sification head trained on each selected dataset subset 13, 37, 73 Contact-aware entity model [22] 16 sets of entity crops and predi-cates Frozen ImageNet-pretrained ResNet-50 Entity-fusion and classifica-tion modules retrained using the common protocol 13, 37, 73 Matched pairwise graph 16 pairwise entity graphs Frozen ImageNet-pretrained ResNet-50 Graph layers and classifier trained with the same node dimensions and reason-ing depth as the proposed model 13, 37, 73 Hierarchical graph model [5] 16 hierarchical entity graphs Frozen ImageNet-pretrained ResNet-50 Adapted and retrained on the same clips using the com-mon entity features 13, 37, 73 Adaptive graph reasoning (visual-only adap-tation) [6] 16 adaptive entity graphs Frozen ImageNet-pretrained ResNet-50 Adapted and retrained on the same clips using the com-mon entity features 13, 37, 73 Static hypergraph 16 fixed-template hypergraphs Frozen ImageNet-pretrained ResNet-50 Templates selected once using clip-averaged predicates 13, 37, 73 Proposed method 16 dynamic hypergraphs Frozen ImageNet-pretrained ResNet-50 Dynamic hypergraph layers and classifier trained using the common optimization protocol 13, 37, 73 
+
+23 4.4 Main Quantitative Results 
+
+Table 3 compares the proposed method with video-level, entity-based, graph-based, and static-hypergraph baselines under the common evaluation protocol described in Section 4.1. Quantitative results are reported on EPIC-KITCHENS-100/VISOR and Assembly101. ARCTIC is excluded from this comparison because it is used only for supporting contact-oriented and qualitative analysis.    
+
+> Table 3 Main quantitative comparison under the common evaluation protocol. Values are reported as mean ±standard deviation across three random seeds.
+
+Dataset Method Acc. Macro-F1 HO-F1 
+
+EPIC-KITCHENS-100/VISOR VideoMAE V2 57 .9 ± 0.8 53 .8 ± 0.9 49 .6 ± 1.0InternVideo2 60 .7 ± 0.7 56 .2 ± 0.8 52 .1 ± 0.9Contact-aware entity model 61 .8 ± 0.6 57 .7 ± 0.7 55 .3 ± 0.8Matched pairwise graph 63 .9 ± 0.5 60 .0 ± 0.6 58 .2 ± 0.8Hierarchical graph model 62 .6 ± 0.7 58 .8 ± 0.7 56 .4 ± 0.9Adaptive graph reasoning (visual-only adaptation) 65 .1 ± 0.6 61 .4 ± 0.6 59 .0 ± 0.7Static hypergraph 65 .7 ± 0.5 62 .0 ± 0.6 60 .7 ± 0.7Proposed method 68 .2 ± 0.4 64 .6 ± 0.5 65 .1 ± 0.6
+
+Assembly101 VideoMAE V2 43 .8 ± 0.9 39 .5 ± 1.0 37 .2 ± 1.1InternVideo2 47 .1 ± 0.8 42 .9 ± 0.9 40 .8 ± 1.0Contact-aware entity model 46 .0 ± 0.8 42 .3 ± 0.8 41 .7 ± 0.9Matched pairwise graph 50 .2 ± 0.6 46 .8 ± 0.7 45 .5 ± 0.8Hierarchical graph model 49 .0 ± 0.7 45 .6 ± 0.8 44 .8 ± 0.9Adaptive graph reasoning (visual-only adaptation) 51 .4 ± 0.7 48 .2 ± 0.7 46 .7 ± 0.8Static hypergraph 52 .0 ± 0.6 48 .8 ± 0.7 49 .2 ± 0.7Proposed method 55 .3 ± 0.5 52 .1 ± 0.6 55 .0 ± 0.7
+
+The proposed method achieves the highest mean performance under the evalu-ated protocol, with the matched pairwise graph and static hypergraph providing the principal controlled comparisons. Compared with InternVideo2, the strongest video-only baseline, it improves HO-F1 by 13.0 percentage points on EPIC-KITCHENS-100/VISOR and 14.2 points on Assembly101. The larger mean difference in HO-F1 indicates a greater performance advantage on the predefined higher-order class subset. Comparisons with VideoMAE V2 and InternVideo2 should be interpreted as contex-tual rather than strictly controlled, because their pretrained video encoders remain frozen and only their classification heads are trained. The matched pairwise graph and static hypergraph therefore constitute the primary controlled baselines, as they use identical entity features, temporal sampling, reasoning depth, and optimization settings. Replacing pairwise edges with higher-order hyperedges improves accuracy by 24 4.3 points on EPIC-KITCHENS-100/VISOR and 5.1 points on Assembly101. The cor-responding mean HO-F1 differences are 6.9 and 9.5 points, respectively, showing that the proposed higher-order formulation achieves higher mean scores than the matched pairwise formulation under the evaluated protocol. The proposed method also outperforms the static hypergraph by 2.5 accuracy points and 4.4 HO-F1 points on EPIC-KITCHENS-100/VISOR, and by 3.3 accuracy points and 5.8 HO-F1 points on Assembly101. The higher mean scores relative to the static baseline suggest an additional benefit from per-step dynamic template selection under the evaluated protocol. For completeness, Table 4 summarizes the gains over the three most informative baselines.                                 
+
+> Table 4 Improvement of the proposed method over selected baselines.
+> Dataset Comparison ∆Acc. ∆
+> Macro-F1
+> ∆
+> HO-F1
+> EPIC-KITCHENS-100/VISOR Proposed −strongest video-only baseline +7.5 +8.4 +13.0 EPIC-KITCHENS-100/VISOR Proposed −matched pairwise graph +4.3 +4.6 +6.9 EPIC-KITCHENS-100/VISOR Proposed −static hypergraph +2.5 +2.6 +4.4 Assembly101 Proposed −strongest video-only baseline +8.2 +9.2 +14.2 Assembly101 Proposed −matched pairwise graph +5.1 +5.3 +9.5 Assembly101 Proposed −static hypergraph +3.3 +3.3 +5.8
+
+## 4.5 Ablation Study 
+
+We evaluate the contribution of the main model components on EPIC-KITCHENS-100/VISOR. Each ablation modifies one component while retaining the same entity inputs, visual features, training settings, and evaluation protocol. We examine the contact and motion-coupling predicates, semantic-role embeddings, learned hyperedge weighting, temporal attention, time-varying hypergraph construction, and higher-order relational representation. 25 In the uniform hyperedge-pooling variant, the retained hyperedges are pooled using 
+
+ηtj = 1
+
+Mt
+
+, j = 1 , . . . , M t,
+
+while all other uses of αtj remain unchanged.                                                                             
+
+> Table 5 Ablation study on EPIC-KITCHENS-100/VISOR. Values are reported as mean ±
+> standard deviation across three random seeds.
+> Model variant Acc. Macro-F1 HO-F1
+> Without contact predicate 66 .4±0.662 .7±0.761 .6±0.8Without motion coupling 66 .9±0.563 .2±0.662 .4±0.7Without semantic-role embedding 67 .3±0.563 .8±0.663 .2±0.7Uniform hyperedge pooling 66 .6±0.662 .9±0.761 .9±0.8Mean temporal pooling 66 .8±0.563 .1±0.662 .3±0.7Static hypergraph 65 .7±0.562 .0±0.660 .7±0.7Matched pairwise graph 63 .9±0.560 .0±0.658 .2±0.8
+> Full proposed model 68 .2±0.464 .6±0.565 .1±0.6
+
+The matched pairwise graph produces the largest performance reduction, decreas-ing accuracy by 4.3 points and HO-F1 by 6.9 points relative to the full model. This result supports the use of higher-order hyperedges for representing complete manipulation configurations rather than decomposing them into independent pairwise relations. The static hypergraph also performs below the full model, with reductions of 2.5 points in accuracy and 4.4 points in HO-F1. This indicates that constructing the hypergraph from time-varying entity relations contributes beyond the use of higher-order structure alone. Removing contact information or motion coupling, or replacing relevance-weighted hyperedge pooling with uniform pooling, causes a larger reduction in HO-F1 than in overall accuracy. Contact information and relevance-weighted pooling are particularly important for identifying the active multi-entity configuration. 
+
+## 4.6 Analysis of Higher-Order Manipulation Classes 
+
+To identify the action types that benefit most from higher-order reasoning, we report family-wise F1 scores for the manipulation categories defined in Section 4.1. The analysis is restricted to EPIC-KITCHENS-100/VISOR and Assembly101, which are used for quantitative recognition experiments. ARCTIC is reserved for qualitative contact-oriented analysis. Table 6 compares the matched pairwise graph, static hypergraph, and proposed method. The matched pairwise graph uses the same entities, predicates, temporal 26 sampling, and reasoning depth as the proposed model, but represents each manipu-lation configuration through ordinary pairwise edges. The static hypergraph retains higher-order relations but uses fixed clip-level template selection.      
+
+> Table 6 Family-wise F1scores for higher-order manipulation classes. Gain denotes the improvement of the proposed method over the matched pairwise graph. Values are reported as mean ±standard deviation across three random seeds.
+
+Dataset Action family Pairwise Static HG Proposed Gain 
+
+EPIC-KITCHENS-100/VISOR Surface-dependent manipulation 59 .1 ± 0.8 61 .5 ± 0.7 65 .3 ± 0.6 +6 .2 ± 0.7EPIC-KITCHENS-100/VISOR Tool-mediated manipulation 56 .8 ± 0.9 60 .4 ± 0.8 65 .8 ± 0.7 +9 .0 ± 0.8EPIC-KITCHENS-100/VISOR Contact- or state-change actions 58 .7 ± 0.8 60 .2 ± 0.7 64 .1 ± 0.6 +5 .4 ± 0.7Assembly101 Bimanual manipulation 46 .1 ± 0.9 49 .7 ± 0.8 55 .6 ± 0.7 +9 .5 ± 0.9Assembly101 Tool-mediated manipulation 44 .9 ± 1.0 48 .6 ± 0.9 54 .4 ± 0.8 +9 .5 ± 0.9
+
+The largest gains occur for tool-mediated and bimanual actions. These classes depend on the joint participation of several entities, such as the active hand, tool, manipulated object, and supporting surface, or both hands acting on the same object. The corresponding family-level results show higher mean F1 scores for the tested hypergraph formulation than for the matched pairwise formulation. The proposed method also has higher mean scores than the static hypergraph across the reported families. This indicates that higher-order structure alone is benefi-cial, but that reconstructing the manipulation configuration from time-varying entity relations provides additional information. The smaller gains for surface-dependent and contact-state actions suggest that strong pairwise cues, such as hand–object contact or object–surface proximity, already provide partial evidence. Overall, the results sup-port the use of time-varying higher-order relations for manipulation classes defined by coordinated multi-entity interactions. 
+
+## 4.7 Qualitative Hyperedge-Importance Analysis 
+
+We qualitatively examine whether the hyperedges emphasized by the model correspond to meaningful manipulation evidence. For each video, the importance score defined in Section 3.5 ranks the selected hyperedges across temporal steps. The highest-ranked hyperedges are mapped back to their participating entities and video frames. These 27 scores indicate the relational evidence emphasized by the model, but should not be interpreted as causal explanations. Figure 3 presents representative examples from EPIC-KITCHENS-100/VISOR, Assembly101, and ARCTIC. In the EPIC-KITCHENS-100/VISOR cutting example, the model assigns the highest importance to the hyperedge connecting the active hand, knife, manipulated object, and cutting surface. Its score increases during tool–object contact, indicating that the model focuses on the complete tool-mediated configuration rather than on the appearance of the knife alone. For the Assembly101 example, the dominant hyperedge connects the left hand, right hand, and manipulated component. This configuration is informative for distin-guishing bimanual actions that contain similar objects and local hand motions but differ in how both hands coordinate around the principal component. ARCTIC is used only for supporting contact-oriented analysis. The highest-ranked hyperedges are compared with intervals of coordinated bimanual contact provided by the dataset annotations. The observed temporal correspondence indicates that the learned importance scores emphasize interaction periods in which both hands actively participate in manipulating the object. These annotations are used only for analysis and are not supplied to the recognition model.                 
+
+> Fig. 3Representative hyperedge-importance visualizations. The EPIC-KITCHENS-100/VISOR and Assembly101 examples show selected frames, ground-truth and predicted labels, and the highest-ranked hyperedge. The ARCTIC example compares normalized hyperedge importance with an annotated bimanual-contact interval. In the failure case, no valid hyperedge is instantiated because a required entity is missing.
+
+28 The failure case illustrates the dependence of the construction on entity localiza-tion. When the supporting surface is not detected, the surface-dependent templates are not instantiated. If no other manipulation template is valid at that temporal step, then Mt = 0; the prediction consequently relies on the pooled node representation, and no hyperedge-importance score is returned for that temporal step. Overall, the qualitative results show that the model associates its decisions with explicit multi-entity manipulation configurations. Correct predictions are supported by hyperedges that agree with the functional structure of the action, whereas failure cases reveal limitations in entity detection and relation estimation. 
+
+# 5 Conclusion and Future Directions 
+
+This paper presented a dynamic manipulation hypergraph framework for vision-based human activity recognition. Unlike conventional pairwise graphs, the proposed repre-sentation models complete manipulation configurations involving hands, objects, tools, and supporting surfaces as higher-order hyperedges. By combining entity-level visual features, contact and motion predicates, time-varying hypergraph construction, and hypergraph reasoning, the framework is designed to capture relational patterns that are difficult to represent through isolated pairwise connections. The evaluation considers daily egocentric manipulation and bimanual procedural activities using EPIC-KITCHENS-100/VISOR and Assembly101, while ARCTIC is used for supporting contact-oriented qualitative analysis. Comparisons with video-only, entity-based, matched pairwise-graph, and static-hypergraph baselines examine the respective contributions of explicit relational modeling, higher-order represen-tation, and time-varying hypergraph construction. The family-wise and qualitative analyses further indicate that the proposed representation is particularly suitable for tool-mediated, surface-dependent, bimanual, and contact- or state-change actions. Several limitations should be acknowledged. First, the constructed hypergraphs depend on reliable localization of hands, objects, tools, and supporting surfaces; missed or inaccurate detections may produce incomplete manipulation configurations. Sec-ond, the predefined hyperedge templates cover common manipulation patterns but may not represent all interactions encountered in unconstrained environments. Third, differences in dataset annotations require dataset-specific adaptation of the available entity roles and candidate templates. Finally, the hyperedge importance scores pro-vide attention-based relational evidence rather than causal explanations of the model predictions. Future work will investigate data-driven hyperedge discovery to reduce dependence on predefined templates. Incorporating open-vocabulary visual and relational repre-sentations may further improve generalization to unseen objects, tools, and actions. Other promising directions include robustness to missing entities, cross-dataset trans-fer, online activity recognition and anticipation, richer object-state modeling, and more rigorous evaluation of explanation faithfulness. These extensions may broaden the applicability of dynamic manipulation hypergraphs while preserving their explicit and interpretable relational structure. 29 Declarations 
+
+Funding: This research received no specific grant from any funding agency in the public, commercial, or not-for-profit sectors. 
+
+Competing interests: The author declares that there are no competing interests. 
+
+Author contributions: The author was solely responsible for all aspects of the study, including conceptualization, methodology development, software implementa-tion, experimental design, validation, formal analysis, investigation, data curation, visualization, interpretation of the results, and preparation, review, and editing of the manuscript. 
+
+Data availability: The datasets used in this study are publicly available from the official repositories of EPIC-KITCHENS-100, VISOR, Assembly101, and ARCTIC. 
+
+# References 
+
+[1] Wang, L., Huang, B., Zhao, Z., Tong, Z., He, Y., Wang, Y., Wang, Y., Qiao, Y.: Videomae v2: Scaling video masked autoencoders with dual masking. In: Proceed-ings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 14549–14560 (2023) [2] Wang, Y., Li, K., Li, X., Yu, J., He, Y., Wang, C., Chen, G., Pei, B., Zheng, R., Wang, Z., Shi, Y., Jiang, T., Li, T., Xu, J., Zhang, H., Huang, Y., Qiao, Y., Wang, Y., Wang, L.: Internvideo2: Scaling foundation models for multimodal video understanding. In: Computer Vision – ECCV 2024, pp. 396–416 (2024) [3] Kwon, T., Tekin, B., St¨ uhmer, J., Bogo, F., Pollefeys, M.: H2o: Two hands manip-ulating objects for first person interaction recognition. In: Proceedings of the IEEE/CVF International Conference on Computer Vision (2021) [4] Rodin, I., Furnari, A., Min, K., Tripathi, S., Farinella, G.M.: Action scene graphs for long-form understanding of egocentric videos. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 18622–18632 (2024) [5] Ziaeetabar, F., Tamosiunaite, M., W¨ org¨ otter, F.: A hierarchical graph-based approach for recognition and description generation of bimanual actions in videos. IEEE Access 12 , 180328–180360 (2024) [6] Ziaeetabar, F., W¨ org¨ otter, F.: Adaptive multimodal graph reasoning with founda-tion models for fine-grained action recognition. IEEE Access 13 , 201990–202009 (2025) [7] Damen, D., Doughty, H., Farinella, G.M., Furnari, A., Kazakos, E., Moltisanti, D., Munro, J., Perrett, T., Price, W., Wray, M.: Rescaling egocentric vision: Col-lection, pipeline and challenges for EPIC-KITCHENS-100. International Journal of Computer Vision 130 (1), 33–55 (2022) 30 [8] Darkhalil, A., Shan, D., Zhu, B., Ma, J., Kar, A., Higgins, R., Fidler, S., Fouhey, D., Damen, D.: EPIC-KITCHENS VISOR Benchmark: VIdeo Segmentations and Object Relations. In: Advances in Neural Information Processing Systems, vol. 35 (2022). Datasets and Benchmarks Track [9] Sener, F., Chatterjee, D., Shelepov, D., He, K., Singhania, D., Wang, R., Yao, A.: Assembly101: A large-scale multi-view video dataset for understanding procedural activities. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 21096–21106 (2022) [10] Fan, Z., Taheri, O., Tzionas, D., Kocabas, M., Kaufmann, M., Black, M.J., Hilliges, O.: Arctic: A dataset for dexterous bimanual hand-object manipulation. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 12943–12954 (2023) [11] Dessalene, E., Devaraj, C., Maynord, M., Fermuller, C., Aloimonos, Y.: Fore-casting action through contact representations from first person video. IEEE Transactions on Pattern Analysis and Machine Intelligence 45 (6), 6703–6714 (2023) https://doi.org/10.1109/TPAMI.2021.3055233 [12] Zhang, L., Zhou, S., Stent, S., Shi, J.: Fine-grained egocentric hand-object seg-mentation: Dataset, model, and applications. In: Computer Vision – ECCV 2022, pp. 127–145 (2022). https://doi.org/10.1007/978-3-031-19818-2 8 [13] Feng, Y., You, H., Zhang, Z., Ji, R., Gao, Y.: Hypergraph neural networks. In: Proceedings of the AAAI Conference on Artificial Intelligence (2019) [14] Perrett, T., Darkhalil, A., Sinha, S., Emara, O., Pollard, S., Parida, K.K., Liu, K., Gatti, P., Bansal, S., Flanagan, K., Chalk, J., Zhu, Z., Guerrier, R., Abdelazim, F., Zhu, B., Moltisanti, D., Wray, M., Doughty, H., Damen, D.: Hd-epic: A highly-detailed egocentric video dataset. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 23901–23913 (2025) [15] Yan, S., Xiong, Y., Lin, D.: Spatial temporal graph convolutional networks for skeleton-based action recognition. In: Proceedings of the AAAI Conference on Artificial Intelligence (2018) [16] Wang, L., Koniusz, P.: 3mformer: Multi-order multi-mode transformer for skeletal action recognition. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 5620–5631 (2023) [17] Zhou, Y., Yan, X., Cheng, Z.-Q., Yan, Y., Dai, Q., Hua, X.-S.: Blockgcn: Redefine topology awareness for skeleton-based action recognition. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 2049– 2058 (2024) [18] Zhou, Y., Cheng, Z.-Q., Li, C., Fang, Y., Geng, Y., Xie, X., Keuper, M.: 31 Hypergraph transformer for skeleton-based action recognition. arXiv preprint arXiv:2211.09590 (2022) [19] Ray, A., Raj, A., Kolekar, M.H.: Autoregressive adaptive hypergraph transformer for skeleton-based activity recognition. In: Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision, pp. 9690–9699 (2025) [20] Nguyen, T.-T., Nguyen, P., Cothren, J., Yilmaz, A., Luu, K.: Hyperglm: Hyper-graph for video scene graph generation and anticipation. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 29150–29160 (2025) [21] Liu, Y., Liu, Y., Jiang, C., Lyu, K., Wan, W., Shen, H., Liang, B., Fu, Z., Wang, H., Yi, L.: Hoi4d: A 4d egocentric dataset for category-level human-object inter-action. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 21013–21022 (2022) [22] Shiota, T., Takagi, M., Kumagai, K., Seshimo, H., Aono, Y.: Egocentric action recognition by capturing hand-object contact and object state. In: Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision, pp. 6527–6537 (2024) [23] Ziaeetabar, F., Safabakhsh, R., Momtazi, S., Tamosiunaite, M., W¨ org¨ otter, F.: Multi sentence description of complex manipulation action videos. Machine Vision and Applications 35 (4), 64 (2024) [24] Ziaeetabar, F., Esghaei, M.: Efficientgformer: Pruned spatial-semantic graph-transformer learning for multimodal brain tumor segmentation. arXiv preprint arXiv:2508.01465 (2025) arXiv:2508.01465 [cs.CV] [25] Liu, S., Zeng, Z., Ren, T., Li, F., Zhang, H., Yang, J., Li, C., Yang, J., Su, H., Zhu, J., Zhang, L.: Grounding dino: Marrying dino with grounded pre-training for open-set object detection. In: Computer Vision – ECCV 2024 (2024) [26] Ravi, N., Gabeur, V., Hu, Y.-T., Hu, R., Ryali, C., Ma, T., Khedr, H., R¨ adle, R., Rolland, C., Gustafson, L., Mintun, E., Pan, J., Alwala, K.V., Carion, N., Wu, C.-Y., Girshick, R., Doll´ ar, P., Feichtenhofer, C.: SAM 2: Segment anything in images and videos. In: International Conference on Learning Representations (2025) 32
